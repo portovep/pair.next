@@ -1,6 +1,14 @@
 source "https://rubygems.org"
 
-gem 'sinatra'
+# General
+gem "sinatra"
+
+# Persistence
+gem "activerecord"
+gem "sinatra-activerecord"
+gem "pg"
+
+# Specs
 
 group :development, :test do
   gem 'rspec'
