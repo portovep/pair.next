@@ -4,7 +4,7 @@ describe 'Main' do
 
     it 'should say hello world' do
       get '/hi'
-      expect(last_response.body).to include("Hello World!")
+      expect(last_response.body).to include("Welcome to pair.next")
     end
 
 end
