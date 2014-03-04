@@ -4,4 +4,4 @@ require './app'
 
 task :shotgun do
     `ruby app.rb`
-  end
+end
