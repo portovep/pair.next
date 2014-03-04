@@ -9,4 +9,8 @@ gem "sinatra-activerecord"
 gem "pg"
 
 # Specs
-gem "rspec"
+
+group :development, :test do
+  gem 'rspec'
+  gem 'rack-test', require: 'rack/test'
+end
