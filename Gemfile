@@ -2,6 +2,9 @@ source "https://rubygems.org"
 
 # General
 gem "sinatra"
+gem "sinatra-contrib"
+gem "omniauth"
+gem "omniauth-saml"
 
 # Persistence
 gem "activerecord"
