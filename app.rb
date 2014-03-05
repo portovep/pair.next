@@ -1,3 +1,9 @@
+require 'sinatra'
+require 'sinatra/contrib'
+require_relative './auth.rb'
+require_relative './db.rb'
+APP_ROOT = Pathname.new(File.expand_path('../', __FILE__))
+
 require 'bundler/setup'
 Bundler.require(:default)
 
@@ -5,25 +11,25 @@ Bundler.require(:default)
 require "better_errors"
 require "binding_of_caller"
 configure :development do
-  use BetterErrors::Middleware
-  BetterErrors.application_root = __dir__
+	use BetterErrors::Middleware
+	BetterErrors.application_root = __dir__
 end
 
+# Security
 require 'openssl'
 require 'base64'
 
-require_relative './auth.rb'
-# ActiveRecord::Base.logger = Logger.new(STDERR)
-# ActiveRecord::Base.establish_connection(:adapter  => 'sqlite3', :database => 'db.sqlite')
 
-# require "sinatra"
+register Sinatra::Contrib
 
 set :app_file, __FILE__
 
 before do
-  protected! unless request.path_info.include? '/auth'
+	protected! unless request.path_info.include? '/auth'
 end
 
 get '/hi' do
-  erb :index
+	erb :index
 end
+
+
