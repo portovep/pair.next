@@ -26,3 +26,13 @@ post '/team/new' do
 
 end
 
+get '/team/:team_id' do
+  @team = Team.find_by_id(params[:team_id])
+
+  if @team.nil?
+    session[:error_message] =  "Team not found"
+    redirect to '/team/new'
+  else
+    erb :team_profile
+  end
+end
