@@ -1,4 +1,3 @@
-require 'sinatra'
 require 'sinatra/config_file'
 require 'omniauth'
 require 'omniauth-saml'
