@@ -1,8 +1,6 @@
 require 'sinatra/activerecord'
-
-db = URI.parse('postgres://user:pass@localhost/dbname')
-
 DB_NAME = "pair_next"
+db = URI.parse("postgres://postgres:postgres@localhost/#{DB_NAME}")
 
 ActiveRecord::Base.establish_connection(
   :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,

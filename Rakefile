@@ -52,3 +52,13 @@ desc "Fire up the server"
 task :shotgun do
 	`ruby app.rb`
 end
+
+desc "Returns the current schema version number"
+  task :version do
+    puts "Current version: #{ActiveRecord::Migrator.current_version}"
+  end
+
+  desc 'Start IRB with application environment loaded'
+task "console" do
+  exec "irb -r./app"
+end
