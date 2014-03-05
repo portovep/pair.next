@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 # General
 gem "sinatra"
+
+# Auth (Okta integration)
 gem "sinatra-contrib"
 gem "omniauth"
 gem "omniauth-saml"
