@@ -19,7 +19,7 @@ post '/team/new' do
 
   if @team.save
     session[:success_message] =  "Team #{@team.name} successfully created"
-    erb :team_profile 
+    redirect to "/team/#{@team.id}"
   else
     erb :team_setup
   end

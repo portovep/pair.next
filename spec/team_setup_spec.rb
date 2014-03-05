@@ -22,6 +22,9 @@ describe 'Team setup' do
 
       post '/team/new', { team_name: 'my team'}, session
 
+      expect(last_response.redirect?).to be_true
+
+      follow_redirect!
       expect(last_response.body).to include('Team my team successfully created')
       expect(last_response.body).to include('Profile - my team')
       expect(Team.find_by_name('my team').name).to eq 'my team'
