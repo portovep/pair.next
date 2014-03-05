@@ -19,15 +19,23 @@ GEM
     arel (4.0.2)
     atomic (1.1.15)
     backports (3.6.0)
+    better_errors (1.1.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.1.4)
     canonix (0.1.1)
+    coderay (1.1.0)
+    debug_inspector (0.0.2)
     diff-lcs (1.2.5)
+    erubis (2.7.0)
     hashie (2.0.5)
     i18n (0.6.9)
     macaddr (1.6.7)
       systemu (~> 2.6.2)
     minitest (4.7.5)
-    multi_json (1.8.4)
+    multi_json (1.9.0)
     nokogiri (1.5.11)
     omniauth (1.2.1)
       hashie (>= 1.2, < 3)
@@ -80,6 +88,8 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  better_errors
+  binding_of_caller
   omniauth
   omniauth-saml
   pg
