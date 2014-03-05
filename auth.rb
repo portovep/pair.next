@@ -19,12 +19,14 @@ use OmniAuth::Builder do
 end
 
 helpers do
+
   def protected!
     return if authorized?
     redirect to("/auth/saml?redirectUrl=#{URI::encode(request.path)}")
   end
 
   def authorized?
-    !session[:user_id].nil?
+    session[:user_id]
   end
+
 end
