@@ -50,7 +50,7 @@ end
 
 desc "Fire up the server"
 task :shotgun do
-  `ruby app.rb`
+  puts `shotgun`
 end
 
 desc "Run the tests"
@@ -63,7 +63,7 @@ desc "Returns the current schema version number"
     puts "Current version: #{ActiveRecord::Migrator.current_version}"
   end
 
-desc 'Start IRB with application environment loaded'
+desc 'Start PRY with application environment loaded'
 task :console do
-  exec "irb -r./app"
+  exec "pry -r ./environment.rb"
 end
