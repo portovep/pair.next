@@ -1,3 +1,14 @@
+require 'sinatra'
+require 'sinatra/contrib'
+require_relative './auth.rb'
+require_relative './db.rb'
+require_relative './models/user.rb'
+require_relative './models/team.rb'
+require_relative './models/team_member.rb'
+require_relative './models/pairing_session.rb'
+require_relative './models/pairing_membership.rb'
+APP_ROOT = Pathname.new(File.expand_path('../', __FILE__))
+
 require 'bundler/setup'
 Bundler.require(:default)
 
@@ -5,16 +16,17 @@ Bundler.require(:default)
 require "better_errors"
 require "binding_of_caller"
 configure :development do
-  use BetterErrors::Middleware
-  BetterErrors.application_root = __dir__
+	use BetterErrors::Middleware
+	BetterErrors.application_root = __dir__
 end
 
+# Security
 require 'openssl'
 require 'base64'
 
 require_relative './auth.rb'
 
-require "sinatra"
+register Sinatra::Contrib
 
 set :app_file, __FILE__
 
@@ -24,7 +36,7 @@ before do
 end
 
 get '/hi' do
-  erb :index
+	erb :index
 end
 
 get '/team/new' do
