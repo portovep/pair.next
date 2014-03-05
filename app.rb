@@ -2,7 +2,7 @@ set :app_file, __FILE__
 
 # Okta integration
 before do
-  protected! unless request.path_info.start_with? '/auth'
+  #protected! unless request.path_info.start_with? '/auth'
 end
 
 get '/hi' do
@@ -10,10 +10,19 @@ get '/hi' do
 end
 
 get '/team/new' do
+  @team = Team.new
   erb :team_setup
 end
 
 post '/team/new' do
-  session[:success_message] =  "Team successfully created"
-  erb :team_profile
+  @team = Team.new(name: params[:team_name])
+
+  if @team.save
+    session[:success_message] =  "Team #{@team.name} successfully created"
+    erb :team_profile 
+  else
+    erb :team_setup
+  end
+
 end
+
