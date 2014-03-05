@@ -3,6 +3,7 @@ Bundler.require(:default)
 
 # Better Errors error handling
 require "better_errors"
+require "binding_of_caller"
 configure :development do
   use BetterErrors::Middleware
   BetterErrors.application_root = __dir__
