@@ -1,4 +1,4 @@
-require './app'
+require_relative './environment.rb'
 require 'rake'
 require 'active_support/core_ext'
 

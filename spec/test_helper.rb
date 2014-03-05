@@ -3,7 +3,7 @@ require 'rack/test'
 
 ENV['RACK_ENV'] = 'test'
 
-require_relative '../app.rb'
+require_relative '../environment.rb'
 
 RSpec.configure do |conf|
 
