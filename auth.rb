@@ -1,7 +1,7 @@
 require 'sinatra/config_file'
-require 'omniauth'
-require 'omniauth-saml'
 require 'securerandom'
+require 'openssl'
+require 'base64'
 
 config_file 'config.yml'
 
