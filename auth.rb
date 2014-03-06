@@ -17,6 +17,8 @@ use OmniAuth::Builder do
   :idp_sso_target_url_runtime_params  => {:redirectUrl => :RelayState}
 end
 
+set :protection, :origin_whitelist => ['https://thoughtworks.okta.com']
+
 helpers do
 
   def protected!
