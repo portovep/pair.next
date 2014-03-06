@@ -19,10 +19,17 @@ group :development, :test do
   gem "rack-test", require: "rack/test"
 end
 
-# Error display
 group :development do
+  # Error display
   gem "binding_of_caller"
   gem "better_errors"
+
+  # better console
   gem "pry"
+
+  # dev server
   gem "shotgun"
+
+  # load env variables
+  gem "dotenv"
 end

@@ -1,7 +1,7 @@
 require 'bundler/setup'
 Bundler.require(:default)
 
-if development?
+if development? || test?
   Bundler.require(:development, :test)
 end
 

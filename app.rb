@@ -48,9 +48,5 @@ post '/auth/saml/callback' do
   auth = request.env['omniauth.auth']
   session[:user_id] = auth[:uid]
 
-  if params[:RelayState].nil? || params[:RelayState].empty?
-    redirect to '/'
-  else
-    redirect to params[:RelayState]
-  end
+  redirect to(params[:RelayState] || "/")
 end
