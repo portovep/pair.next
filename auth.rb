@@ -8,7 +8,6 @@ config_file 'config.yml'
 # Sessions
 enable :sessions
 # configure 'SECRET_TOKEN' in .env
-Dotenv.load
 set :session_secret, ENV['SECRET_TOKEN'] || SecureRandom.hex
 
 use OmniAuth::Builder do
@@ -33,4 +32,19 @@ helpers do
     session[:user_id]
   end
 
+  def login!(username)
+    user = User.find_or_create_by(username: username)
+    session[:user_id] = user.username
+  end
+
+  def current_user
+    User.find_by_username(session[:user_id])
+  end
+
+end
+
+post '/auth/saml/callback' do
+  auth = request.env['omniauth.auth']
+  login!(auth[:uid])
+  redirect to(params[:RelayState] || "/")
 end
