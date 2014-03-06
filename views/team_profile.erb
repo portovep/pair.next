@@ -4,28 +4,36 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="large-6 columns">
-    <div class="row collapse">
-      <form action="/team/<%= @team.id %>/members" method="POST">
-        <div class="small-10 columns">
-          <input type="text" name="member_username" placeholder="Type an username" />
-        </div>
-        <div class="small-2 columns">
-          <input type="submit" class="button postfix" value="Add member" />
-        </div>
-      </form>
-    </div>
-  </div>
 
-  <% unless @team.users.empty? %>
-    <% @team.users.each do |member| %>
-      <div class="large-6 columns">
-        <div class="panel clearfix">
-          <img src="http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/6/000/1fa/1eb/204f64b.jpg" width="80" height="80">
-              <%= member.username %>
+<div class="row">
+  <div class="large-8 large-offset-2 columns">
+    <form action="/team/<%= @team.id %>/members" method="POST">
+      <div class="row collapse">
+        <div class="small-9 columns">
+          <input type="text" name="member_username" placeholder="Type a username" />
+        </div>
+        <div class="small-3 columns">
+          <input type="submit" value="Add member" class="button postfix">
         </div>
       </div>
-    <% end %>    
-  <% end %>
+    </form>
+  </div>
 </div>
+
+
+
+<% unless @team.users.empty? %>
+  <% @team.users.each_slice(2) do |row| %>
+    <div class="row">
+      <% row.each do |member| %> 
+        <div class="large-6 columns">
+          <div class="panel">
+            <img src="http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/6/000/1fa/1eb/204f64b.jpg" width="80" height="80">
+            <%= member.username %>
+          </div>
+        </div>
+      <% end %>  
+    </div>  
+  <% end %>    
+<% end %>
+
