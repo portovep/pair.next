@@ -9,20 +9,6 @@
   </head>
   <body>
 
-    <% if session[:success_message] %>
-      <div data-alert class="alert-box success radius">
-        <%= session.delete(:success_message) %>
-        <a href="#" class="close">&times;</a>
-      </div>
-    <% end %> 
-
-    <% if session[:error_message] %>
-      <div data-alert class="alert-box error radius">
-        <%= session.delete(:error_message) %>
-        <a href="#" class="close">&times;</a>
-      </div>
-    <% end %> 
-
     <!-- Nav bar -->
     <div class="contain-to-grid">
       <nav class="top-bar" data-topbar>
@@ -51,7 +37,23 @@
         </section>
       </nav>
     </div>
-      
+    
+
+    <% if session[:success_message] %>
+      <div data-alert class="alert-box success">
+        <%= session.delete(:success_message) %>
+        <a href="#" class="close">&times;</a>
+      </div>
+    <% end %> 
+
+    <% if session[:error_message] %>
+      <div data-alert class="alert-box error">
+        <%= session.delete(:error_message) %>
+        <a href="#" class="close">&times;</a>
+      </div>
+    <% end %> 
+
+
   	<%= yield %>
    
     <footer class="row">

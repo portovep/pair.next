@@ -1,3 +1,5 @@
+
+
 <div class="row">
   <div class="large-12 columns">
     <h1>Create a team</h1>
@@ -8,18 +10,16 @@
 
   <div class="row">
     <div class="large-4 columns <%= "error" if @team.errors.messages[:name] %>">
-      <label>Team name
-        <input type="text" name="team_name" placeholder="Type the team name" />
-      </label>
-      <% if @team.errors.messages[:name] %>
-        <small class="error">Name <%= @team.errors.messages[:name].first %></small>
-      <% end %> 
-    </div>
-  </div>
+      <div class="panel clearfix">
 
-  <div class="row">
-    <div class="large-4 columns">
-      <input type="submit" class="button" value="Create" />
+        <label><h3>Team name</h3>
+          <input type="text" name="team_name" placeholder="Type your team name." />
+        </label>
+        <% if @team.errors.messages[:name] %>
+          <small class="error">Name <%= @team.errors.messages[:name].first %></small>
+        <% end %> 
+        <input type="submit" class="small button right" value="Create" />
+      </div>
     </div>
   </div>
 
