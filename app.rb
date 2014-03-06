@@ -2,7 +2,11 @@ set :app_file, __FILE__
 
 # Okta integration
 before do
-  #protected! unless request.path_info.start_with? '/auth'
+  unless request.path_info.start_with? '/auth' ||
+         request.path_info == '/' ||
+         request.path_info == '/hi'
+    protected!
+  end
 end
 
 get '/' do
@@ -37,5 +41,16 @@ get '/team/:team_id' do
     redirect to '/team/new'
   else
     erb :team_profile
+  end
+end
+
+post '/auth/saml/callback' do
+  auth = request.env['omniauth.auth']
+  session[:user_id] = auth[:uid]
+
+  if params[:RelayState].nil? || params[:RelayState].empty?
+    redirect to '/'
+  else
+    redirect to params[:RelayState]
   end
 end
