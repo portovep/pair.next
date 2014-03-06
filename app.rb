@@ -39,3 +39,8 @@ get '/team/:team_id' do
     erb :team_profile
   end
 end
+
+get '/team/:team_id/shuffle' do
+  @team = Team.find_by_id(params[:team_id])
+  erb :shuffle_page
+end

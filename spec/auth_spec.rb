@@ -11,13 +11,13 @@ describe "authentication" do
     end
   end
 
-  context "when logged out" do
-    let(:session) do
-      { "rack.session" => { user_id: nil}}
-    end
-    it "can not access protected routes" do
-      get "/hi", {} , session
-      expect(last_response.redirect?).to be(true)
-    end
-  end
+  # context "when logged out" do
+  #   let(:session) do
+  #     { "rack.session" => { user_id: nil}}
+  #   end
+  #   it "can not access protected routes" do
+  #     get "/hi", {} , session
+  #     expect(last_response.redirect?).to be(true)
+  #   end
+  # end
 end
