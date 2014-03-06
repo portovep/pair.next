@@ -16,9 +16,10 @@ describe 'Pair shuffle' do
       @new_teammembers = ["Lukas", "Florian", "Pablo", "Martino"]
 
       @new_teammembers.each do |member|
-      	new_member = User.create(username: member)
-      	team_membership = TeamMember.create(user: new_member, team: @team)
+      	@team.users << User.create(username: member)
       end
+
+      @team.save
     end
 
     it 'should show shuffle page for existing pairings' do
