@@ -20,7 +20,11 @@ RSpec.configure do |conf|
       Sinatra::Application
     end
 
-    example.run
+    # Wrap all DB interactions in a transaction and rollback after
+    ActiveRecord::Base.transaction do
+      example.run
+      raise ActiveRecord::Rollback
+    end
   end
 
 end

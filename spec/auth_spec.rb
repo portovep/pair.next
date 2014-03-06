@@ -2,10 +2,6 @@ require_relative "./test_helper.rb"
 
 describe "authentication" do
 
-  before :each do
-    User.destroy_all
-  end
-
   context "when logged in" do
     let(:session) do
       { "rack.session" => { user_id: "logged in" } }
