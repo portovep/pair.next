@@ -42,10 +42,10 @@ module Sinatra
       FileUtils.mkdir_p(migrations_dir)
       File.open(migration_file, 'w') do |file|
         file.write <<-MIGRATION.strip_heredoc
-          class #{migration_class} < ActiveRecord::Migration
-            def change
-            end
+        class #{migration_class} < ActiveRecord::Migration
+          def change
           end
+        end
         MIGRATION
       end
     end
