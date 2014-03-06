@@ -23,6 +23,35 @@
       </div>
     <% end %> 
 
+    <!-- Nav bar -->
+    <div class="contain-to-grid">
+      <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+          <li class="name">
+            <h1><a href="#">Pair.Next</a></h1>
+          </li>
+          <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+        </ul>
+
+        <section class="top-bar-section">
+          <!-- Right Nav Section -->
+          <ul class="right">
+            <li class ="name"><h1><a href="#">
+            <% if session[:user_id] %>
+              Welcome <%= session[:user_id] %>
+            <% else %>
+              Welcome
+            <% end %>
+            </h1></a></li>
+          </ul>
+
+          <!-- Left Nav Section -->
+          <ul class="left">
+          </ul>
+        </section>
+      </nav>
+    </div>
+      
   	<%= yield %>
    
     <footer class="row">
