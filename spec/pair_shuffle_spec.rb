@@ -34,5 +34,14 @@ describe 'Pair shuffle' do
       	expect(last_response.body).to include(member)
       end
     end
+
+    it 'should not show any pairs when new team accesses shuffle page' do
+      get "/team/#{@team.id}/shuffle", {}, session
+      
+      expect(last_response.body).to include("Profile - #{@team.name} - Shuffle Teams")
+      @new_teammembers.each do |member|
+        expect(last_response.body).to_not include(member)
+      end
+    end
   end
 end
