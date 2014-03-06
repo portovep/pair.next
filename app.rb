@@ -2,11 +2,10 @@ set :app_file, __FILE__
 
 # Okta integration
 before do
-  unless request.path_info.start_with? '/auth' ||
-         request.path_info == '/' ||
-         request.path_info == '/hi'
-    protected!
-  end
+  request_path = request.path_info
+  return if request_path.start_with? '/auth'
+  return if ['/', '/hi'].include? request_path
+  protected!
 end
 
 get '/' do
