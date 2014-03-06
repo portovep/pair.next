@@ -1,4 +1,4 @@
-  class Team < ActiveRecord::Base
+class Team < ActiveRecord::Base
   has_many :team_members
   has_many :users, through: :team_members
   validates :name, presence: true, uniqueness: true
@@ -25,5 +25,17 @@
       end
     end
     pairs.values
+  end
+
+
+  def shuffle_pairs
+    team_members = self.team_members
+    pairs = []
+
+    team_members.each_slice(2) do |pair| 
+      pairs << pairs
+    end
+
+    pairs
   end
 end

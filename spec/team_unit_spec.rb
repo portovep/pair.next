@@ -32,4 +32,25 @@ describe 'Team class' do
             old_pairs = @team.get_old_pairs
             old_pairs.should be == []
       end
+
+      it 'should shuffle pairs when no previous pairings exist' do 
+            new_pairs = @team.shuffle_pairs
+            new_pairs.size.should be == 2
+            new_pairs[0].size.should be == 2
+            new_pairs[1].size.should be == 2
+      end 
+      # TODO: this test is red
+      # it 'should generate only possible pairing solution left' do
+      #       start_time = Time.now
+      #       end_time = start_time + (10*60)
+      #       TestUtilityMethods.create_pair("Pablo", "Florian", start_time, end_time)
+      #       TestUtilityMethods.create_pair("Lukas", "Martino", start_time, end_time)
+
+      #       TestUtilityMethods.create_pair("Lukas", "Florian", end_time)
+      #       TestUtilityMethods.create_pair("Pablo", "Martino", end_time)
+
+      #       new_pairs = @team.shuffle_pairs
+      #       new_pairs.should be == [[User.find_by_username("Lukas"), User.find_by_username("Pablo")],
+      #                                           [User.find_by_username("Florian"), User.find_by_username("Martino")]]
+      # end
 end
