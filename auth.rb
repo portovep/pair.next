@@ -5,7 +5,10 @@ require 'base64'
 
 config_file 'config.yml'
 
+# Sessions
 enable :sessions
+# configure 'SECRET_TOKEN' in .env
+Dotenv.load
 set :session_secret, ENV['SECRET_TOKEN'] || SecureRandom.hex
 
 use OmniAuth::Builder do
