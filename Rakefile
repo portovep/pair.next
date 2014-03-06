@@ -60,7 +60,7 @@ end
 
 desc "Run the tests"
 task :test do
-  puts `bundle exec rspec`
+  puts `bundle exec rspec --color --format documentation`
 end
 
 desc "Returns the current schema version number"
