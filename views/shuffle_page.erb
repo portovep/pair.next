@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="large-12 columns">
+		<h1>Profile - <%= @team.name %> - Shuffle Teams</h1>
+		<div id="old-pairs">
+			<% @old_pairs.each do |pair| %>
+			<span>
+				<% pair.each do |user| %>
+				<%= user.username %>
+				<% end %>
+			</span>
+			<% end %>
+		</div> 
+	</div>
+</div>
+
