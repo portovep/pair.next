@@ -48,8 +48,12 @@ post '/team/:team_id/members' do
 
   new_member = User.find_by_username(params[:member_username])
   if new_member
-    @team.users << new_member
-    @team.save
+    unless @team.users.include?(new_member)
+      @team.users << new_member
+      @team.save
+    else
+      session[:error_message] = "#{params[:member_username]} is already a member!"
+    end
   else
     session[:error_message] = "#{params[:member_username]} does not exist!"
   end

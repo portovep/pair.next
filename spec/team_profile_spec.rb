@@ -51,6 +51,19 @@ describe 'Team setup' do
       expect(last_response.body).to include("user1 does not exist!")
     end
 
+    it 'should show error when user is already a member' do
+      team = Team.create(name: 'team_test')
+      user = User.create(username: 'user1')
+      team.users << user
+      team.save
+
+      post "/team/#{team.id}/members", {member_username: user.username}, session
+      follow_redirect!
+
+      expect(team.users).to eq(team.users.uniq)
+      expect(last_response.body).to include("user1 is already a member!")
+    end
+
   end
 
 end
