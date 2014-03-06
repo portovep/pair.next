@@ -5,8 +5,12 @@ before do
   #protected! unless request.path_info.start_with? '/auth'
 end
 
+get '/' do
+  redirect to '/hi'
+end
+
 get '/hi' do
-	erb :index
+  erb :index
 end
 
 get '/team/new' do
@@ -28,7 +32,6 @@ end
 
 get '/team/:team_id' do
   @team = Team.find_by_id(params[:team_id])
-
   if @team.nil?
     session[:error_message] =  "Team not found"
     redirect to '/team/new'
