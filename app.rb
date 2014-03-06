@@ -23,7 +23,8 @@ end
 
 post '/team/new' do
   @team = Team.new(name: params[:team_name])
-
+  @team.users << current_user
+  
   if @team.save
     session[:success_message] =  "Team #{@team.name} successfully created"
     redirect to "/team/#{@team.id}"

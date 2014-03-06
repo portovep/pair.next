@@ -10,6 +10,8 @@ describe 'Team setup' do
 
     before(:each) do
       Team.destroy_all
+      User.destroy_all
+      @current_user = User.create(username: 'valid_id')
     end
 
     it 'should show team creation page' do
@@ -43,6 +45,13 @@ describe 'Team setup' do
 
       expect(Team.where(name: 'myteam').count).to eq(1)
       expect(last_response.body).to include("Name has already been taken")
+    end
+
+    it 'should add creator as a team member on creation' do
+      post '/team/new', { team_name: 'my_team'}, session
+
+      team = Team.find_by_name('my_team')
+      expect(team.users).to include(@current_user)
     end
 
   end
