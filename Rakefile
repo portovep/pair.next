@@ -48,9 +48,14 @@ task :migrate do
 	end
 end
 
-desc "Fire up the server"
+desc "Fire up the development server"
 task :shotgun do
-  puts `shotgun`
+  puts `shotgun -p 4567`
+end
+
+desc "Fire up the production server"
+task :serve do
+  puts `rackup -p 4567`
 end
 
 desc "Run the tests"

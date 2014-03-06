@@ -2,7 +2,11 @@ set :app_file, __FILE__
 
 # Okta integration
 before do
-  #protected! unless request.path_info.start_with? '/auth'
+  unless request.path_info.start_with? '/auth' ||
+         request.path_info == '/' ||
+         request.path_info == '/hi'
+    protected!
+  end
 end
 
 get '/' do
@@ -27,7 +31,6 @@ post '/team/new' do
   else
     erb :team_setup
   end
-
 end
 
 get '/team/:team_id' do
@@ -44,4 +47,15 @@ get '/team/:team_id/shuffle' do
   @team = Team.find_by_id(params[:team_id])
   @old_pairs = @team.get_old_pairs
   erb :shuffle_page
+end
+
+post '/auth/saml/callback' do
+  auth = request.env['omniauth.auth']
+  session[:user_id] = auth[:uid]
+
+  if params[:RelayState].nil? || params[:RelayState].empty?
+    redirect to '/'
+  else
+    redirect to params[:RelayState]
+  end
 end
