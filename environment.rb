@@ -3,6 +3,7 @@ Bundler.require(:default)
 
 if development? || test?
   Bundler.require(:development, :test)
+  Dotenv.load # load environment variables from .env
 end
 
 APP_ROOT = Pathname.new(File.expand_path('../', __FILE__))
