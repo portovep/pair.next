@@ -2,10 +2,10 @@ require_relative './environment.rb'
 require 'rake'
 require 'active_support/core_ext'
 
-desc "Create an empty migration in db/migrate, e.g., rake generate:migration NAME=create_tasks"
+desc "Create an empty migration in db/migrate, e.g., rake migration NAME=create_tasks"
 task :migration do
 	unless ENV.has_key?('NAME')
-		raise "Must specificy migration name, e.g., rake generate:migration NAME=create_tasks"
+		raise "Must specificy migration name, e.g., rake migration NAME=create_tasks"
 	end
 
 	name     = ENV['NAME'].camelize
