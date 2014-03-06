@@ -100,6 +100,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   dotenv
+  nokogiri
   omniauth
   omniauth-saml
   pg
