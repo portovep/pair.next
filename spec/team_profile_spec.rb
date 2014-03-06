@@ -37,10 +37,11 @@ describe 'Team setup' do
 
       expect(team.users).to be_empty
 
-      post "/team/#{team.id}/members", {member_username: 'user1'}, session
+      post "/team/#{team.id}/members", {member_username: user.username}, session
+      follow_redirect!
 
       expect(team.users).to include(user)
-      #expect(last_response.body).to include("user1")
+      expect(last_response.body).to include(user.username)
     end
 
     it 'should show error for non existing member username' do
@@ -49,9 +50,10 @@ describe 'Team setup' do
       expect(team.users).to be_empty
 
       post "/team/#{team.id}/members", {member_username: 'user1'}, session
+      follow_redirect!
 
       expect(team.users).to be_empty
-      #expect(last_response.body).to include("error")
+      expect(last_response.body).to include("user1 does not exist!")
     end
 
   end
