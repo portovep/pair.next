@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <% unless @team.users.blank? %>
+  <% unless @team.users.empty? %>
     <% @team.users.each do |member| %>
       <div class="large-6 columns">
         <div class="panel clearfix">

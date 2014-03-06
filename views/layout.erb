@@ -23,8 +23,8 @@
           <!-- Right Nav Section -->
           <ul class="right">
             <li class ="name"><h1><a href="#">
-            <% if session[:user_id] %>
-              Welcome <%= session[:user_id] %>
+            <% if current_user %>
+              Welcome <%= current_user.username %>
             <% else %>
               Welcome
             <% end %>
