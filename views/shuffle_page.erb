@@ -2,12 +2,29 @@
 	<div class="large-12 columns">
 		<h1>Profile - <%= @team.name %> - Shuffle Teams</h1>
 		<div id="old-pairs">
+			<% if @old_pairs.empty? %>
+				<span>No existing pairings</span>
+			<% else %>
 			<% @old_pairs.each do |pair| %>
-			<span>
-				<% pair.each do |user| %>
-				<%= user.username %>
+				<span>
+					<% pair.each do |user| %>
+					<%= user.username %>
+					<% end %>
+				</span>
 				<% end %>
-			</span>
+			<% end %>
+		</div> 
+		<div id="new-pairs">
+			<% if @new_pairs.empty? %>
+				<span>No existing pairings</span>
+			<% else %>
+			<% @new_pairs.each do |pair| %>
+				<span>
+					<% pair.each do |user| %>
+					<%= user.username %>
+					<% end %>
+				</span>
+				<% end %>
 			<% end %>
 		</div> 
 	</div>

@@ -17,6 +17,7 @@ gem "pg"
 group :development, :test do
   gem "rspec"
   gem "rack-test", require: "rack/test"
+  gem 'nokogiri'
 end
 
 group :development do
