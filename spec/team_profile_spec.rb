@@ -8,11 +8,6 @@ describe 'Team setup' do
       { 'rack.session' => { user_id: 'valid_id' } }
     end
 
-    before(:each) do
-      Team.destroy_all
-      User.destroy_all
-    end
-
     it 'should show team profile' do
       team = Team.create(name: 'team_test')
 

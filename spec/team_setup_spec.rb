@@ -9,8 +9,6 @@ describe 'Team setup' do
     end
 
     before(:each) do
-      Team.destroy_all
-      User.destroy_all
       @current_user = User.create(username: 'valid_id')
     end
 

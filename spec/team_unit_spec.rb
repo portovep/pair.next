@@ -3,17 +3,13 @@ require_relative './test_helper.rb'
 describe 'Team class' do
 
 	before(:each) do
-      TeamMember.destroy_all
-      Team.destroy_all
-      User.destroy_all
+            @team = Team.create(name: 'team_test')
+            
+            @new_teammembers = ["Lukas", "Florian", "Pablo", "Martino"]
 
-      @team = Team.create(name: 'team_test')
-      
-      @new_teammembers = ["Lukas", "Florian", "Pablo", "Martino"]
-
-      @new_teammembers.each do |member|
-      	new_member = User.create(username: member)
-      	team_membership = TeamMember.create(user: new_member, team: @team)
+            @new_teammembers.each do |member|
+            	new_member = User.create(username: member)
+            	team_membership = TeamMember.create(user: new_member, team: @team)
       end
 
     end

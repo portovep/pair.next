@@ -1,5 +1,5 @@
 class TestUtilityMethods
-	def initialize()
+	def initialize
 	end
 
 	def self.create_pair(name_one, name_two, start_time = nil, end_time = nil)

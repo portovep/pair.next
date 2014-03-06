@@ -11,10 +11,6 @@ describe 'Pair shuffle' do
     end
 
     before(:each) do
-      TeamMember.destroy_all
-      Team.destroy_all
-      User.destroy_all
-
       @team = Team.create(name: 'team_test')
       
       @new_teammembers = ["Lukas", "Florian", "Pablo", "Martino"]
