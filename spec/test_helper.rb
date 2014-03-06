@@ -6,6 +6,9 @@ ENV['RACK_ENV'] = 'test'
 require_relative '../environment.rb'
 require_relative './test_utility_methods.rb'
 
+# Suppress deprecation warning
+I18n.enforce_available_locales = false
+
 RSpec.configure do |conf|
 
   conf.include Rack::Test::Methods
