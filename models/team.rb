@@ -9,16 +9,20 @@ class Team < ActiveRecord::Base
   	team_members.each do |team_member|
   		user = team_member.user
   		memberships = PairingMembership.where(user_id: user.id)
+
       membership = memberships.find do |membership|
         membership.pairing_session.end_time == nil
       end
 
-  		if pairs[membership.pairing_session_id] == nil
-  			pairs[membership.pairing_session_id] = []	
-  		end 
-  		pairs[membership.pairing_session_id] << user
-  	end
+      if membership != nil
 
-  	pairs.values
-  end
+        if pairs[membership.pairing_session_id] == nil
+         pairs[membership.pairing_session_id] = []	
+        end
+
+        pairs[membership.pairing_session_id] << user
+      end
+   end
+   pairs.values
+ end
 end
