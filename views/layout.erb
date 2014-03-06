@@ -47,7 +47,7 @@
     <% end %> 
 
     <% if session[:error_message] %>
-      <div data-alert class="alert-box error">
+      <div data-alert class="alert-box warning">
         <%= session.delete(:error_message) %>
         <a href="#" class="close">&times;</a>
       </div>
