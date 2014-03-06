@@ -4,6 +4,7 @@ require 'rack/test'
 ENV['RACK_ENV'] = 'test'
 
 require_relative '../environment.rb'
+require_relative './test_utility_methods.rb'
 
 RSpec.configure do |conf|
 
