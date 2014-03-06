@@ -15,4 +15,13 @@
         </div>
     </div>
   </div>
+
+
+  <div class="large-6 columns">
+    <% unless @team.users.blank? %>
+      <% @team.users.each do |member| %>
+        <%= member.username %>
+      <% end %>    
+    <% end %>
+  </div>
 </div>
