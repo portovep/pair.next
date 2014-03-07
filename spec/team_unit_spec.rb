@@ -10,8 +10,13 @@ describe 'Team class' do
             @new_teammembers.each do |member|
             	new_member = User.create(username: member)
             	team_membership = TeamMember.create(user: new_member, team: @team)
-      end
 
+
+      end
+            @lukas = User.find_by_username("Lukas")
+            @florian = User.find_by_username("Florian")
+            @pablo = User.find_by_username("Pablo")
+            @martino = User.find_by_username("Martino")
     end
 
 	it 'should get the most current old pairs' do
@@ -39,7 +44,29 @@ describe 'Team class' do
             new_pairs[0].size.should be == 2
             new_pairs[1].size.should be == 2
       end 
-      # TODO: this test is red
+
+      it 'should output all possible pairings' do 
+            
+
+            possible_pairings = @team.all_possible_pairings
+            expected_pairings = [[@lukas, @florian],[@lukas,@martino],[@lukas,@pablo],[@florian,@martino], [@florian,@pablo], [@pablo,@martino]]
+
+            possible_pairings.should match_array expected_pairings
+      end
+
+      it 'should find number of pairings between two people when they didnt pair before' do 
+            number_of_pairings = @team.number_of_pairings_between(@florian,@lukas)
+            number_of_pairings.should be == 0
+      end
+
+       it 'should find number of pairings between two people when they paired before' do 
+            TestUtilityMethods.create_pair("Lukas", "Florian")
+            TestUtilityMethods.create_pair("Pablo", "Martino")
+            number_of_pairings = @team.number_of_pairings_between(@florian,@lukas)
+            number_of_pairings.should be == 1
+      end
+
+      # TODO
       # it 'should generate only possible pairing solution left' do
       #       start_time = Time.now
       #       end_time = start_time + (10*60)
