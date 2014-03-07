@@ -53,6 +53,12 @@ task :seed do
   require_relative 'db/seed.rb'
 end
 
+desc "Resets the database"
+task :reset_db do
+  puts "resetting the db with test data..."
+  puts `rake drop ; rake create && rake migrate && rake seed`
+end
+
 desc "Fire up the development server"
 task :shotgun do
   puts `shotgun -p 4567`
