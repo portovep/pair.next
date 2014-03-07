@@ -47,7 +47,18 @@ class Team < ActiveRecord::Base
 
     sorted = pairing_numbers.sort_by { |entry| entry[1]}
 
-    new_pairs = sorted.take(team_members.count/2).map { |entry| entry[0]}
+    number_of_pairs = team_members.count/2
+    new_pairs = []
+    paired_users = []
+
+    while (paired_users.count <= number_of_pairs ) do 
+      next_pair = sorted.shift[0]
+      if not paired_users.include? next_pair[0] and not paired_users.include? next_pair[1] 
+        new_pairs << next_pair
+        paired_users << next_pair[0]
+        paired_users << next_pair[1]
+      end
+    end
 
     new_pairs
   end
