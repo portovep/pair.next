@@ -1223,7 +1223,7 @@ meta.foundation-mq-topbar {
   .contain-to-grid .top-bar {
     max-width: 62.5rem;
     margin: 0 auto;
-    margin-bottom: 0; }
+    margin-bottom: 20px; }
 
   .top-bar-section {
     -webkit-transition: none 0 0;
