@@ -8,7 +8,7 @@ describe 'Main' do
       { 'rack.session' => { user_id: 'valid_id' } }
     end
 
-    it 'should say hello world' do
+    it 'should say welcome' do
       get '/hi', {}, session
       expect(last_response.body).to include("Welcome to Pair.Next")
     end
