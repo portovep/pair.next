@@ -74,10 +74,3 @@ post '/team/:team_id/shuffle' do
   @new_pairs = @old_pairs
   erb :shuffle_page
 end
-
-post '/auth/saml/callback' do
-  auth = request.env['omniauth.auth']
-  session[:user_id] = auth[:uid]
-
-  redirect to(params[:RelayState] || "/")
-end
