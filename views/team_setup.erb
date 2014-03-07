@@ -26,8 +26,3 @@
 </form>
 
 
-  <% unless @team.users.blank? %>
-    <% @team.users.each do |member| %>
-      <%= member.username %>
-    <% end %>    
-  <% end %>
