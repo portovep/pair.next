@@ -27,6 +27,22 @@ class Team < ActiveRecord::Base
     pairs.values
   end
 
+  def end_old_pairings
+    team_members.each do |team_member|
+      user = team_member.user
+      memberships = PairingMembership.where(user_id: user.id)
+
+      membership = memberships.find do |membership|
+        membership.pairing_session.end_time == nil
+      end
+      if membership != nil 
+        pairing_session = membership.pairing_session
+        pairing_session.end_time = Time.now
+        pairing_session.save
+      end 
+    end
+  end
+
   def all_possible_pairings 
     self.team_members.combination(2).to_a.map do |members|
       members.map do |member|

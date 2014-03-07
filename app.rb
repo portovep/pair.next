@@ -102,6 +102,8 @@ post '/team/:team_id/savePairs' do
     pairs << pair
   end
 
+  @team = Team.find_by_id(params[:team_id]).end_old_pairings
+
   pairs.each do |pair|
     pairing_session = PairingSession.create(start_time: Time.now, end_time: nil)
     pair.each do |member|
