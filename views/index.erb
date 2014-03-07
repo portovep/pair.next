@@ -5,7 +5,11 @@
 </div>
 
 <div class="row">
+  <% if !@teams.nil? && !@teams.empty? %>
   <div class="small-12 large-9 columns">
+  <% else %>
+  <div class="small-12 large-12 columns">
+  <% end %>  
     <div class="panel clearfix">
 
       <h3>Tired of keeping your pairing logs on paper? Keep reading.</h3>
@@ -16,16 +20,17 @@
     </div>
   </div>
 
-  <div class="small-12 large-3 columns">
-    <ul class="pricing-table">
-      <% if !@teams.nil? && !@teams.empty? %>
-        <li class="title">Your teams</li>
-        <% @teams.each do |team| %>
-          <li class="bullet-item"><a href="team/<%= team.id %>" class="small"><%= team.name %></a></li>
-        <% end %>
-      <% end %>
-    </ul>
-  </div>
+  <% if !@teams.nil? && !@teams.empty? %>
+    <div class="small-12 large-3 columns">
+      <ul class="pricing-table">
+          <li class="title">  Your teams</li>
+          <% @teams.each do |team| %>
+            <li class="bullet-item"><a href="team/<%= team.id %>" class="small"><%= team.name %></a></li>
+          <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 
 </div>
 
