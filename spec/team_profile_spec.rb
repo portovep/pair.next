@@ -37,6 +37,7 @@ describe 'Team setup' do
 
       expect(team.users).to include(user)
       expect(last_response.body).to include(user.username)
+      expect(last_response.body).to include(user.image_url)
     end
 
     it 'should show error for non existing member username' do
