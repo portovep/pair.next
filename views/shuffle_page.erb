@@ -24,7 +24,7 @@
 	</div>
 	<div id="new-pairs" class="column large-5">
 		<% if @new_pairs.empty? %>
-		<span>No existing pairings</span>
+		<span>Shuffle me</span>
 		<% else %>
 		<% @new_pairs.each do |pair| %>
 		<p>
@@ -39,7 +39,18 @@
 <% if not @new_pairs.empty? %>
 	<div class="row">
 		<div class="column large-3 large-offset-9">
-			<button type="submit">PAIR LIKE THIS</button>
+			<form action="savePairs" method="POST">
+				<% pairIndex =0 %>
+				<% @new_pairs.each do |pair| %>
+						<% i=0 %>
+						<% pair.each do |user| %>
+							<input type="hidden" name="pair[][<%=pairIndex%>][<%=i%>]" value="<%=user.id%>">
+							<% i+=1 %>
+						<% end %>
+						<% pairIndex+=1 %>
+				<% end %>
+				<button type="submit">PAIR LIKE THIS</button>
+			</form>
 		</div>
 	</div>
 <% end %>
