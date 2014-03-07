@@ -10,7 +10,7 @@ describe 'Main' do
 
     it 'should say hello world' do
       get '/hi', {}, session
-      expect(last_response.body).to include("Welcome to pair.next")
+      expect(last_response.body).to include("Welcome to Pair.Next")
     end
 
   end

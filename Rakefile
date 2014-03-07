@@ -48,6 +48,11 @@ task :migrate do
   end
 end
 
+desc "Populate db with testing data"
+task :seed do
+  require_relative 'db/seed.rb'
+end
+
 desc "Fire up the development server"
 task :shotgun do
   puts `shotgun -p 4567`
