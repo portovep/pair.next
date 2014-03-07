@@ -9,7 +9,7 @@
 <form action="/team/new" method="post">
 
   <div class="row">
-    <div class="large-4 columns <%= "error" if @team.errors.messages[:name] %>">
+    <div class="large-12 columns <%= "error" if @team.errors.messages[:name] %>">
       <div class="panel clearfix">
 
         <label><h3>Team name</h3>
