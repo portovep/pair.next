@@ -37,7 +37,7 @@ describe 'Team setup' do
       expect(last_response.body).to include("Name can't be blank")
     end
 
-    it 'should not create a new team when team name is blank' do
+    it 'should not create a new team when team name is duplicated' do
       Team.create(name: 'myteam')
       post '/team/new', { team_name: 'myteam'}, session
 

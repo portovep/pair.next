@@ -1,6 +1,6 @@
 require_relative './test_helper.rb'
 
-describe 'Team setup' do
+describe 'Team profile' do
 
   context 'with a signed in user' do
 
@@ -17,7 +17,7 @@ describe 'Team setup' do
     end
 
     it 'should show error for non existing team' do
-      non_existing_team_id = 1
+      non_existing_team_id = -1
       get "/team/#{non_existing_team_id}", {}, session
       
       expect(last_response.redirect?).to be_true
