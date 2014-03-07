@@ -1,35 +1,39 @@
 <div class="row">
 	<div class="large-12 columns">
 		<h1>Profile - <%= @team.name %> - Shuffle Teams</h1>
-		<div id="old-pairs">
-			<% if @old_pairs.empty? %>
-				<span>No existing pairings</span>
-			<% else %>
-			<% @old_pairs.each do |pair| %>
-				<span>
-					<% pair.each do |user| %>
-					<%= user.username %>
-					<% end %>
-				</span>
-				<% end %>
+	</div>
+</div>
+<div class="row">
+	<div id="old-pairs" class="large-5 column">
+		<% if @old_pairs.empty? %>
+		<span>No existing pairings</span>
+		<% else %>
+		<% @old_pairs.each do |pair| %>
+		<p>
+			<% pair.each do |user| %>
+			<%= user.username %>
 			<% end %>
-		</div> 
+		</p>
+		<% end %>
+		<% end %>
+	</div> 
+	<div class="column large-1">
 		<form method="POST">
 			<button type="submit">SHUFFLE</button>
 		</form>
-		<div id="new-pairs">
-			<% if @new_pairs.empty? %>
-				<span>No existing pairings</span>
-			<% else %>
-			<% @new_pairs.each do |pair| %>
-				<span>
-					<% pair.each do |user| %>
-					<%= user.username %>
-					<% end %>
-				</span>
-				<% end %>
-			<% end %>
-		</div> 
 	</div>
+	<div id="new-pairs" class="column large-5">
+		<% if @new_pairs.empty? %>
+		<span>No existing pairings</span>
+		<% else %>
+		<% @new_pairs.each do |pair| %>
+		<p>
+			<% pair.each do |user| %>
+			<%= user.username %>
+			<% end %>
+		</p>
+		<% end %>
+		<% end %>
+	</div> 
 </div>
 
