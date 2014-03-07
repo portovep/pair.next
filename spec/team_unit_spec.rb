@@ -46,8 +46,6 @@ describe 'Team class' do
       end 
 
       it 'should output all possible pairings' do 
-            
-
             possible_pairings = @team.all_possible_pairings
             expected_pairings = [[@lukas, @florian],[@lukas,@martino],[@lukas,@pablo],[@florian,@martino], [@florian,@pablo], [@pablo,@martino]]
 
@@ -59,7 +57,7 @@ describe 'Team class' do
             number_of_pairings.should be == 0
       end
 
-       it 'should find number of pairings between two people when they paired before' do 
+      it 'should find number of pairings between two people when they paired before' do 
             TestUtilityMethods.create_pair("Lukas", "Florian")
             TestUtilityMethods.create_pair("Pablo", "Martino")
             number_of_pairings = @team.number_of_pairings_between(@florian,@lukas)
@@ -67,17 +65,17 @@ describe 'Team class' do
       end
 
       # TODO
-      # it 'should generate only possible pairing solution left' do
-      #       start_time = Time.now
-      #       end_time = start_time + (10*60)
-      #       TestUtilityMethods.create_pair("Pablo", "Florian", start_time, end_time)
-      #       TestUtilityMethods.create_pair("Lukas", "Martino", start_time, end_time)
+      it 'should generate only possible pairing solution left' do
+            start_time = Time.now
+            end_time = start_time + (10*60)
+            TestUtilityMethods.create_pair("Pablo", "Florian", start_time, end_time)
+            TestUtilityMethods.create_pair("Lukas", "Martino", start_time, end_time)
 
-      #       TestUtilityMethods.create_pair("Lukas", "Florian", end_time)
-      #       TestUtilityMethods.create_pair("Pablo", "Martino", end_time)
+            TestUtilityMethods.create_pair("Lukas", "Florian", end_time)
+            TestUtilityMethods.create_pair("Pablo", "Martino", end_time)
 
-      #       new_pairs = @team.shuffle_pairs
-      #       new_pairs.should be == [[User.find_by_username("Lukas"), User.find_by_username("Pablo")],
-      #                                           [User.find_by_username("Florian"), User.find_by_username("Martino")]]
-      # end
+            new_pairs = @team.shuffle_pairs
+            new_pairs.should be == [[User.find_by_username("Lukas"), User.find_by_username("Pablo")],
+                                                [User.find_by_username("Florian"), User.find_by_username("Martino")]]
+      end
 end
