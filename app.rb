@@ -74,7 +74,6 @@ post '/team/:team_id/members' do
   redirect to "/team/#{@team.id}"
 end
 
-
 get '/team/:team_id/shuffle' do
   @team = Team.find_by_id(params[:team_id])
   @old_pairs = @team.get_old_pairs

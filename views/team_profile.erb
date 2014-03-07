@@ -17,9 +17,11 @@
         </div>
       </div>
     </form>
-    <div class="small 8">
-      <a href="#" class="button expand">Geneate Pairs</a>
-    </div>
+    <form action="/team/<%= @team.id %>/shuffle" method="POST">
+      <div class="small 8">
+        <input type="submit" value="Geneate Pairs" class="button expand">
+      </div>
+    </form>
   </div>
 </div>
 
