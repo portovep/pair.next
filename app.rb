@@ -58,7 +58,10 @@ post '/team/:team_id/members' do
   @team = Team.find_by_id(params[:team_id])
 
   new_member = User.find_by_username(params[:member_username])
-  if new_member
+  if !@team.users.include? current_user
+    session[:error_message] = "You are not a member of the team you are trying to access"
+    redirect to '/team/new'
+  elsif new_member
     unless @team.users.include?(new_member)
       @team.users << new_member
       @team.save

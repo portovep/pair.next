@@ -78,6 +78,16 @@ describe 'Team profile' do
       expect(last_response.body).to include("user1 is already a member!")
     end
 
+    it 'should show error when a non member user try to add member to a team' do
+      team = Team.create(name: 'team_test')
+      user = User.create(username: 'user1')
+
+      post "/team/#{team.id}/members", {member_username: user.username}, session
+      follow_redirect!
+
+      expect(last_response.body).to include("You are not a member of the team you are trying to access")
+    end
+
   end
 
 end
