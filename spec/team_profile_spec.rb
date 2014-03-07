@@ -8,8 +8,9 @@ describe 'Team profile' do
       { 'rack.session' => { user_id: 'valid_id' } }
     end
 
-    it 'should show team profile' do
+    it 'should show team profile if user is a member' do
       team = Team.create(name: 'team_test')
+      team.users << User.create(username: 'valid_id')
 
       get "/team/#{team.id}", {}, session
       
@@ -26,11 +27,22 @@ describe 'Team profile' do
       expect(last_response.body).to include("Team not found")
     end
 
+    it 'should denied access to team profile when user is not member of given team' do
+      team = Team.create(name: 'team_test')
+      user = User.create(username: 'valid_id')
+      
+      get "/team/#{team.id}", {}, session
+
+      expect(last_response.redirect?).to be_true
+
+      follow_redirect!
+      expect(last_response.body).to include("You are not a member of the team you are trying to access")
+    end
+
     it 'should add a new member to a team' do
       team = Team.create(name: 'team_test')
+      team.users << User.create(username: 'valid_id')
       user = User.create(username: 'user1')
-
-      expect(team.users).to be_empty
 
       post "/team/#{team.id}/members", {member_username: user.username}, session
       follow_redirect!
@@ -42,21 +54,22 @@ describe 'Team profile' do
 
     it 'should show error for non existing member username' do
       team = Team.create(name: 'team_test')
-
-      expect(team.users).to be_empty
+      team.users << User.create(username: 'valid_id')
+      
+      expect(team.users.count).to be(1)
 
       post "/team/#{team.id}/members", {member_username: 'user1'}, session
       follow_redirect!
 
-      expect(team.users).to be_empty
+      expect(team.users.count).to be(1)
       expect(last_response.body).to include("user1 does not exist!")
     end
 
     it 'should show error when user is already a member' do
       team = Team.create(name: 'team_test')
+      team.users << User.create(username: 'valid_id')
       user = User.create(username: 'user1')
       team.users << user
-      team.save
 
       post "/team/#{team.id}/members", {member_username: user.username}, session
       follow_redirect!

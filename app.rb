@@ -46,6 +46,9 @@ get '/team/:team_id' do
   if @team.nil?
     session[:error_message] =  "Team not found"
     redirect to '/team/new'
+  elsif !@team.users.include? current_user
+    session[:error_message] = "You are not a member of the team you are trying to access"
+    redirect to '/team/new'
   else
     erb :team_profile
   end
