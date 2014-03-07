@@ -64,7 +64,6 @@ describe 'Team class' do
             number_of_pairings.should be == 1
       end
 
-      # TODO
       it 'should generate only possible pairing solution left' do
             start_time = Time.now
             end_time = start_time + (10*60)
@@ -77,5 +76,21 @@ describe 'Team class' do
             new_pairs = @team.shuffle_pairs
             new_pairs.should be == [[User.find_by_username("Lukas"), User.find_by_username("Pablo")],
                                                 [User.find_by_username("Florian"), User.find_by_username("Martino")]]
+      end
+
+      it 'should generate a valid pairing solution when more than one option exists' do 
+            TestUtilityMethods.create_pair("Lukas", "Florian")
+            TestUtilityMethods.create_pair("Pablo", "Martino")
+
+            # valid pairing check: 
+            new_pairs = @team.shuffle_pairs
+
+            new_pairs.count.should be == 2
+            pair_membership_counter = {@florian => 0, @lukas=> 0, @martino=>0, @pablo=>0}
+            new_pairs.each { |pair| pair.each {|user| pair_membership_counter[user] += 1 }}
+
+            pair_membership_counter.each { |k,v| v.should be == 1}
+
+            # todo: better checks?
       end
 end
