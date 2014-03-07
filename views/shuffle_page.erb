@@ -36,8 +36,10 @@
 		<% end %>
 	</div> 
 </div>
-<div class="row">
-	<div class="column large-3 large-offset-9">
-		<button type="submit">PAIR LIKE THIS</button>
+<% if not @new_pairs.empty? %>
+	<div class="row">
+		<div class="column large-3 large-offset-9">
+			<button type="submit">PAIR LIKE THIS</button>
+		</div>
 	</div>
-</div>
+<% end %>
