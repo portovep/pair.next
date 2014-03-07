@@ -41,13 +41,14 @@ class Team < ActiveRecord::Base
   end 
 
   def shuffle_pairs
-    team_members = self.team_members
-    pairs = []
-
-    team_members.each_slice(2) do |pair| 
-      pairs << pairs
+    pairing_numbers = all_possible_pairings.map do |pair| 
+      [pair, number_of_pairings_between(pair[0],pair[1])]
     end
 
-    pairs
+    sorted = pairing_numbers.sort_by { |entry| entry[1]}
+
+    new_pairs = sorted.take(team_members.count/2).map { |entry| entry[0]}
+
+    new_pairs
   end
 end
