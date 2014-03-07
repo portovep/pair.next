@@ -13,6 +13,14 @@ get '/' do
 end
 
 get '/hi' do
+  if current_user
+    @teams = []
+    Team.all.each do |team|
+      if team.users.include? current_user
+        @teams << team
+      end
+    end
+  end
   erb :index
 end
 
