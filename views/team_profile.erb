@@ -6,7 +6,7 @@
 
 
 <div class="row">
-  <div class="large-8 large-offset-2 columns">
+  <div class="small-8 small-offset-2 columns">
     <form action="/team/<%= @team.id %>/members" method="POST">
       <div class="row collapse">
         <div class="small-9 columns">
@@ -17,6 +17,9 @@
         </div>
       </div>
     </form>
+    <div class="small 8">
+      <a href="#" class="button expand">Geneate Pairs</a>
+    </div>
   </div>
 </div>
 
@@ -26,7 +29,7 @@
   <% @team.users.each_slice(2) do |row| %>
     <div class="row">
       <% row.each do |member| %> 
-        <div class="large-6 columns">
+        <div class="small-6 columns">
           <div class="panel">
             <img src="http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/6/000/1fa/1eb/204f64b.jpg" width="80" height="80">
             <%= member.username %>
