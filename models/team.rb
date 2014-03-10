@@ -6,12 +6,12 @@ class Team < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
 
-  def possible_pairs
-    users.combination(2).to_a.map(&:sort)
-  end
-
   def pair_up(pair)
     self.pairing_sessions << PairingSession.create(users: pair)
+  end
+
+  def possible_pairs
+    users.combination(2).to_a.map(&:sort)
   end
 
   # Return the number of times pair has paired together in the current team
