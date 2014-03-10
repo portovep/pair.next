@@ -43,7 +43,7 @@ class Team < ActiveRecord::Base
   def pairing_frequency_of(users)
     user_ids = users.map(&:id)
     where_query = user_ids.map{ |id| "#{id} = ANY(user_ids)"}.join(" AND ")
-    PairingSession.where(where_query).count
+    self.pairing_sessions.where(where_query).count
   end
 
 end
