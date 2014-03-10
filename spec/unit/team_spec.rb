@@ -55,4 +55,16 @@ describe 'Team' do
     end
   end
 
+  describe '#frequency_of([user1, user2])' do
+
+    it 'should return the number of times the two users have paired' do
+      @user1 = User.create(username: 'user1')
+      @user2 = User.create(username: 'user2')
+      PairingSession.create_with_users(users: [@user1, @user2])
+      PairingSession.create_with_users(users: [@user2, @user1])
+      PairingSession.create_with_users(users: [@user1, @user2])
+
+      expect(@team.pairing_frequency_of([@user1, @user2])).to eq(3)
+    end
+  end
 end

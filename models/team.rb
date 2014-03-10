@@ -25,11 +25,18 @@ class Team < ActiveRecord::Base
 
     @pairing_frequencies = Hash.new([])
     possible_pairs.each do |pair|
-      frequency_of_pair = PairingSession.frequency_of(pair)
+      frequency_of_pair = pairing_frequency_of(pair)
       @pairing_frequencies[frequency_of_pair] << pair
     end
 
     return @pairing_frequencies
+  end
+
+  # Return the number of times users have paired together
+  def pairing_frequency_of(users)
+    user_ids = users.map(&:id)
+    where_query = user_ids.map{ |id| "#{id} = ANY(user_ids)"}.join(" AND ")
+    PairingSession.where(where_query).count
   end
 
 end
