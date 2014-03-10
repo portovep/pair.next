@@ -5,8 +5,12 @@ class PairingSession < ActiveRecord::Base
   #
   # TODO: 10/3/14 Martino - if I destroy a user, her pairing sessions should also go
 
-  def self.create_with_users(args)
-    self.create(user_ids: args[:users].map(&:id).sort)
+  def initialize(args)
+    if args[:users]
+      super(standard_args(args))
+    else
+      super(args)
+    end
   end
 
   def users
@@ -14,5 +18,12 @@ class PairingSession < ActiveRecord::Base
   end
 
   # TODO: implement users<<
+
+  private
+  def standard_args(args)
+    user_ids = args.delete(:users).map(&:id).sort
+    args[:user_ids] = user_ids
+    args
+  end
 
 end

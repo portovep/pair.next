@@ -36,13 +36,13 @@ describe 'Team' do
       @team.users << tom
 
       1.times do
-        PairingSession.create_with_users(users: [martino, tom])
+        PairingSession.create(users: [martino, tom])
       end
       4.times do
-        PairingSession.create_with_users(users: [martino, pablo])
+        PairingSession.create(users: [martino, pablo])
       end
       4.times do
-        PairingSession.create_with_users(users: [florian, lukas])
+        PairingSession.create(users: [florian, lukas])
       end
 
       pairing_frequencies = @team.pairing_frequencies
@@ -60,9 +60,9 @@ describe 'Team' do
     it 'should return the number of times the two users have paired' do
       @user1 = User.create(username: 'user1')
       @user2 = User.create(username: 'user2')
-      PairingSession.create_with_users(users: [@user1, @user2])
-      PairingSession.create_with_users(users: [@user2, @user1])
-      PairingSession.create_with_users(users: [@user1, @user2])
+      PairingSession.create(users: [@user1, @user2])
+      PairingSession.create(users: [@user2, @user1])
+      PairingSession.create(users: [@user1, @user2])
 
       expect(@team.pairing_frequency_of([@user1, @user2])).to eq(3)
     end
