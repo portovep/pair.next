@@ -2,6 +2,7 @@ require_relative './test_helper.rb'
 
 describe 'Team class' do
 
+
 	before(:each) do
             @team = Team.create(name: 'team_test')
             
@@ -52,6 +53,17 @@ describe 'Team class' do
             possible_pairings.should match_array expected_pairings
       end
 
+      it 'should output all possible pairing sessions' do 
+            possible_sessions = @team.all_possible_pairing_sessions
+            expected_sessions = [
+                  [[@lukas, @florian],[@pablo,@martino]],
+                  [[@lukas, @martino],[@florian,@pablo]],
+                  [[@lukas, @pablo],[@florian,@martino]],
+                                    ]
+
+            possible_sessions.should match_array expected_sessions
+      end
+
       it 'should find number of pairings between two people when they didnt pair before' do 
             number_of_pairings = @team.number_of_pairings_between(@florian,@lukas)
             number_of_pairings.should be == 0
@@ -90,7 +102,7 @@ describe 'Team class' do
             new_pairs.each { |pair| pair.each {|user| pair_membership_counter[user] += 1 }}
 
             pair_membership_counter.each { |k,v| v.should be == 1}
-
+            # todo: the checks are also in Team#isValidPairingSession
             # todo: better checks?
       end
 end

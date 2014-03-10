@@ -51,31 +51,39 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def is_valid_pairing_session(session)
+    pair_membership_counter = {}
+    team_members.each { |member| pair_membership_counter[member.user] = 0 }
+    session.each { |pair| pair.each {|user| pair_membership_counter[user] += 1 }}
+
+    valid_user_entries = pair_membership_counter.select { |k,v| v == 1}
+   
+    valid_user_entries.count == pair_membership_counter.count
+  end
+
+  def all_possible_pairing_sessions 
+    permutations = all_possible_pairs.combination(team_members.count/2)
+    valid_permutations = permutations.select { |session| is_valid_pairing_session(session) }
+
+    valid_permutations
+  end
+
+  def number_of_pairings_in_session(session) 
+    session.map {|pair| number_of_pairings_between(pair[0],pair[1]) }.reduce(0,:+)
+  end
+
   def number_of_pairings_between(user1,user2)
     pairing_memberships_with_user2 = user1.pairing_memberships.select { |membership| membership.pairing_session.users.include? user2}
     pairing_memberships_with_user2.count
   end 
 
   def shuffle_pairs
-    pairing_numbers = all_possible_pairs.map do |pair| 
-      [pair, number_of_pairings_between(pair[0],pair[1])]
-    end
+    pairing_number_map = all_possible_pairing_sessions.map { |session| [session,number_of_pairings_in_session(session)]}
+    minimum_pairing_number = pairing_number_map.min_by { |session,pairing_number| pairing_number}[1]
 
-    sorted = pairing_numbers.sort_by { |entry| entry[1]}
+    pairings_with_minimum_number = pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
 
-    number_of_pairs = team_members.count/2
-    new_pairs = []
-    paired_users = []
-
-    while (paired_users.count <= number_of_pairs ) do 
-      next_pair = sorted.shift[0]
-      if not paired_users.include? next_pair[0] and not paired_users.include? next_pair[1] 
-        new_pairs << next_pair
-        paired_users << next_pair[0]
-        paired_users << next_pair[1]
-      end
-    end
-
-    new_pairs
+    pairings_with_minimum_number.shuffle.first
   end
+
 end
