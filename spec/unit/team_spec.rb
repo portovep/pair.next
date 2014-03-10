@@ -2,26 +2,7 @@ require_relative '../test_helper.rb'
 
 describe 'Team' do
 
-  before(:each) do
-    @team = Team.create(name: 'uk-heroes') # sorry Germans, i needed an even number of people...
-    team_members = %w[Tom Martino Pablo John]
-    team_members.each do |member_name|
-      @team.users << User.create(username: member_name)
-    end
-  end
 
-  describe '#possible_pairs' do
-    it 'should give a list of all the possible pair combinations' do
-      # FIXME: tests implementation?
-      expect(@team.possible_pairs).to eq(@team.users.combination(2).to_a)
-    end
-  end
-
-  describe '#pair_up' do
-    it 'should make a pairing session for the given pair' do
-      expect { @team.pair_up(random_pair) }.to change { @team.pairing_sessions.count}.by(1)
-    end
-  end
 
   describe 'pairing' do
 
@@ -31,13 +12,25 @@ describe 'Team' do
       @martino = User.create(username: "martino")
       @pablo = User.create(username: "pablo")
       @tom = User.create(username: "tom")
+
+      @team = Team.create(name: 'eu-boys')
+      @team.users << [@florian, @lukas, @martino, @pablo, @tom]
+    end
+
+    describe '#possible_pairs' do
+      it 'should give a list of all the possible pair combinations' do
+        # FIXME: tests implementation?
+        expect(@team.possible_pairs).to eq(@team.users.combination(2).to_a)
+      end
+    end
+
+    describe '#pair_up' do
+      it 'should make a pairing session for the given pair' do
+        expect { @team.pair_up(random_pair) }.to change { @team.pairing_sessions.count}.by(1)
+      end
     end
 
     describe '#frequency_of([user1, user2])' do
-      before(:each) do
-        @team = Team.create(name: 'eu-boys')
-        @team.users << [@florian, @lukas, @martino, @pablo, @tom]
-      end
       it 'should return the number of times the two users have paired' do
         a_pair = [@tom, @florian]
         3.times do
@@ -59,10 +52,6 @@ describe 'Team' do
     end
 
     describe '#pairing_frequency_table' do
-      before(:each) do
-        @team = Team.create(name: 'eu-boys')
-        @team.users << [@florian, @lukas, @martino, @pablo, @tom]
-      end
       it 'should return a hash with the frequency at which each pair has occurred' do
         1.times do
           @team.pair_up([@martino, @tom])
@@ -117,11 +106,12 @@ describe 'Team' do
 
       end
     end
+
+    private
+
+    def random_pair
+      @team.users.shuffle.first(2).sort
+    end
   end
 
-  private
-
-  def random_pair
-    @team.users.shuffle.first(2).sort
-  end
 end
