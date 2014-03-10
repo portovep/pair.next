@@ -14,12 +14,7 @@ end
 
 get '/hi' do
   if current_user
-    @teams = []
-    Team.all.each do |team|
-      if team.users.include? current_user
-        @teams << team
-      end
-    end
+    @teams = Team.all.to_a.select { |team| team.users.include? current_user }
   end
   erb :index
 end
@@ -89,11 +84,11 @@ post '/team/:team_id/shuffle' do
 end
 
 post '/team/:team_id/savePairs' do
-  
+
   # convertig pairs into better format:
   input_data = params['pair']
   pairs = []
-  input_data[0].values.each do |pairData| 
+  input_data[0].values.each do |pairData|
     pair = []
     pairData.values.each do |userData|
       pair << userData
@@ -107,7 +102,7 @@ post '/team/:team_id/savePairs' do
     pairing_session = PairingSession.create(start_time: Time.now, end_time: nil)
     pair.each do |member|
       pairing_session.users << User.find_by_id(member)
-    end  
+    end
   end
 
   redirect to "/team/#{params[:team_id]}/shuffle"
