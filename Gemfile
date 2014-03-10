@@ -18,11 +18,6 @@ group :development, :test do
   gem "rspec"
   gem "rack-test", require: "rack/test"
   gem 'nokogiri'
-
-  # test them associations
-  gem 'activemodel'
-  gem 'shoulda'
-  gem 'shoulda-matchers'
 end
 
 group :development do
