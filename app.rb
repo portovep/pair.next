@@ -71,39 +71,11 @@ end
 
 get '/team/:team_id/shuffle' do
   @team = Team.find_by_id(params[:team_id])
-  @old_pairs = @team.get_old_pairs
-  @new_pairs = []
   erb :shuffle_page
 end
 
 post '/team/:team_id/shuffle' do
   @team = Team.find_by_id(params[:team_id])
-  @old_pairs = @team.get_old_pairs
-  @new_pairs = @team.shuffle_pairs
   erb :shuffle_page
 end
 
-post '/team/:team_id/savePairs' do
-
-  # convertig pairs into better format:
-  input_data = params['pair']
-  pairs = []
-  input_data[0].values.each do |pairData|
-    pair = []
-    pairData.values.each do |userData|
-      pair << userData
-    end
-    pairs << pair
-  end
-
-  @team = Team.find_by_id(params[:team_id]).end_old_pairings
-
-  pairs.each do |pair|
-    pairing_session = PairingSession.create(start_time: Time.now, end_time: nil)
-    pair.each do |member|
-      pairing_session.users << User.find_by_id(member)
-    end
-  end
-
-  redirect to "/team/#{params[:team_id]}/shuffle"
-end

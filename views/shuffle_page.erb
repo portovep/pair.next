@@ -1,56 +1,43 @@
 <div class="row">
-	<div class="large-12 column">
-		<h1>Profile - <%= @team.name %> - Shuffle Teams</h1>
-	</div>
+  <div class="large-12 column">
+    <h1>Shuffle Team: <%= @team.name %></h1>
+  </div>
 </div>
+
 <div class="row">
-	<div id="old-pairs" class="large-5 column">
-		<% if @old_pairs.empty? %>
-		<span>No existing pairings</span>
-		<% else %>
-		<% @old_pairs.each do |pair| %>
-		<p>
-			<% pair.each do |user| %>
-			<%= user.username %>
-			<% end %>
-		</p>
-		<% end %>
-		<% end %>
-	</div> 
-	<div class="column large-1">
-		<form method="POST">
-			<button type="submit">SHUFFLE</button>
-		</form>
-	</div>
-	<div id="new-pairs" class="column large-5">
-		<% if @new_pairs.empty? %>
-		<span>Shuffle me</span>
-		<% else %>
-		<% @new_pairs.each do |pair| %>
-		<p>
-			<% pair.each do |user| %>
-			<%= user.username %>
-			<% end %>
-		</p>
-		<% end %>
-		<% end %>
-	</div> 
+  <div class="column large-12">
+    <form method="POST">
+      <button type="submit">SHUFFLE</button>
+    </form>
+  </div>
 </div>
-<% if not @new_pairs.empty? %>
-	<div class="row">
-		<div class="column large-3 large-offset-9">
-			<form action="savePairs" method="POST">
-				<% pairIndex =0 %>
-				<% @new_pairs.each do |pair| %>
-						<% i=0 %>
-						<% pair.each do |user| %>
-							<input type="hidden" name="pair[][<%=pairIndex%>][<%=i%>]" value="<%=user.id%>">
-							<% i+=1 %>
-						<% end %>
-						<% pairIndex+=1 %>
-				<% end %>
-				<button type="submit">PAIR LIKE THIS</button>
-			</form>
-		</div>
-	</div>
-<% end %>
+
+<div class="row">
+
+  <div id="last-pairs" class="large-6 column">
+    <h3>Last pairs</h3>
+    <% if @team.last_pairs.empty? %>
+      <span>No previous pairing sessions</span>
+    <% else %>
+      <ul>
+        <% @team.last_pairs.each do |pair| %>
+          <li><%= pair.map(&:username).join(" <==> ") %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div id="next-pairs" class="column large-6">
+    <h3>Next pairs</h3>
+    <% if @team.next_pairs.empty? %>
+      <span>Shuffle them up!</span>
+    <% else %>
+      <ul>
+        <% @team.next_pairs.each do |pair| %>
+          <li><%= pair.map(&:username).join(" <==> ") %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+</div>
