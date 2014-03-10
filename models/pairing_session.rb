@@ -1,5 +1,7 @@
 class PairingSession < ActiveRecord::Base
 
+  belongs_to :team
+
   # this is mainly glue for inserting and getting
   # back User objects (while storing their ids in a psql array)
   #

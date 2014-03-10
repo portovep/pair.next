@@ -19,6 +19,16 @@ describe 'PairingSession' do
     end
   end
 
+  describe 'belonging to a team' do
+    it "should be addedd to a team's pairing_sessions" do
+      team = Team.create(name: 'foo-fighters')
+      pairing_session = PairingSession.create(users: [@user1, @user2])
+      team.pairing_sessions << pairing_session
+      expect(team.pairing_sessions).to include(pairing_session)
+      expect(pairing_session.team).to eq(team)
+    end
+  end
+
   describe '.create' do
     it 'should work as usual' do
       p = PairingSession.create(user_ids: [@user1.id, @user2.id])
