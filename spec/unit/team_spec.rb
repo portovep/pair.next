@@ -2,8 +2,6 @@ require_relative '../test_helper.rb'
 
 describe 'Team' do
 
-
-
   describe 'pairing' do
 
     before(:each) do
@@ -21,6 +19,24 @@ describe 'Team' do
       it 'should give a list of all the possible pair combinations' do
         # FIXME: tests implementation?
         expect(@team.possible_pairs).to eq(@team.users.combination(2).to_a)
+      end
+    end
+
+    describe '#last_pairs' do
+      it 'should return the pairs of the most recent session' do
+        # previous sessions:
+        @team.pair_up([@florian, @pablo])
+        @team.pair_up([@lukas, @martino])
+
+        # last session:
+        @team.pair_up([@florian, @tom])
+        @team.pair_up([@lukas, @pablo])
+
+        expect(@team.last_pairs).to include([@florian, @tom])
+        expect(@team.last_pairs).to include([@lukas, @pablo])
+
+        expect(@team.last_pairs).not_to include([@florian, @pablo])
+        expect(@team.last_pairs).not_to include([@lukas, @martino])
       end
     end
 

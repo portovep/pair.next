@@ -14,6 +14,10 @@ class Team < ActiveRecord::Base
     users.combination(2).to_a.map(&:sort)
   end
 
+  def last_pairs
+    self.pairing_sessions.order(created_at: :desc).limit(needed_pairs).map(&:users)
+  end
+
   # Return the number of times pair has paired together in the current team
   def pairing_frequency_of(pair)
     user_ids = pair.map(&:id)
