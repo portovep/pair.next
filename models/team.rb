@@ -16,7 +16,7 @@ class Team < ActiveRecord::Base
 
   # Return the number of times pair has paired together in the current team
   def pairing_frequency_of(pair)
-    user_ids = users.map(&:id)
+    user_ids = pair.map(&:id)
     where_query = user_ids.map{ |id| "#{id} = ANY(user_ids)"}.join(" AND ")
     self.pairing_sessions.where(where_query).count
   end
