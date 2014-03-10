@@ -19,34 +19,38 @@ describe 'Team' do
 
   describe '#pair_up' do
     it 'should make a pairing session for the given pair' do
-      random_pair = @team.users.shuffle.first(2).sort
       expect { @team.pair_up(random_pair) }.to change { @team.pairing_sessions.count}.by(1)
+    end
+  end
+
+  describe '#frequency_of([user1, user2])' do
+    it 'should return the number of times the two users have paired' do
+      a_pair = random_pair()
+      3.times do
+        @team.pair_up(a_pair)
+      end
+      expect(@team.pairing_frequency_of(a_pair)).to eq(3)
     end
   end
 
   describe '#pairing_frequencies' do
     it 'should return a hash with the frequency at which each pair has occurred' do
-
       florian = User.create(username: "Florian")
       lukas = User.create(username: "lukas")
       martino = User.create(username: "martino")
       pablo = User.create(username: "pablo")
       tom = User.create(username: "tom")
 
-      @team.users << florian
-      @team.users << lukas
-      @team.users << martino
-      @team.users << pablo
-      @team.users << tom
+      @team.users << [florian, lukas, martino, pablo, tom]
 
       1.times do
-        PairingSession.create(users: [martino, tom])
+        @team.pair_up([martino, tom])
       end
       4.times do
-        PairingSession.create(users: [martino, pablo])
+        @team.pair_up([martino, pablo])
       end
       4.times do
-        PairingSession.create(users: [florian, lukas])
+        @team.pair_up([florian, lukas])
       end
 
       pairing_frequencies = @team.pairing_frequencies
@@ -55,20 +59,12 @@ describe 'Team' do
       expect(pairing_frequencies[1]).to include([martino, tom])
       expect(pairing_frequencies[4]).to include([martino, pablo])
       expect(pairing_frequencies[4]).to include([florian, lukas])
-
     end
   end
 
-  describe '#frequency_of([user1, user2])' do
+  private
 
-    it 'should return the number of times the two users have paired' do
-      @user1 = User.create(username: 'user1')
-      @user2 = User.create(username: 'user2')
-      PairingSession.create(users: [@user1, @user2])
-      PairingSession.create(users: [@user2, @user1])
-      PairingSession.create(users: [@user1, @user2])
-
-      expect(@team.pairing_frequency_of([@user1, @user2])).to eq(3)
-    end
+  def random_pair
+    @team.users.shuffle.first(2).sort
   end
 end
