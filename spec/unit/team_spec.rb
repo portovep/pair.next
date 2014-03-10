@@ -11,7 +11,7 @@ describe 'Team' do
         team.users << User.create(username: member_name)
       end
 
-      # FIX: tests implementation?
+      # FIXME: tests implementation?
       expect(team.possible_pairs).to eq(team.users.combination(2).to_a)
     end
 
