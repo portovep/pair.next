@@ -20,6 +20,7 @@ group :development, :test do
   gem 'nokogiri'
 
   # test them associations
+  gem 'activemodel'
   gem 'shoulda'
   gem 'shoulda-matchers'
 end

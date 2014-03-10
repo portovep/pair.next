@@ -102,6 +102,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemodel
   activerecord
   better_errors
   binding_of_caller
