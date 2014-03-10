@@ -4,11 +4,9 @@ class PairingSession < ActiveRecord::Base
   # back User objects (while storing their ids in a psql array)
   #
   # TODO: 10/3/14 Martino - if I destroy a user, her pairing sessions should also go
-  # FIXME: 10/3/14 Martino - implement .create and #initialize. I tried and it didn't seem trivial
 
-  def add_pair(*users)
-    # FIXME: 10/3/14 Martino - should not take a splat?
-    self.user_ids = users.map(&:id)
+  def self.create_with_users(args)
+    self.create(user_ids: args[:users].map(&:id).sort)
   end
 
   def users
