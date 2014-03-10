@@ -48,23 +48,26 @@ class Team < ActiveRecord::Base
     @next_pairs = []
 
     frequencies_table = pairing_frequency_table() # cache this and remove chosen/invalid pairs as we go
-    frequencies = frequencies_table.keys.sort # need this to access the hash in order
+    frequencies = frequencies_table.keys.sort # need this to access the hash in asc order
 
     frequencies.each do |frequency|
 
-      while next_pair = frequencies_table[frequency].shuffle!.pop # remove pairs as we visit them
-        if valid_pair?(next_pair) # need to check
+      loop do # consider all the pairs in this frequency
+        next_pair = frequencies_table[frequency].shuffle!.pop # remove pairs as we visit them
+        break if next_pair.nil? # if it's nil, we've exhausted the pairs at this freq, so move out of loop
+        if valid_pair?(next_pair)
           @next_pairs << next_pair
         end
       end
 
     end
 
-    return @next_pairs.take(needed_pairs)
+    return @next_pairs.take(needed_pairs) # only take the number of pairs we need
   end
 
   private
 
+  # ensure that no member of pair has already been choosen in @next_pairs
   def valid_pair?(pair)
     chosen_users = @next_pairs.flatten
     !chosen_users.include?(pair.first) && !chosen_users.include?(pair.second)
