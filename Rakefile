@@ -66,7 +66,18 @@ end
 
 desc "Fire up the production server"
 task :serve do
-  puts `rackup -p 4567`
+  puts `rackup -D -p 4567`
+end
+
+desc 'Stop server'
+task :stop do
+  pid = `lsof -i :4567 -t`
+  if !pid.nil? && !pid.empty?
+    puts "Stopping server on port 4567"
+    Process.kill 9, pid.to_i
+  else
+    puts "No server running on port 4567"
+  end
 end
 
 desc "Run the tests"
