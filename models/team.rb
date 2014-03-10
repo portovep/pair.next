@@ -54,9 +54,9 @@ class Team < ActiveRecord::Base
 
     frequencies.each do |frequency|
 
-      loop do # we want to consider all the pairs at this frequency
-        next_pair = frequencies_table[frequency].shuffle!.pop # remove pairs form the table as we visit it
-        break if next_pair.nil? # if the pair is nil, we have finished the pairs at this frequency, move on
+      loop do # consider all the pairs in this frequency
+        next_pair = frequencies_table[frequency].shuffle!.pop # remove pairs as we visit them
+        break if next_pair.nil? # if it's nil, we've exhausted the pairs at this freq, so move out of loop
         if valid_pair?(next_pair)
           @next_pairs << next_pair
         end
@@ -64,12 +64,12 @@ class Team < ActiveRecord::Base
 
     end
 
-    return @next_pairs.take(needed_pairs) # only take number of pairs we need
+    return @next_pairs.take(needed_pairs) # only take the number of pairs we need
   end
 
   private
 
-  # ensures that no member of pair has already been assigned a pair in @next_pairs
+  # ensure that no member of pair has already been choosen in @next_pairs
   def valid_pair?(pair)
     chosen_users = @next_pairs.flatten
     !chosen_users.include?(pair.first) && !chosen_users.include?(pair.second)
