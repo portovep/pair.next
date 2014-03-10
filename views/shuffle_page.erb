@@ -7,7 +7,7 @@
 <div class="row">
   <div class="column large-12">
     <form method="POST">
-      <button type="submit">SHUFFLE</button>
+      <button class="expand" type="submit">SHUFFLE</button>
     </form>
   </div>
 </div>
@@ -15,7 +15,7 @@
 <div class="row">
 
   <div id="last-pairs" class="large-6 column">
-    <h3>Last pairs</h3>
+    <h3>Current pairs</h3>
     <% if @team.last_pairs.empty? %>
       <span>No previous pairing sessions</span>
     <% else %>
@@ -41,3 +41,12 @@
   </div>
 
 </div>
+
+<div class="row">
+  <div class="column large-6 large-offset-6">
+    <form action="/team/<%= @team.id %>/save_pairs" method="POST">
+      <button class="expand success" type="submit">SAVE PAIRS</button>
+    </form>
+  </div>
+</div>
+

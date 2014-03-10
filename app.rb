@@ -51,7 +51,6 @@ end
 
 post '/team/:team_id/members' do
   @team = Team.find_by_id(params[:team_id])
-
   new_member = User.find_by_username(params[:member_username])
   if !@team.users.include? current_user
     session[:error_message] = "You are not a member of the team you are trying to access"
@@ -71,11 +70,22 @@ end
 
 get '/team/:team_id/shuffle' do
   @team = Team.find_by_id(params[:team_id])
+  session[:next_pairs] = @team.next_pairs # cannot do this (> 4KB)
   erb :shuffle_page
 end
 
 post '/team/:team_id/shuffle' do
-  @team = Team.find_by_id(params[:team_id])
-  erb :shuffle_page
+  redirect to "/team/#{params[:team_id]}/shuffle"
+end
+
+post '/team/:team_id/save_pairs' do
+  next_pairs = session.delete(:next_pairs)
+  team = Team.find_by_id(params[:team_id])
+  next_pairs.each do |pair|
+    team.pair_up(pair)
+  end
+
+  session[:success_message] = "Your pairs have been saved, find them in Current Pairs"
+  redirect to '/team/:team_id/shuffle'
 end
 
