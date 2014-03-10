@@ -46,6 +46,9 @@ get '/team/:team_id' do
   if @team.nil?
     session[:error_message] =  "Team not found"
     redirect to '/team/new'
+  elsif !@team.users.include? current_user
+    session[:error_message] = "You are not a member of the team you are trying to access"
+    redirect to '/team/new'
   else
     erb :team_profile
   end
@@ -55,7 +58,10 @@ post '/team/:team_id/members' do
   @team = Team.find_by_id(params[:team_id])
 
   new_member = User.find_by_username(params[:member_username])
-  if new_member
+  if !@team.users.include? current_user
+    session[:error_message] = "You are not a member of the team you are trying to access"
+    redirect to '/team/new'
+  elsif new_member
     unless @team.users.include?(new_member)
       @team.users << new_member
       @team.save
@@ -67,7 +73,6 @@ post '/team/:team_id/members' do
   end
   redirect to "/team/#{@team.id}"
 end
-
 
 get '/team/:team_id/shuffle' do
   @team = Team.find_by_id(params[:team_id])
@@ -81,4 +86,29 @@ post '/team/:team_id/shuffle' do
   @old_pairs = @team.get_old_pairs
   @new_pairs = @team.shuffle_pairs
   erb :shuffle_page
+end
+
+post '/team/:team_id/savePairs' do
+  
+  # convertig pairs into better format:
+  input_data = params['pair']
+  pairs = []
+  input_data[0].values.each do |pairData| 
+    pair = []
+    pairData.values.each do |userData|
+      pair << userData
+    end
+    pairs << pair
+  end
+
+  @team = Team.find_by_id(params[:team_id]).end_old_pairings
+
+  pairs.each do |pair|
+    pairing_session = PairingSession.create(start_time: Time.now, end_time: nil)
+    pair.each do |member|
+      pairing_session.users << User.find_by_id(member)
+    end  
+  end
+
+  redirect to "/team/#{params[:team_id]}/shuffle"
 end
