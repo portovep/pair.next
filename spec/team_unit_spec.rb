@@ -46,7 +46,7 @@ describe 'Team class' do
       end 
 
       it 'should output all possible pairings' do 
-            possible_pairings = @team.all_possible_pairings
+            possible_pairings = @team.all_possible_pairs
             expected_pairings = [[@lukas, @florian],[@lukas,@martino],[@lukas,@pablo],[@florian,@martino], [@florian,@pablo], [@pablo,@martino]]
 
             possible_pairings.should match_array expected_pairings
