@@ -43,7 +43,7 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def all_possible_pairings 
+  def all_possible_pairs 
     self.team_members.combination(2).to_a.map do |members|
       members.map do |member|
         member.user
@@ -57,7 +57,7 @@ class Team < ActiveRecord::Base
   end 
 
   def shuffle_pairs
-    pairing_numbers = all_possible_pairings.map do |pair| 
+    pairing_numbers = all_possible_pairs.map do |pair| 
       [pair, number_of_pairings_between(pair[0],pair[1])]
     end
 
