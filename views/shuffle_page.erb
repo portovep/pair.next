@@ -8,13 +8,17 @@
 		<% if @old_pairs.empty? %>
 		<span>No existing pairings</span>
 		<% else %>
-		<% @old_pairs.each do |pair| %>
-		<p>
-			<% pair.each do |user| %>
-			<%= user.username %>
+		<table>
+			<tbody>
+			<% @old_pairs.each do |pair| %>
+				<tr>
+					<% pair.each do |user| %>
+					<td><%= user.username %></td>
+					<% end %>
+				</tr>
 			<% end %>
-		</p>
-		<% end %>
+			</tbody>
+		</table>
 		<% end %>
 	</div> 
 	<div class="column large-1">
@@ -26,13 +30,17 @@
 		<% if @new_pairs.empty? %>
 		<span>Shuffle me</span>
 		<% else %>
-		<% @new_pairs.each do |pair| %>
-		<p>
-			<% pair.each do |user| %>
-			<%= user.username %>
+		<table>
+			<tbody>
+			<% @new_pairs.each do |pair| %>
+				<tr>
+					<% pair.each do |user| %>
+					<td><%= user.username %></td>
+					<% end %>
+				</tr>
 			<% end %>
-		</p>
-		<% end %>
+			</tbody>
+		</table>
 		<% end %>
 	</div> 
 </div>
