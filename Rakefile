@@ -61,11 +61,15 @@ end
 
 desc "Fire up the development server"
 task :shotgun do
+  puts "If you're using binding.pry, you'd be better off using `rackup -p 4567`"
+  puts "This does not print pry output...."
   puts `shotgun -p 4567`
 end
 
 desc "Fire up the production server"
 task :serve do
+  puts "If you're using binding.pry, you'd be better off using `rackup -p 4567`"
+  puts "This does not print pry output...."
   puts `rackup -p 4567`
 end
 
