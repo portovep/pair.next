@@ -35,7 +35,7 @@
 			<% @new_pairs.each do |pair| %>
 				<tr>
 					<% pair.each do |user| %>
-					<td><%= user.username %></td>
+					<td draggable="true" ondragstart="return dragStart(event)" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)" id="newpair-user-<%= user.id %>"><%= user.username %></td>
 					<% end %>
 				</tr>
 			<% end %>
@@ -62,3 +62,5 @@
 		</div>
 	</div>
 <% end %>
+
+<script src="/js/dragAndDrop.js"></script>
