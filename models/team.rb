@@ -62,10 +62,10 @@ class Team < ActiveRecord::Base
   end
 
   def all_possible_pairing_sessions 
-    permutations = all_possible_pairs.combination(team_members.count/2)
-    valid_permutations = permutations.select { |session| is_valid_pairing_session(session) }
+    combinations = all_possible_pairs.combination(team_members.count/2)
+    valid_combinations = combinations.select { |session| is_valid_pairing_session(session) }
 
-    valid_permutations
+    valid_combinations
   end
 
   def number_of_pairings_in_session(session) 
