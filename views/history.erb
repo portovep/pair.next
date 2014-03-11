@@ -6,51 +6,24 @@
 
 <div class="row">
 	<div class="small-10 column">
+		<% @history.each do |timestamp,pairs| %>
 		<div class="row">
 			<div class="small-10 column">
-				<h2>Monday, 10 March 2013</h2>
+				<h2><%=timestamp%></h2>
+				<% pairs.each do |pair| %>
 				<div class="row">
 					<div class="small-2 columns">
-			                <img src="http://gravatar.com/avatar/808fce0c3ab1e2b249baa79aa65f7301" width="30" height="30">
-			                <img src="https://identicons.github.com/61060970c07a72447ed922bd754c9f7e.png" width="30" height="30">
-			        </div>
-			        <div class="small-10 column">
-			        	<span>Martino and Florian paired from 10am to 6pm</span>
-			        </div>		
-		        </div>
-		        <div class="row">
-					<div class="small-2 columns">
-			                <img src="http://gravatar.com/avatar/b46abcb54a5ad5445a389dcb3f460ad0" width="30" height="30">
-			                <img src="https://identicons.github.com/a54ac7757425b7503445b0f8b9b10979.png" width="30" height="30">
-			        </div>
-			        <div class="small-10 column">
-			        	<span>Pablo and Tom paired from 10am to 6pm</span>
-			        </div>		
-		        </div>
+						<% pair.each do |pair_member| %>
+              <img src="<%=pair_member.image_url%>" width="30" height="30">
+            <% end %>
 	        </div>
+	        <div class="small-10 column">
+	        	<span><%=pair.map{ |user| user.username }.join(" and ")%> started pairing</span>
+	        </div>		
         </div>
-        <div class="row">
-			<div class="small-10 column">
-				<h2>Tuesday, 11 March 2013</h2>
-				<div class="row">
-					<div class="small-2 columns">
-			                <img src="http://gravatar.com/avatar/808fce0c3ab1e2b249baa79aa65f7301" width="30" height="30">
-			                <img src="https://identicons.github.com/a54ac7757425b7503445b0f8b9b10979.png" width="30" height="30">
-			        </div>
-			        <div class="small-10 column">
-			        	<span>Martino and Tom paired from 10am to 6pm</span>
-			        </div>		
-		        </div>
-		        <div class="row">
-					<div class="small-2 columns">
-			                <img src="http://gravatar.com/avatar/b46abcb54a5ad5445a389dcb3f460ad0" width="30" height="30">
-			                <img src="https://identicons.github.com/61060970c07a72447ed922bd754c9f7e.png" width="30" height="30">
-			        </div>
-			        <div class="small-10 column">
-			        	<span>Pablo and Florian paired from 10am to 6pm</span>
-			        </div>		
-		        </div>
-	        </div>
-        </div>
+        <%end %>
+      </div>
     </div>
+    <% end %>
+	</div>
 </div>	
