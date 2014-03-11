@@ -64,18 +64,6 @@ describe 'Team class' do
             possible_sessions.should match_array expected_sessions
       end
 
-      it 'should find number of pairings between two people when they didnt pair before' do 
-            number_of_pairings = @team.number_of_pairings_between(@florian,@lukas)
-            number_of_pairings.should be == 0
-      end
-
-      it 'should find number of pairings between two people when they paired before' do 
-            TestUtilityMethods.create_pair("Lukas", "Florian")
-            TestUtilityMethods.create_pair("Pablo", "Martino")
-            number_of_pairings = @team.number_of_pairings_between(@florian,@lukas)
-            number_of_pairings.should be == 1
-      end
-
       it 'should generate only possible pairing solution left' do
             start_time = Time.now
             end_time = start_time + (10*60)

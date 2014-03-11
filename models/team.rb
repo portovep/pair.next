@@ -69,13 +69,8 @@ class Team < ActiveRecord::Base
   end
 
   def number_of_pairings_in_session(session) 
-    session.map {|pair| number_of_pairings_between(pair[0],pair[1]) }.reduce(0,:+)
+    session.map {|pair| pair[0].count_pairings_with(pair[1]) }.reduce(0,:+)
   end
-
-  def number_of_pairings_between(user1,user2)
-    pairing_memberships_with_user2 = user1.pairing_memberships.select { |membership| membership.pairing_session.users.include? user2}
-    pairing_memberships_with_user2.count
-  end 
 
   def shuffle_pairs
     pairing_number_map = all_possible_pairing_sessions.map { |session| [session,number_of_pairings_in_session(session)]}
