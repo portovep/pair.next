@@ -107,3 +107,8 @@ post '/team/:team_id/savePairs' do
 
   redirect to "/team/#{params[:team_id]}/shuffle"
 end
+
+
+get '/team/:team_id/history' do 
+  erb :history
+end
