@@ -1,0 +1,9 @@
+.drag-source {
+	border: dashed;
+	border-width: 1px;
+}
+
+.drag-target {
+	border: dashed;
+	border-width: 1px;		
+}

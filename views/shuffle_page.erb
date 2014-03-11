@@ -35,7 +35,11 @@
 			<% @new_pairs.each do |pair| %>
 				<tr>
 					<% pair.each do |user| %>
-					<td draggable="true" ondragstart="return dragStart(event)" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)" id="newpair-user-<%= user.id %>" data-userid="<%= user.id %>"><%= user.username %></td>
+					<td draggable="true" id="newpair-user-<%= user.id %>"
+						ondragstart="return dragStart(event)" ondragenter="return dragEnter(event)" 
+						ondrop="return dragDrop(event)" ondragover="return dragOver(event)"
+						ondragleave="return dragLeave(event)"
+						data-userid="<%= user.id %>"><%= user.username %></td>
 					<% end %>
 				</tr>
 			<% end %>

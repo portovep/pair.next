@@ -1,10 +1,16 @@
 function dragStart(ev) {
 	ev.dataTransfer.effectAllowed = "move";
 	ev.dataTransfer.setData("text",ev.target.id);
+	
+
+	$(ev.target).addClass("drag-source")
+
 }
 
 function dragEnter(ev) {
 	ev.preventDefault();
+	$(ev.target).addClass("drag-target")
+
 	return true;
 }
 
@@ -16,13 +22,21 @@ function dragDrop(ev) {
 	var sourceId = ev.dataTransfer.getData("text");
 	var targetId = ev.target.id;
 
-	var source = $("#"+sourceId)
-	var target = $("#"+targetId)
+	var source = $("#"+sourceId);
+	var target = $("#"+targetId);
 
-	swapElements(source[0],target[0])
+	swapElements(source[0],target[0]);
+
+	source.removeClass("drag-source");
+	target.removeClass("drag-target");
 
 	ev.stopPropagation();	
 	return false;
+}
+
+function dragLeave(ev) {
+	$(ev.target).removeClass("drag-target")
+	return true;
 }
 
 function swapElements(elm1, elm2) {
@@ -40,14 +54,14 @@ function swapElements(elm1, elm2) {
 }
 
 function onsubmitPairings(ev) {
-	var rows = $("#newpairs-body").children()
-	var form = $("#pairingSubmissionForm")
+	var rows = $("#newpairs-body").children();
+	var form = $("#pairingSubmissionForm");
 	for (pairNumber=0;pairNumber <rows.length; pairNumber++) {
-		var row = rows[pairNumber]
-		var memberEntries = row.children
+		var row = rows[pairNumber];
+		var memberEntries = row.children;
 		for (memberNumber=0;memberNumber<memberEntries.length;memberNumber++) {
-			var cell = memberEntries[memberNumber]
-			form.append('<input type="hidden" name="pair[]['+pairNumber+']['+memberNumber+']" value="'+cell.dataset.userid+'">')
+			var cell = memberEntries[memberNumber];
+			form.append('<input type="hidden" name="pair[]['+pairNumber+']['+memberNumber+']" value="'+cell.dataset.userid+'">');
 		}
 	}
 }
