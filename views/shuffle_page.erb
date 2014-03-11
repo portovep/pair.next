@@ -31,11 +31,11 @@
 		<span>Shuffle me</span>
 		<% else %>
 		<table>
-			<tbody>
+			<tbody id="newpairs-body">
 			<% @new_pairs.each do |pair| %>
 				<tr>
 					<% pair.each do |user| %>
-					<td draggable="true" ondragstart="return dragStart(event)" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)" id="newpair-user-<%= user.id %>"><%= user.username %></td>
+					<td draggable="true" ondragstart="return dragStart(event)" ondragenter="return dragEnter(event)" ondrop="return dragDrop(event)" ondragover="return dragOver(event)" id="newpair-user-<%= user.id %>" data-userid="<%= user.id %>"><%= user.username %></td>
 					<% end %>
 				</tr>
 			<% end %>
@@ -47,16 +47,8 @@
 <% if not @new_pairs.empty? %>
 	<div class="row">
 		<div class="column large-3 large-offset-9">
-			<form action="savePairs" method="POST">
-				<% pairIndex =0 %>
-				<% @new_pairs.each do |pair| %>
-						<% i=0 %>
-						<% pair.each do |user| %>
-							<input type="hidden" name="pair[][<%=pairIndex%>][<%=i%>]" value="<%=user.id%>">
-							<% i+=1 %>
-						<% end %>
-						<% pairIndex+=1 %>
-				<% end %>
+			<form id="pairingSubmissionForm" action="savePairs" method="POST" onsubmit="return onsubmitPairings(event)">
+				<!-- onsubmit-function will generate the hidden fields to be submitted-->
 				<button type="submit">PAIR LIKE THIS</button>
 			</form>
 		</div>

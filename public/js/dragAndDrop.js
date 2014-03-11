@@ -38,3 +38,16 @@ function swapElements(elm1, elm2) {
     parent1.insertBefore(elm2, next1);
     parent2.insertBefore(elm1, next2);
 }
+
+function onsubmitPairings(ev) {
+	var rows = $("#newpairs-body").children()
+	var form = $("#pairingSubmissionForm")
+	for (pairNumber=0;pairNumber <rows.length; pairNumber++) {
+		var row = rows[pairNumber]
+		var memberEntries = row.children
+		for (memberNumber=0;memberNumber<memberEntries.length;memberNumber++) {
+			var cell = memberEntries[memberNumber]
+			form.append('<input type="hidden" name="pair[]['+pairNumber+']['+memberNumber+']" value="'+cell.dataset.userid+'">')
+		}
+	}
+}
