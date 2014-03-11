@@ -86,4 +86,19 @@ class Team < ActiveRecord::Base
     pairings_with_minimum_number.shuffle.first
   end
 
+  def pairing_history
+    pairing_memberships_for_team = 
+      PairingMembership.find_by_sql ["select pm.* from pairing_memberships pm, users u where pm.user_id = u.id and exists (select * from team_members where user_id = u.id and team_id = ?)",id]
+    memberships_by_time = pairing_memberships_for_team.group_by { |foo| foo.pairing_session.start_time.change(usec:0) }
+    Hash[memberships_by_time.map { |time,memberships| 
+      [time,memberships.group_by {|membership| 
+        membership.pairing_session_id
+      }.map {|session_id,pair_memberships| 
+        pair_memberships.map{|membership| 
+          membership.user
+        }
+      }]
+    }]
+  end
+
 end

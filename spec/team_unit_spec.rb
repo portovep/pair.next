@@ -105,4 +105,23 @@ describe 'Team class' do
             # todo: the checks are also in Team#isValidPairingSession
             # todo: better checks?
       end
+
+      it 'should generate a hash of pairings grouped by start date' do 
+        today = Time.current.utc.change(usec:0)
+        yesterday = today - (24*60*60)
+        
+        TestUtilityMethods.create_pair("Pablo", "Florian", yesterday, today)
+        TestUtilityMethods.create_pair("Lukas", "Martino", yesterday, today)
+
+        TestUtilityMethods.create_pair("Lukas", "Florian", today)
+        TestUtilityMethods.create_pair("Pablo", "Martino", today)
+
+        expected = {
+          yesterday => [[@pablo,@florian],[@lukas,@martino]],
+          today => [[@lukas,@florian],[@pablo,@martino]]
+        }
+
+        @team.pairing_history.should be == expected
+      end
+
 end
