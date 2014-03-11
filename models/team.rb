@@ -44,11 +44,7 @@ class Team < ActiveRecord::Base
   end
 
   def all_possible_pairs 
-    self.team_members.combination(2).to_a.map do |members|
-      members.map do |member|
-        member.user
-      end
-    end
+    users.combination(2).to_a
   end
 
   def is_valid_pairing_session(session)
