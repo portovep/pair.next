@@ -4,16 +4,13 @@ class Team < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   # TODO: not all those methods actually belong in team
   def get_old_pairs
-    team_members = self.team_members
     pairs = {}
 
     team_members.each do |team_member|
       user = team_member.user
       memberships = PairingMembership.where(user_id: user.id)
 
-      membership = memberships.find do |membership|
-        membership.pairing_session.end_time == nil
-      end
+      membership = memberships.find { |membership| membership.pairing_session.end_time == nil }
 
       if membership != nil
 
