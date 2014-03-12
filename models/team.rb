@@ -66,4 +66,7 @@ class Team < ActiveRecord::Base
     }]
   end
 
+   def pairing_statistics 
+     Hash[all_possible_pairs.map { |pair| [pair,pair[0].count_pairings_with(pair[1])]}]
+   end
 end

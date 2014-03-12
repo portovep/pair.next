@@ -93,7 +93,7 @@ describe 'Team class' do
     # todo: better checks?
   end
 
-  it 'should generate a hash of pairings grouped by start date' do 
+  it 'should generate a hash of pairings grouped by start date as pairing history' do 
     today = Time.current.utc.change(usec:0)
     yesterday = today - (24*60*60)
     
@@ -110,5 +110,25 @@ describe 'Team class' do
 
     @team.pairing_history.should be == expected
   end
+
+  it 'should generate pairing statistics' do 
+    today = Time.now
+    yesterday = today - (24*60*60)
+    dayBefore = yesterday - (24*60*60)
+    PairingSession.create(users: [@martino,@pablo], start_time: dayBefore, end_time: yesterday)
+    PairingSession.create(users: [@lukas,@florian], start_time: dayBefore, end_time: yesterday)
+
+    PairingSession.create(users: [@martino,@pablo], start_time: yesterday, end_time: today) 
+
+    @team.pairing_statistics.should be == {
+      [@pablo,@martino] => 2,
+      [@lukas,@florian] => 1,
+      [@lukas,@martino] => 0, 
+      [@lukas,@pablo] => 0, 
+      [@florian,@martino] => 0, 
+      [@florian,@pablo] => 0
+    }
+  end
+
 
 end
