@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="small-12 column">
+		<h1>Pairing history</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="small-10 column">
+		<% @history.each do |timestamp,pairs| %>
+		<div class="row">
+			<div class="small-10 column">
+				<h2><%=timestamp%></h2>
+				<% pairs.each do |pair| %>
+				<div class="row">
+					<div class="small-2 columns">
+						<% pair.each do |pair_member| %>
+              <img src="<%=pair_member.image_url%>" width="30" height="30">
+            <% end %>
+	        </div>
+	        <div class="small-10 column">
+	        	<span><%=pair.map{ |user| user.username }.join(" and ")%> started pairing</span>
+	        </div>		
+        </div>
+        <%end %>
+      </div>
+    </div>
+    <% end %>
+	</div>
+</div>	
