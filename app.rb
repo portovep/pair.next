@@ -71,14 +71,14 @@ end
 
 get '/team/:team_id/shuffle' do
   @team = Team.find_by_id(params[:team_id])
-  @old_pairs = @team.get_old_pairs
+  @old_pairs = @team.get_current_pairs
   @new_pairs = []
   erb :shuffle_page
 end
 
 post '/team/:team_id/shuffle' do
   @team = Team.find_by_id(params[:team_id])
-  @old_pairs = @team.get_old_pairs
+  @old_pairs = @team.get_current_pairs
   @new_pairs = @team.shuffle_pairs
   erb :shuffle_page
 end
@@ -96,7 +96,7 @@ post '/team/:team_id/savePairs' do
     pairs << pair
   end
 
-  @team = Team.find_by_id(params[:team_id]).end_old_pairings
+  @team = Team.find_by_id(params[:team_id]).end_current_pairing_sessions
 
   pairs.each do |pair|
     pairing_session = PairingSession.create(start_time: Time.now, end_time: nil)
