@@ -28,13 +28,13 @@ describe 'Team class' do
     TestUtilityMethods.create_pair("Lukas", "Florian", end_time)
     TestUtilityMethods.create_pair("Pablo", "Martino", end_time)
 
-		old_pairs = @team.get_old_pairs
+		old_pairs = @team.get_current_pairs
 		old_pairs.should be == [[User.find_by_username("Lukas"), User.find_by_username("Florian")],
 								[User.find_by_username("Pablo"), User.find_by_username("Martino")]]
 	end
 
   it 'should return empty array when no pairings exist' do
-    old_pairs = @team.get_old_pairs
+    old_pairs = @team.get_current_pairs
     old_pairs.should be == []
   end
 

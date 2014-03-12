@@ -3,17 +3,17 @@ class Team < ActiveRecord::Base
   has_many :users, through: :team_members
   validates :name, presence: true, uniqueness: true
   # TODO: not all those methods actually belong in team
-  def get_old_pairs
-    old_pairing_sessions.map {|session| session.users }
+  def get_current_pairs
+    current_pairing_sessions.map {|session| session.users }
   end
 
-  def old_pairing_sessions
+  def current_pairing_sessions
     current_pairing_memberships = team_members.map { |member|   PairingMembership.find_current_by_user(member.user) }.select { |membership| membership != nil }
     current_pairing_memberships.group_by { |membership| membership.pairing_session }.keys
   end
 
-  def end_old_pairings # TODO: this is untested
-    old_pairing_sessions.each do |pairing_session|
+  def end_current_pairing_sessions # TODO: this is untested
+    current_pairing_sessions.each do |pairing_session|
       pairing_session.end_time = Time.now
       pairing_session.save
     end
