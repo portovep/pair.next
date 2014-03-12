@@ -110,6 +110,8 @@ end
 
 
 get '/team/:team_id/history' do 
-  @history = Team.find_by_id(params[:team_id]).pairing_history
+  team = Team.find_by_id(params[:team_id])
+  @history = team.pairing_history
+  @statistics = team.pairing_statistics
   erb :history
 end
