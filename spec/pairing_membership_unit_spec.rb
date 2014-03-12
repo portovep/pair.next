@@ -1,6 +1,6 @@
 require_relative './test_helper.rb'
 
-describe 'Team class' do
+describe 'PairingMembership class' do
   before(:each) do
     @team = Team.create(name: "team_test")
 
