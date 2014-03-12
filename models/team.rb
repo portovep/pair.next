@@ -44,11 +44,7 @@ class Team < ActiveRecord::Base
   end
 
   def all_possible_pairs 
-    self.team_members.combination(2).to_a.map do |members|
-      members.map do |member|
-        member.user
-      end
-    end
+    users.combination(2).to_a
   end
 
   def is_valid_pairing_session(session)
@@ -62,20 +58,15 @@ class Team < ActiveRecord::Base
   end
 
   def all_possible_pairing_sessions 
-    permutations = all_possible_pairs.combination(team_members.count/2)
-    valid_permutations = permutations.select { |session| is_valid_pairing_session(session) }
+    combinations = all_possible_pairs.combination(team_members.count/2)
+    valid_combinations = combinations.select { |session| is_valid_pairing_session(session) }
 
-    valid_permutations
+    valid_combinations
   end
 
   def number_of_pairings_in_session(session) 
-    session.map {|pair| number_of_pairings_between(pair[0],pair[1]) }.reduce(0,:+)
+    session.map {|pair| pair[0].count_pairings_with(pair[1]) }.reduce(0,:+)
   end
-
-  def number_of_pairings_between(user1,user2)
-    pairing_memberships_with_user2 = user1.pairing_memberships.select { |membership| membership.pairing_session.users.include? user2}
-    pairing_memberships_with_user2.count
-  end 
 
   def shuffle_pairs
     pairing_number_map = all_possible_pairing_sessions.map { |session| [session,number_of_pairings_in_session(session)]}
@@ -84,6 +75,20 @@ class Team < ActiveRecord::Base
     pairings_with_minimum_number = pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
 
     pairings_with_minimum_number.shuffle.first
+  end
+
+  def pairing_history
+    pairing_memberships_for_team = PairingMembership.find_by_team(self)
+    memberships_by_time = pairing_memberships_for_team.group_by { |foo| foo.pairing_session.start_time.change(usec:0) }
+    Hash[memberships_by_time.map { |time,memberships| 
+      [time,memberships.group_by {|membership| 
+        membership.pairing_session_id
+      }.map {|session_id,pair_memberships| 
+        pair_memberships.map{|membership| 
+          membership.user
+        }
+      }]
+    }]
   end
 
 end
