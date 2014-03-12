@@ -2,7 +2,7 @@ class Team < ActiveRecord::Base
   has_many :team_members
   has_many :users, through: :team_members
   validates :name, presence: true, uniqueness: true
-  # TODO: not all those methods actually belong in team
+
   def get_current_pairs
     current_pairing_sessions.map {|session| session.users }
   end
@@ -17,7 +17,6 @@ class Team < ActiveRecord::Base
       pairing_session.save
     end
   end
-
 
   def all_possible_pairs 
     users.combination(2).to_a
