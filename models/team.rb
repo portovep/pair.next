@@ -8,12 +8,9 @@ class Team < ActiveRecord::Base
 
     team_members.each do |team_member|
       user = team_member.user
-      memberships = PairingMembership.where(user_id: user.id)
-
-      membership = memberships.find { |membership| membership.pairing_session.end_time == nil }
+      membership = PairingMembership.find_current_by_user(user)
 
       if membership != nil
-
         if pairs[membership.pairing_session_id] == nil
           pairs[membership.pairing_session_id] = []
         end
@@ -27,11 +24,9 @@ class Team < ActiveRecord::Base
   def end_old_pairings
     team_members.each do |team_member|
       user = team_member.user
-      memberships = PairingMembership.where(user_id: user.id)
+          
+      membership = PairingMembership.find_current_by_user(user)
 
-      membership = memberships.find do |membership|
-        membership.pairing_session.end_time == nil
-      end
       if membership != nil 
         pairing_session = membership.pairing_session
         pairing_session.end_time = Time.now
