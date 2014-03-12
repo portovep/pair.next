@@ -8,8 +8,7 @@ class Team < ActiveRecord::Base
   end
 
   def current_pairing_sessions
-    current_pairing_memberships = team_members.map { |member|   PairingMembership.find_current_by_user(member.user) }.select { |membership| membership != nil }
-    current_pairing_memberships.group_by { |membership| membership.pairing_session }.keys
+    PairingSession.find_current_by_team(self)
   end
 
   def end_current_pairing_sessions # TODO: this is untested
