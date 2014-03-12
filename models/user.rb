@@ -17,4 +17,7 @@ class User < ActiveRecord::Base
     pairing_memberships.select { |membership| membership.pairing_session.users.include? other_user}.count
   end
 
+  def shortname 
+    username.gsub(/@.*/,"")
+  end
 end

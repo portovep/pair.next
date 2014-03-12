@@ -11,7 +11,7 @@
       <tbody>
         <% @statistics.each do |pair,count| %>
           <tr>
-            <td><%=pair.map{ |user| user.username }.join(",")%></td>
+            <td><%=pair.map{ |user| user.shortname }.join(",")%></td>
             <td><%=count%></td>
           </tr>
         <% end %>

@@ -27,4 +27,9 @@ describe 'User' do
     end
   end
 
+  it 'should have a shortname which is the username without the email domain' do 
+      User.new(username: 'foo@thoughtworks.com').shortname.should be == "foo"
+      User.new(username: 'bar@baz.com').shortname.should be == "bar"
+
+  end
 end
