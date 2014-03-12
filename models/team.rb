@@ -4,36 +4,21 @@ class Team < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   # TODO: not all those methods actually belong in team
   def get_old_pairs
-    pairs = {}
-
-    team_members.each do |team_member|
-      user = team_member.user
-      membership = PairingMembership.find_current_by_user(user)
-
-      if membership != nil
-        if pairs[membership.pairing_session_id] == nil
-          pairs[membership.pairing_session_id] = []
-        end
-
-        pairs[membership.pairing_session_id] << user
-      end
-    end
-    pairs.values
+    old_pairing_sessions.map {|session| session.users }
   end
 
-  def end_old_pairings
-    team_members.each do |team_member|
-      user = team_member.user
-          
-      membership = PairingMembership.find_current_by_user(user)
+  def old_pairing_sessions
+    current_pairing_memberships = team_members.map { |member|   PairingMembership.find_current_by_user(member.user) }.select { |membership| membership != nil }
+    current_pairing_memberships.group_by { |membership| membership.pairing_session }.keys
+  end
 
-      if membership != nil 
-        pairing_session = membership.pairing_session
-        pairing_session.end_time = Time.now
-        pairing_session.save
-      end 
+  def end_old_pairings # TODO: this is untested
+    old_pairing_sessions.each do |pairing_session|
+      pairing_session.end_time = Time.now
+      pairing_session.save
     end
   end
+
 
   def all_possible_pairs 
     users.combination(2).to_a
