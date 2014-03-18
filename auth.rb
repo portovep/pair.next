@@ -13,6 +13,7 @@ enable :sessions
 # configure 'SECRET_TOKEN' in .env
 set :session_secret, ENV['SECRET_TOKEN'] || SecureRandom.hex
 
+OpenID.fetcher.ca_file = "#{APP_ROOT}/ca-bundle.cer"
 use OmniAuth::Builder do
   # provider :saml,
   # :issuer                             => settings.auth['issuer'],
