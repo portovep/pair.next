@@ -34,17 +34,17 @@ describe "authentication" do
 
     # Always respond with a valid OmniAuth response
     OmniAuth.config.test_mode = true
-    OmniAuth.config.add_mock(:saml, {:uid => 'my_username'})
+    OmniAuth.config.add_mock(:open_id, {:info => {:email => 'my_username'}})
 
     it "saves the user on their first login" do
       expect(User.where(username: "my_username").count).to be(0)
-      post "/auth/saml/callback"
+      post "/auth/open_id/callback"
       expect(User.where(username: "my_username").count).to be(1)
     end
 
     it "doesn't create the user again on subsequent logins" do
       User.create(username: 'my_username')
-      post "/auth/saml/callback"
+      post "/auth/open_id/callback"
       expect(User.where(username: "my_username").count).to be(1)
     end
 
