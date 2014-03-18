@@ -1,19 +1,28 @@
 <div class="row">
 	<div class="large-12 column">
-		<h1>Profile - <%= @team.name %> - Shuffle Teams</h1>
+		<h1>Profile : <a href="/team/<%= @team.id %>" class="small"><%= @team.name %></a> - Shuffle Pairs</h1>
 	</div>
 </div>
+
 <div class="row">
-	<div id="old-pairs" class="large-5 column">
+	<div id="old-pairs" class="large-6 column text-center">
+		<h3>Current Pairs</h3>
 		<% if @old_pairs.empty? %>
-		<span>No existing pairings</span>
+		<h3>No Current Pairs</h3>
 		<% else %>
 		<table>
 			<tbody>
 			<% @old_pairs.each do |pair| %>
-				<tr>
+				<tr class="row">
 					<% pair.each do |user| %>
-					<td><%= user.username %></td>
+						<td class="column small-6 text-center">
+
+							<img src="<%= user.image_url %>" width="80" height="80">
+
+							<div class="column small-12 text-center"><%= user.username %>
+							</div>
+
+						</td>
 					<% end %>
 				</tr>
 			<% end %>
@@ -21,25 +30,31 @@
 		</table>
 		<% end %>
 	</div> 
-	<div class="column large-1">
-		<form method="POST">
-			<button type="submit">SHUFFLE</button>
-		</form>
-	</div>
-	<div id="new-pairs" class="column large-5">
+
+	<div id="new-pairs" class="column large-6 text-center">
+		<h3>New Pairs</h3>
 		<% if @new_pairs.empty? %>
-		<span>Shuffle me</span>
+			<h3>Hit Shuffle to start Paring!</h3>
 		<% else %>
 		<table>
 			<tbody id="newpairs-body">
 			<% @new_pairs.each do |pair| %>
-				<tr>
+				<tr class="row">
 					<% pair.each do |user| %>
-					<td draggable="true" id="newpair-user-<%= user.id %>"
+					<td draggable="true" 
+						id="newpair-user-<%= user.id %>"
 						ondragstart="return dragStart(event)" ondragenter="return dragEnter(event)" 
 						ondrop="return dragDrop(event)" ondragover="return dragOver(event)"
 						ondragleave="return dragLeave(event)"
-						data-userid="<%= user.id %>"><%= user.username %></td>
+						data-userid="<%= user.id %>"
+						class="column small-6 text-center">
+
+						<img draggable="false" src="<%= user.image_url %>" width="80" height="80">
+						<div class="column small-12 text-center"><%= user.username %>
+						</div>
+						
+					</td>
+
 					<% end %>
 				</tr>
 			<% end %>
@@ -50,13 +65,33 @@
 </div>
 <% if not @new_pairs.empty? %>
 	<div class="row">
-		<div class="column large-3 large-offset-9">
-			<form id="pairingSubmissionForm" action="savePairs" method="POST" onsubmit="return onsubmitPairings(event)">
-				<!-- onsubmit-function will generate the hidden fields to be submitted-->
-				<button type="submit">PAIR LIKE THIS</button>
+
+		<div class="column large-6">
+			
+			<form method="POST">
+				<button class="button expand" type="submit">Shuffle</button>
 			</form>
 		</div>
+
+		<div class="column large-6">
+
+			<form id="pairingSubmissionForm" action="savePairs" method="POST" onsubmit="return onsubmitPairings(event)">
+				<!-- onsubmit-function will generate the hidden fields to be submitted-->
+				<button class="button expand" type="submit">Confirm New Pairs</button>
+			</form>
+		</div>
+
 	</div>
-<% end %>
+<% else %>
+	<div class="row">
+
+		<div class="column large-6">
+			
+			<form method="POST">
+				<button class="button expand" type="submit">Shuffle</button>
+			</form>
+		</div>
+<% end %>			
+
 
 <script src="/js/dragAndDrop.js"></script>
