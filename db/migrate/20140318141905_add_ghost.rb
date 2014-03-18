@@ -1,7 +1,8 @@
+class User < ActiveRecord::Base
+end
 class AddGhost < ActiveRecord::Migration
-  class User < ActiveRecord::Base
-    def change
-  	  User.create(username:"Balthasar")
-  	end
-  end
+
+  def change
+	  User.create(username:"Balthasar")
+	end
 end
