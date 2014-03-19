@@ -111,6 +111,7 @@ end
 
 get '/team/:team_id/history' do 
   team = Team.find_by_id(params[:team_id])
+  @team = team
   @history = team.pairing_history
   @statistics = team.pairing_statistics
   erb :history
