@@ -39,7 +39,12 @@ helpers do
   end
 
   def login!(username)
-    user = User.find_or_create_by(username: username)
+
+    if(!(User.exists?(username: username)))
+      nickname = username[/[^@]+/]
+      user =User.create(username: username,nickname: nickname)
+    end
+    user = User.find_by_username(username)
     session[:user_id] = user.username
   end
 
