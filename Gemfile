@@ -8,6 +8,10 @@ gem "sinatra-contrib"
 gem "omniauth"
 gem "omniauth-saml"
 
+# Auth (OpenID)
+gem "omniauth-openid"
+
+
 # Persistence
 gem "activerecord"
 gem "sinatra-activerecord"
