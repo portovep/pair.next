@@ -3,19 +3,14 @@ function dragStart(ev) {
 	ev.dataTransfer.setData("text",ev.target.id);
 	
 	$(ev.target).addClass("drag-source")
-	
-
 }
 
 function dragEnter(ev) {
 	ev.preventDefault();
 	var target = $(ev.target);
-	if(target.is( "td" ))
-	{
+	if(target.is( "td" )) {
 		$(ev.target).addClass("drag-target")
-	}
-	else
-	{
+	} else {
 		target.parent().addClass("drag-target");
 		target.parent().addClass("drag-alt-target");
 	}
@@ -55,15 +50,12 @@ function dragLeave(ev) {
 	if (target.is("td")){
 		$(ev.target).removeClass("drag-target")
 		//$(ev.target).removeClass("drag-source")
-	}
-	else
-	{
+	} else {
 		target.parent().addClass("drag-target");
 		target.parent().removeClass("drag-alt-target");
 	}
 
 	$(ev.target).removeClass("drag-target")
-
 
 	return true;
 }
