@@ -110,9 +110,15 @@ post '/team/:team_id/savePairs' do
 end
 
 delete '/team/:team_id/user/:user_id' do 
+  team = Team.find_by_id(params[:team_id])
   user = User.find_by_id(params[:user_id])
-  "trying to delete #{user.id}"
+  session[:success_message] =  "User removed from team."
+
+  team.users.delete(user)
+
+  redirect to "/team/#{team.id}"
 end
+
 get '/team/:team_id/history' do 
   team = Team.find_by_id(params[:team_id])
   @team = team
