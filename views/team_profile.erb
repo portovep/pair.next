@@ -6,7 +6,8 @@
 
 
 <div class="row">
-  <div class="small-8 small-offset-2 columns">
+  <div class="small-8 small-offset-2 columns text-center">
+    <h3>Add new team members.</h3>
     <form action="/team/<%= @team.id %>/members" method="POST">
       <div class="row collapse">
         <div class="small-9 columns">
@@ -17,15 +18,18 @@
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="row">  
+  <div class="small-6 columns">
     <form action="/team/<%= @team.id %>/shuffle" method="POST">
-      <div class="small 8">
-        <input type="submit" value="Generate Pairs" class="button expand">
-      </div>
+      <input type="submit" value="Generate Pairs" class="button expand">
     </form>
+  </div>
+  <div class="small-6 columns">
     <form action="/team/<%= @team.id %>/history" method="GET">
-      <div class="small 8">
-        <input type="submit" value="Show Pairing History" class="button expand">
-      </div>
+      <input type="submit" value="Show Pairing History" class="button expand">
     </form>
   </div>
 </div>
@@ -33,6 +37,9 @@
 
 
 <% unless @team.users.empty? %>
+  <div class="small-12 columns text-center">
+    <h3>Team Members</h3>
+  </div>
   <% @team.users.each_slice(2) do |row| %>
     <div class="row">
       <% row.each do |member| %> 
