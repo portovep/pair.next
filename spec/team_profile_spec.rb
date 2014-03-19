@@ -52,6 +52,23 @@ describe 'Team profile' do
       expect(last_response.body).to include(user.image_url)
     end
 
+    it 'should delete a member from the team' do 
+      team = Team.create(name: 'team_test')
+      user = User.create(username: 'theUserName')
+      team.users << user
+      
+      delete "/team/#{team.id}/user/#{user.id}", {}, session
+      expect(last_response.redirect?).to be_true
+      
+      follow_redirect!
+
+      expect(team.users).not_to include(user)
+      # FIXME: for some reason the body is empty...
+      # expect(last_response.body).not_to include("theUserName")
+      # expect(last_response.body).to include("User removed from team.")
+
+    end
+
     it 'should show error for non existing member username' do
       team = Team.create(name: 'team_test')
       team.users << User.create(username: 'valid_id')
