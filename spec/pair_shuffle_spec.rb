@@ -5,7 +5,9 @@ require_relative './test_helper.rb'
 describe 'Pair shuffle' do
 
   context 'with a signed in user' do
-
+    def expect_shuffle_header 
+      expect(last_response.body).to include("Profile : <a href=\"/team/#{@team.id}\" class=\"small\">team_test</a> - Shuffle Pairs")
+    end
     let(:session) do
       { 'rack.session' => { user_id: 'valid_id' } }
     end
@@ -31,7 +33,8 @@ describe 'Pair shuffle' do
       parsed_doc_old_pairs = parsed_doc.css("#old-pairs").text
       parsed_doc_new_pairs = parsed_doc.css("#new-pairs").text
       
-      expect(last_response.body).to include("Profile : <a href=\"/team/#{@team.id}\" class=\"small\">team_test</a> - Shuffle Pairs")
+      expect_shuffle_header
+
       @new_teammembers.each do |member|
       	expect(parsed_doc_old_pairs).to include(member)
         expect(parsed_doc_new_pairs).to_not include(member)
@@ -45,8 +48,9 @@ describe 'Pair shuffle' do
       parsed_doc_old_pairs = parsed_doc.css("#old-pairs").text
       parsed_doc_new_pairs = parsed_doc.css("#new-pairs").text
       
-      expect(last_response.body).to include("Profile - #{@team.name} - Shuffle Teams")
-      expect(parsed_doc_old_pairs).to include("No existing pairings")
+      expect_shuffle_header
+
+      expect(parsed_doc_old_pairs).to include("There are no current pairs, so we've proposed some for you!")
       @new_teammembers.each do |member|
         expect(parsed_doc_old_pairs).to_not include(member)
         expect(parsed_doc_new_pairs).to_not include(member)
@@ -63,7 +67,8 @@ describe 'Pair shuffle' do
       parsed_doc_old_pairs = parsed_doc.css("#old-pairs").text
       parsed_doc_new_pairs = parsed_doc.css("#new-pairs").text
 
-      expect(last_response.body).to include("Profile - #{@team.name} - Shuffle Teams")
+      expect_shuffle_header
+
       @new_teammembers.each do |member|
         expect(parsed_doc_old_pairs).to include(member)
         expect(parsed_doc_new_pairs).to include(member)
