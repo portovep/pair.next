@@ -61,7 +61,7 @@ end
 
 desc "Fire up the development server"
 task :shotgun do
-  puts `shotgun -p 4567`
+  puts `shotgun --port 4567 --host 0.0.0.0`
 end
 
 desc "Fire up the production server"
