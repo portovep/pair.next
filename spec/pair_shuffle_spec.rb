@@ -31,7 +31,7 @@ describe 'Pair shuffle' do
       parsed_doc_old_pairs = parsed_doc.css("#old-pairs").text
       parsed_doc_new_pairs = parsed_doc.css("#new-pairs").text
       
-      expect(last_response.body).to include("Profile - #{@team.name} - Shuffle Teams")
+      expect(last_response.body).to include("Profile : <a href=\"/team/#{@team.id}\" class=\"small\">team_test</a> - Shuffle Pairs")
       @new_teammembers.each do |member|
       	expect(parsed_doc_old_pairs).to include(member)
         expect(parsed_doc_new_pairs).to_not include(member)
