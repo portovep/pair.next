@@ -1,4 +1,5 @@
 set :app_file, __FILE__
+# set :method_override, true
 
 # Okta integration
 before do
@@ -108,6 +109,15 @@ post '/team/:team_id/savePairs' do
   redirect to "/team/#{params[:team_id]}/shuffle"
 end
 
+delete '/team/:team_id/user/:user_id' do 
+  team = Team.find_by_id(params[:team_id])
+  user = User.find_by_id(params[:user_id])
+  session[:success_message] =  "User removed from team."
+
+  team.users.delete(user)
+
+  redirect to "/team/#{team.id}"
+end
 
 get '/team/:team_id/history' do 
   team = Team.find_by_id(params[:team_id])
