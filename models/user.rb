@@ -20,4 +20,8 @@ class User < ActiveRecord::Base
   def shortname 
     username.gsub(/@.*/,"")
   end
+
+  def is_ghost 
+    username == "Balthasar"
+  end
 end

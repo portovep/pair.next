@@ -2,15 +2,19 @@ function dragStart(ev) {
 	ev.dataTransfer.effectAllowed = "move";
 	ev.dataTransfer.setData("text",ev.target.id);
 	
-
 	$(ev.target).addClass("drag-source")
-
 }
 
 function dragEnter(ev) {
 	ev.preventDefault();
-	$(ev.target).addClass("drag-target")
-
+	var target = $(ev.target);
+	if(target.is( "td" )) {
+		$(ev.target).addClass("drag-target")
+	} else {
+		target.parent().addClass("drag-target");
+		target.parent().addClass("drag-alt-target");
+	}
+	//$(ev.target).parent().css( "background-color", "red" );
 	return true;
 }
 
@@ -28,14 +32,31 @@ function dragDrop(ev) {
 	swapElements(source[0],target[0]);
 
 	source.removeClass("drag-source");
+	source.removeClass("drag-target");
+	source.removeClass("drag-alt-target");
+
 	target.removeClass("drag-target");
+	target.removeClass("drag-alt-target");
+
+	target.parent().removeClass("drag-source");
 
 	ev.stopPropagation();	
 	return false;
 }
 
 function dragLeave(ev) {
+
+	var target = $(ev.target);
+	if (target.is("td")){
+		$(ev.target).removeClass("drag-target")
+		//$(ev.target).removeClass("drag-source")
+	} else {
+		target.parent().addClass("drag-target");
+		target.parent().removeClass("drag-alt-target");
+	}
+
 	$(ev.target).removeClass("drag-target")
+
 	return true;
 }
 

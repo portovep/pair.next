@@ -44,10 +44,21 @@ class Team < ActiveRecord::Base
   end
 
   def shuffle_pairs
+
+    if (users.count % 2 == 1)
+      ghost = User.find_by_username("Balthasar")
+      users << ghost
+    end 
+
     pairing_number_map = all_possible_pairing_sessions.map { |session| [session,number_of_pairings_in_session(session)]}
     minimum_pairing_number = pairing_number_map.min_by { |session,pairing_number| pairing_number}[1]
 
     pairings_with_minimum_number = pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
+
+
+    if (ghost != nil) 
+      users.delete(ghost)
+    end
 
     pairings_with_minimum_number.shuffle.first
   end
