@@ -36,9 +36,8 @@ class install_postgres {
     require  => Class['postgresql::server']
   }
 
-  pg_user { 'postgres':
+  pg_user { 'vagrant':
     ensure  => present,
-    password => 'postgres',
     superuser => true,
     require => Class['postgresql::server']
   }
@@ -96,7 +95,7 @@ exec { 'install_ruby':
   # The rvm executable is more suitable for automated installs.
   #
   # use a ruby patch level known to have a binary
-  command => "${as_vagrant} '${home}/.rvm/bin/rvm install ruby-2.0.0-p353 --binary --autolibs=enabled && rvm alias create default 2.0'",
+  command => "${as_vagrant} '${home}/.rvm/bin/rvm install ruby-2.0.0-p353 --binary --autolibs=enabled && rvm --default use ruby-2.0.0-p353'",
   creates => "${home}/.rvm/bin/ruby",
   require => Exec['install_rvm']
 }
@@ -104,4 +103,12 @@ exec { 'install_ruby':
 exec { "${as_vagrant} 'gem install bundler --no-rdoc --no-ri'":
   creates => "${home}/.rvm/bin/bundle",
   require => Exec['install_ruby']
+}
+
+# set environment variables
+file { "/etc/profile.d/set_db_env_variables.sh":
+    ensure => present,
+    mode => 777,
+    content => 'export PG_PASS="pairnext"
+    export PG_USER="pairnext"'
 }
