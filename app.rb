@@ -152,3 +152,25 @@ get '/user/:user_id' do
   end
 
 end
+
+post '/user/update' do
+  if (!(current_user))
+    session[:error_message] =  "You are not logged in."
+    redirect to '/team/new'
+  end
+
+  new_nickname = params[:new_nickname]
+
+  if (new_nickname.length <= 0)
+      session[:error_message] =  "Sorry, you must have a name!"
+      redirect to '/user/' + current_user.id.to_s
+  elsif (new_nickname.length >= 30)
+      session[:error_message] =  "Sorry, your name can't be that long"
+      redirect to '/user/' + current_user.id.to_s
+  end
+  user = User.find_by_id(current_user.id)
+  user.update(nickname: new_nickname)
+  redirect to '/user/' + current_user.id.to_s
+
+  "Hello " + params[:user_id].to_s
+end
