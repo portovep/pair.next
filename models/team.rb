@@ -22,10 +22,6 @@ class Team < ActiveRecord::Base
     PairingUtils.all_possible_pairs(users)
   end
 
-  def is_valid_pairing_session(session)
-    PairingUtils.is_valid_pairing_session(session,team_member_users)
-  end
-
   def team_member_users 
     team_members.map { |member| member.user}
   end
