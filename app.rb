@@ -126,3 +126,29 @@ get '/team/:team_id/history' do
   @statistics = team.pairing_statistics
   erb :history
 end
+
+get '/user' do 
+  @user = User.find_by_id(params[:user_id])
+  if (!(current_user))
+    session[:error_message] =  "You are not logged in."
+    redirect to '/team/new'
+  else
+    redirect to '/user/' + current_user.id.to_s  
+  end
+  
+
+end
+
+get '/user/:user_id' do
+  @user = User.find_by_id(params[:user_id])
+  if @user.nil?
+    session[:error_message] =  "You are not logged in."
+    redirect to '/hi'
+  elsif @user.id != current_user.id
+    redirect to '/user/' + current_user.id.to_s
+  else
+    @teams = Team.all.to_a.select { |team| team.users.include? current_user }
+    erb :user_page
+  end
+
+end

@@ -1,0 +1,53 @@
+<div class="row">
+	<div class="large-12 column">
+		<h1>Hello <%= @user.shortname %>!</h1>	
+		<h3>We gave you a little space all to yourself. No need to thank us. </h3>
+	</div>
+</div>
+
+
+<div class="row data-equalizer">
+
+	<div class="large-9 column">
+		<div class="panel clearfix data-equalizer-watch">
+			<div class="row"> 
+	  		<div class ="large-5 column">
+					<img src="<%= @user.large_image_url %>">
+				</div>
+				<div class="large-7 column">
+
+					<table class="large-12 column nopad">
+						<tbody>
+					    <tr>
+					      <th class="title" colspan="2">About you</th>
+					    </tr>							
+					    <tr>
+					      <th>Email</th>
+					      <td><%= @user.username %></td>
+					    </tr>
+					  		<th>Name</th>
+					      <td><%= @user.shortname %></td>
+					    <tr>
+					  </tbody>
+					</table>
+
+				</div>
+			</div>	
+		</div>
+	</div>
+
+	<div class="large-3 columns">
+  	<ul class="pricing-table data-equalizer-watch">
+   		<li class="title">  
+   			Your teams
+   		</li>
+      <% @teams.each do |team| %>
+      	<li class="bullet-item">
+      		<a href="team/<%= team.id %>" class="small">
+      			<%= team.name %>
+      		</a>
+    		</li>
+    	<% end %>
+    </ul>
+  </div>
+</div>
