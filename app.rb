@@ -142,6 +142,12 @@ end
 get '/user/:user_id' do
   @user = User.find_by_id(params[:user_id])
   if @user.nil?
+    if (!current_user)
+      session[:error_message] =  "You are not logged in."
+      redirect to '/hi'
+    else
+      redirect to '/user/' + current_user.id.to_s
+    end
     session[:error_message] =  "You are not logged in."
     redirect to '/hi'
   elsif @user.id != current_user.id
