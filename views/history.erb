@@ -40,7 +40,7 @@
             <% end %>
 	        </div>
 	        <div class="small-10 column">
-	        	<span><%=pair.map{ |user| user.username }.join(" and ")%> started pairing</span>
+	        	<span><%=pair.map{ |user| user.shortname }.join(" and ")%> started pairing</span>
 	        </div>		
         </div>
         <%end %>
