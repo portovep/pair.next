@@ -23,5 +23,12 @@ class PairingUtils
  def self.number_of_pairings_in_session(session,count_for_users)
     session.map {|pair| count_for_users.call(pair[0],pair[1])}.reduce(0,:+)
  end
+
+ def self.find_best_sessions(sessions,count_for_users)
+  pairing_number_map = sessions.map { |session| [session,number_of_pairings_in_session(session,count_for_users)]}
+  minimum_pairing_number = pairing_number_map.min_by { |session,pairing_number| pairing_number}[1]
+
+  pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
+ end
   
 end
