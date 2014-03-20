@@ -28,9 +28,15 @@ describe 'User' do
   end
 
   it 'should have a shortname which is the username without the email domain' do 
-      User.new(username: 'foo@thoughtworks.com').shortname.should be == "foo"
-      User.new(username: 'bar@baz.com').shortname.should be == "bar"
+      username1 = 'foo@thoughtworks.com'
+      nickname1 = username1[/[^@]+/]
+      username2 = 'bar@baz.com'
+      nickname2 = username2[/[^@]+/]
+      User.new(username: username1,nickname: nickname1).shortname.should be == "foo"
+      User.new(username: username2,nickname: nickname2).shortname.should be == "bar"
   end
+
+  #it 'shuold have a nickname stored in the db which defaults to the shortname'
 
   it 'should know if a user is a ghost or not' do 
     User.find_by_username("Balthasar").is_ghost.should be == true
