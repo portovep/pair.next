@@ -1,6 +1,12 @@
 class PairingUtils
   def self.all_possible_pairs(team_members)
-    team_members.combination(2).to_a
+    if (team_members.count % 2 == 0)
+      team_members.combination(2).to_a
+    else 
+      possible_pairs = team_members.combination(2).to_a
+      possible_pairs.concat(team_members.map{|member| [member]})
+      possible_pairs
+    end
   end
 
   def self.is_valid_pairing_session(session,team_members)
