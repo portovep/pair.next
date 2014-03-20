@@ -14,6 +14,8 @@ describe 'User' do
       @pablo = User.create(username: "Pablo")
 
       PairingSession.create(users: [@lukas,@florian])
+      PairingSession.create(users: [@lukas])
+
     end
 
     it 'should count the number of pairings with another user if pairings exist' do 
@@ -24,6 +26,11 @@ describe 'User' do
     it 'should count the number of pairings with another user they didnt pair before' do 
       @lukas.count_pairings_with(@pablo).should be == 0 
       @pablo.count_pairings_with(@lukas).should be == 0
+    end
+
+    it 'should count pairings with no user at all' do 
+      @lukas.count_pairings_with(nil).should be == 1
+      @pablo.count_pairings_with(nil).should be == 0
     end
   end
 
