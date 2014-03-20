@@ -38,7 +38,7 @@ helpers do
     session[:user_id]
   end
 
-  def login!(username)
+  def login!(username, nickname)
 
     if(!(User.exists?(username: username)))
       nickname = username[/[^@]+/]
@@ -46,6 +46,12 @@ helpers do
     end
     user = User.find_by_username(username)
     session[:user_id] = user.username
+
+    if (user.nickname = "") 
+      user.nickname = nickname
+      user.save 
+    end
+
   end
 
   def current_user
@@ -63,6 +69,7 @@ end
 # Support both GET and POST for callbacks
 post '/auth/open_id/callback' do
   auth = env['omniauth.auth'] 
-  login!(auth[:info][:email])
+  logger.info auth[:info]
+  login!(auth[:info][:email],auth[:info][:name])
   redirect to(params[:RelayState] || "/")
 end
