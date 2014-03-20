@@ -50,7 +50,8 @@
                 <img src="<%= member.image_url %>" width="80" height="80">
               </div>
               <div class="small-8 columns">
-                <h4 class="vertical-align"><%= member.username %></h4>
+                <h4 class="vertical-align"><%= member.shortname %></h4>
+                <h4><%= member.username %></h4>
               </div>
               <div class="small-1 columns">
                 <form method="POST" id="delete-form-<%=member.id%>" action="/team/<%=@team.id%>/user/<%=member.id%>">
