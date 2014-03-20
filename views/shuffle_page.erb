@@ -19,7 +19,7 @@
 
 							<img src="<%= user.image_url %>" width="80" height="80">
 
-							<div class="column small-12 text-center"><%= user.username %>
+							<div class="column small-12 text-center"><%= user.shortname %>
 							</div>
 
 						</td>
@@ -53,7 +53,7 @@
 						data-userid="<%= user.id %>" >
 
 						<div id="newpair-user-<%= user.id %>"  draggable="false" class="column small-12 text-center"  >
-							<%= user.username %>
+							<%= user.shortname %>
 						</div>
 						
 					</td>

@@ -18,7 +18,7 @@ describe 'Pair shuffle' do
       @new_teammembers = ["Lukas", "Florian", "Pablo", "Martino"]
 
       @new_teammembers.each do |member|
-      	@team.users << User.create(username: member)
+      	@team.users << User.create(username: member,nickname: member)
       end
 
       @team.save
