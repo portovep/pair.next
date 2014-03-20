@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
   has_many :pairing_memberships
   has_many :pairing_sessions, through: :pairing_memberships
+  
 
   def image_url   
     email_address = self.username.downcase
@@ -18,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def shortname 
-    username.gsub(/@.*/,"")
+    nickname
   end
 
   def is_ghost 
