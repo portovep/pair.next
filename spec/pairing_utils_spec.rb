@@ -9,16 +9,20 @@ describe 'PairingUtils' do
     @lukas = { username: "lukas"}
 
     @mock_counter = proc do |user1,user2|
-      (user1 == @florian && user2 == @martino) ? 2 : 1 
+      ((user1 == @florian && user2 == @martino)||(user2 == nil)) ? 2 : 1 
     end
-
-
   end
 
-  it 'should provide all possible pairs for a set of users' do
+  it 'should provide all possible pairs for a set of users with even number' do
     PairingUtils.all_possible_pairs([@florian,@tom]).should match_array [[@florian,@tom]]
     PairingUtils.all_possible_pairs([@florian,@lukas,@pablo,@martino]).should match_array [
       [@florian, @lukas],[@lukas,@martino],[@lukas,@pablo],[@florian,@martino], [@florian,@pablo], [@pablo,@martino]]
+  end
+
+  it 'should include pairs with one user for a set of users woth odd number' do 
+    PairingUtils.all_possible_pairs([@florian,@tom,@martino]).should match_array [
+      [@florian,@tom],[@florian,@martino],[@tom,@martino],[@florian],[@tom],[@martino]
+    ]
   end
 
   it 'should detect an invalid pairing session if a user appears more than once' do
@@ -43,6 +47,10 @@ describe 'PairingUtils' do
   it 'should count the number of pairings in a session' do 
     PairingUtils.number_of_pairings_in_session([[@florian,@martino],[@tom,@pablo]],@mock_counter).should be == 3
     PairingUtils.number_of_pairings_in_session([[@lukas,@martino],[@tom,@pablo]],@mock_counter).should be == 2
+  end
+
+  it 'should count the number of pairings in a session when pairings contain a single user' do 
+    PairingUtils.number_of_pairings_in_session([[@lukas],[@tom,@pablo]],@mock_counter).should be == 3
   end
 
   it 'should find the best session in a set of possible session' do 
