@@ -10,10 +10,10 @@
 		<% if @old_pairs.empty? %>
 		<h3>There are no current pairs, so we've proposed some for you!</h3>
 		<% else %>
-		<table>
+		<table class="large-12 column nopad" >
 			<tbody>
 			<% @old_pairs.each do |pair| %>
-				<tr class="row">
+				<tr>
 					<% pair.each do |user| %>
 						<td class="column small-6 text-center">
 
@@ -23,7 +23,7 @@
 								</div>	
 							<% else %>
 								<img src="<%= user.image_url %>" width="80" height="80">
-								<div class="column small-12 text-center"><%= user.username %>
+								<div class="column small-12 text-center"><%= user.shortname %>
 								</div>
 							<% end %>
 						</td>
@@ -40,10 +40,10 @@
 		<% if @new_pairs.empty? %>
 			<h3>Hit Shuffle to start Paring!</h3>
 		<% else %>
-		<table>
+		<table class="large-12 column nopad" >
 			<tbody id="newpairs-body">
 			<% @new_pairs.each do |pair| %>
-				<tr class="row">
+				<tr >
 					<% pair.each do |user| %>
 					<td draggable="true"
 						id="newpair-user-<%= user.id %>"
@@ -61,11 +61,10 @@
 							<% else %>
 								<img id="newpair-user-<%= user.id %>" draggable="false" src="<%= user.image_url %>" width="80" height="80" 
 								data-userid="<%= user.id %>" >
-								<div class="column small-12 text-center"><%= user.username %>
+								<div class="column small-12 text-center"><%= user.shortname %>
 								</div>
 							<% end %>
 					</td>
-
 					<% end %>
 				</tr>
 			<% end %>

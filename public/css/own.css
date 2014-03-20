@@ -12,3 +12,13 @@
 	border: dashed;
 	border-width: 1px;
 }
+
+.full-width {
+     width: 100%;
+     max-width: 100%; 
+}
+
+.nopad{
+	padding: 0px;
+}
+
