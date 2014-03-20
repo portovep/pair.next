@@ -23,14 +23,16 @@ class Team < ActiveRecord::Base
   end
 
   def is_valid_pairing_session(session)
-    PairingUtils.is_valid_pairing_session(session,team_members.map { |member| member.user})
+    PairingUtils.is_valid_pairing_session(session,team_member_users)
   end
 
-  def all_possible_pairing_sessions 
-    combinations = all_possible_pairs.combination(team_members.count/2)
-    valid_combinations = combinations.select { |session| is_valid_pairing_session(session) }
+  def team_member_users 
+    team_members.map { |member| member.user}
+  end
 
-    valid_combinations
+
+  def all_possible_pairing_sessions 
+    PairingUtils.all_possible_pairing_sessions(team_member_users)
   end
 
   def number_of_pairings_in_session(session) 

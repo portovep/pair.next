@@ -12,5 +12,12 @@ class PairingUtils
    
     valid_user_entries.count == pair_membership_counter.count
   end
+
+ def self.all_possible_pairing_sessions(team_members)
+    combinations = all_possible_pairs(team_members).combination(team_members.count/2)
+    valid_combinations = combinations.select { |session| is_valid_pairing_session(session,team_members) }
+
+    valid_combinations
+ end
   
 end
