@@ -51,12 +51,6 @@
   padding-bottom: 4px;
 }
 
-.chart-tail{
-  position:relative;                  /* added */
-  top:0;                           /* added */
-
-}
-
 .no-low-margin{
 	margin: 0px;
 
