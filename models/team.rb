@@ -36,11 +36,12 @@ class Team < ActiveRecord::Base
   end
 
   def number_of_pairings_in_session(session) 
-    session.map {|pair| pair[0].count_pairings_with(pair[1]) }.reduce(0,:+)
+    PairingUtils.number_of_pairings_in_session(session,proc { |user1,user2|
+      user1.count_pairings_with(user2)
+    })
   end
 
   def shuffle_pairs
-
     if (users.count % 2 == 1)
       ghost = User.find_by_username("Balthasar")
       users << ghost

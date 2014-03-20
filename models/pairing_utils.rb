@@ -19,5 +19,9 @@ class PairingUtils
 
     valid_combinations
  end
+
+ def self.number_of_pairings_in_session(session,count_for_users)
+    session.map {|pair| count_for_users.call(pair[0],pair[1])}.reduce(0,:+)
+ end
   
 end

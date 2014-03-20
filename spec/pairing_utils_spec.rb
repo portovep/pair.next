@@ -34,4 +34,13 @@ describe 'PairingUtils' do
           [[@lukas, @martino],[@florian,@pablo]],
           [[@lukas, @pablo],[@florian,@martino]]]
   end
+
+  it 'should count the number of pairings in a session' do 
+    mock_counter = proc do |user1,user2|
+      (user1 == @florian && user2 == @martino) ? 2 : 1 
+    end
+
+    PairingUtils.number_of_pairings_in_session([[@florian,@martino],[@tom,@pablo]],mock_counter).should be == 3
+    PairingUtils.number_of_pairings_in_session([[@lukas,@martino],[@tom,@pablo]],mock_counter).should be == 2
+  end
 end
