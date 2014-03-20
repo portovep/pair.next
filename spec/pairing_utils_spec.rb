@@ -27,4 +27,11 @@ describe 'PairingUtils' do
   it 'should detect if a teammember is not part of the pairing session' do 
     PairingUtils.is_valid_pairing_session([[@florian,@tom]],[@florian,@tom,@martino,@pablo]).should be == false
   end
+
+  it 'should provide all possible pairing sessions' do 
+    PairingUtils.all_possible_pairing_sessions([@lukas,@florian,@pablo,@martino]).should match_array [
+          [[@lukas, @florian],[@pablo,@martino]],
+          [[@lukas, @martino],[@florian,@pablo]],
+          [[@lukas, @pablo],[@florian,@martino]]]
+  end
 end
