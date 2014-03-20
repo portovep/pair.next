@@ -19,7 +19,7 @@ class Team < ActiveRecord::Base
   end
 
   def all_possible_pairs 
-    users.combination(2).to_a
+    PairingUtils.all_possible_pairs(users)
   end
 
   def is_valid_pairing_session(session)
