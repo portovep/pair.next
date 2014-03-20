@@ -31,10 +31,12 @@ class Team < ActiveRecord::Base
     PairingUtils.all_possible_pairing_sessions(team_member_users)
   end
 
+  def count_pairings_between(user1,user2) 
+    user1.count_pairings_with(user2)
+  end
+
   def number_of_pairings_in_session(session) 
-    PairingUtils.number_of_pairings_in_session(session,proc { |user1,user2|
-      user1.count_pairings_with(user2)
-    })
+    PairingUtils.number_of_pairings_in_session(session,method(:count_pairings_between))
   end
 
   def shuffle_pairs
@@ -43,17 +45,13 @@ class Team < ActiveRecord::Base
       users << ghost
     end 
 
-    pairing_number_map = all_possible_pairing_sessions.map { |session| [session,number_of_pairings_in_session(session)]}
-    minimum_pairing_number = pairing_number_map.min_by { |session,pairing_number| pairing_number}[1]
-
-    pairings_with_minimum_number = pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
-
+    best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,method(:count_pairings_between))
 
     if (ghost != nil) 
       users.delete(ghost)
     end
 
-    pairings_with_minimum_number.shuffle.first
+    best_sessions.shuffle.first
   end
 
   def pairing_history

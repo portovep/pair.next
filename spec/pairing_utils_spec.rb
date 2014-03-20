@@ -8,6 +8,11 @@ describe 'PairingUtils' do
     @tom = { username: "tom"}
     @lukas = { username: "lukas"}
 
+    @mock_counter = proc do |user1,user2|
+      (user1 == @florian && user2 == @martino) ? 2 : 1 
+    end
+
+
   end
 
   it 'should provide all possible pairs for a set of users' do
@@ -36,11 +41,17 @@ describe 'PairingUtils' do
   end
 
   it 'should count the number of pairings in a session' do 
-    mock_counter = proc do |user1,user2|
-      (user1 == @florian && user2 == @martino) ? 2 : 1 
-    end
+    PairingUtils.number_of_pairings_in_session([[@florian,@martino],[@tom,@pablo]],@mock_counter).should be == 3
+    PairingUtils.number_of_pairings_in_session([[@lukas,@martino],[@tom,@pablo]],@mock_counter).should be == 2
+  end
 
-    PairingUtils.number_of_pairings_in_session([[@florian,@martino],[@tom,@pablo]],mock_counter).should be == 3
-    PairingUtils.number_of_pairings_in_session([[@lukas,@martino],[@tom,@pablo]],mock_counter).should be == 2
+  it 'should find the best session in a set of possible session' do 
+    bad_session = [[@florian,@martino],[@lukas,@tom]]
+    good_session1 = [[@lukas,@martino],[@florian,@tom]]
+    good_session2 = [[@tom,@martino],[@lukas,@florian]]
+
+    possible_sessions = [bad_session,good_session2,good_session1]
+
+    PairingUtils.find_best_sessions(possible_sessions,@mock_counter).should match_array [good_session2,good_session1]
   end
 end
