@@ -1,6 +1,16 @@
 class PairingUtils
   def self.all_possible_pairs(team_members)
-        team_members.combination(2).to_a
+    team_members.combination(2).to_a
+  end
+
+  def self.is_valid_pairing_session(session,team_members)
+    pair_membership_counter = {}
+    team_members.each { |member| pair_membership_counter[member] = 0 }
+    session.each { |pair| pair.each {|user| pair_membership_counter[user] += 1 }}
+
+    valid_user_entries = pair_membership_counter.select { |k,v| v == 1}
+   
+    valid_user_entries.count == pair_membership_counter.count
   end
   
 end
