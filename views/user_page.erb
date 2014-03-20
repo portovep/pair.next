@@ -1,3 +1,5 @@
+<script src="/js/changeToTextBoxes.js"></script>
+
 <div class="row">
 	<div class="large-12 column">
 		<h1>Hello <%= @user.shortname %>!</h1>	
@@ -6,44 +8,61 @@
 </div>
 
 
-<div class="row data-equalizer">
+<div class="row">
 
 	<div class="large-9 column">
-		<div class="panel clearfix data-equalizer-watch">
+		<div class="panel clearfix">
 			<div class="row"> 
-	  		<div class ="large-5 column">
+	  		<div class="large-5 column">
 					<img src="<%= @user.large_image_url %>">
 				</div>
-				<div class="large-7 column">
+				<div class="large-7 column ">
 
-					<table class="large-12 column nopad">
-						<tbody>
-					    <tr>
-					      <th class="title" colspan="2">About you</th>
-					    </tr>							
-					    <tr>
-					      <th>Email</th>
-					      <td><%= @user.username %></td>
-					    </tr>
-					  		<th>Name</th>
-					      <td><%= @user.shortname %></td>
-					    <tr>
-					  </tbody>
-					</table>
+						<div class="large-12 column nopad text-center">
+							<div class="chart-head">About You</div>
+						</div>
+					
+						<div class="large-4 column chart-row">
+							Nick Name:
+						</div>
+						<div id="nickname_row" class="large-8 column chart-row">
+							<div id="nickname"><%= @user.shortname %> </div>
+						</div>	
 
+						<div class="large-4 column chart-row">
+							Email:
+						</div>
+						<div class="large-8 column chart-row">
+							<%= @user.username %>
+						</div>
+
+						<div class="large-12 column nopad  text-center">
+							<div class="chart-head">A little extra info</div>
+						</div>
+						<div class="chart-row large-12 column tall text-center">
+							Share a little about yourself. 							
+						</div>
+
+						<div calss="row">
+							<div class="large-12 column nopad top-margin">
+								<a id="changeDetailsButton" onclick="javascript: changeToText();" class="button expand">
+									Edit
+								</a>
+							</div>
+						</div>
 				</div>
-			</div>	
+			</div>
 		</div>
-	</div>
+	</div>	
 
 	<div class="large-3 columns">
-  	<ul class="pricing-table data-equalizer-watch">
+  	<ul class="pricing-table">
    		<li class="title">  
    			Your teams
    		</li>
       <% @teams.each do |team| %>
       	<li class="bullet-item">
-      		<a href="team/<%= team.id %>" class="small">
+      		<a href="/team/<%= team.id %>" class="small">
       			<%= team.name %>
       		</a>
     		</li>

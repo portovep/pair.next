@@ -22,3 +22,47 @@
 	padding: 0px;
 }
 
+.chart-head{
+	color: #eeeeee;
+	background-color: #333333;
+  font-family: 'Open Sans', sans-serif;  font-weight: normal;
+  font-style: normal;
+  font-size: 1rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+.chart-row{
+	background-color: #ffffff;
+  font-family: 'Open Sans', sans-serif;  font-weight: normal;
+  font-style: normal;
+  font-size: 1rem;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.chart-text{
+	background-color: #ffffff;
+  font-family: 'Open Sans', sans-serif;  font-weight: normal;
+  font-style: normal;
+  font-size: 1rem;
+  padding-top: 5px;
+  padding-bottom: 4px;
+}
+
+.chart-tail{
+  position:relative;                  /* added */
+  top:0;                           /* added */
+
+}
+
+.no-low-margin{
+	margin: 0px;
+
+}
+
+.top-margin{
+	margin-top: 1em;
+}
+
