@@ -41,17 +41,17 @@
     <h3>Team Members</h3>
   </div>
   <% @team.users.each_slice(2) do |row| %>
-    <div class="row">
+    <div class="row" data-equalizer>
       <% row.each do |member| %> 
-        <div class="small-6 columns">
-          <div class="panel">
+        <div class="small-6 columns" >
+          <div class="panel no-low-pad"  data-equalizer-watch>
             <div class="row">
               <div class="small-3 columns">
-                <img src="<%= member.image_url %>" width="80" height="80">
+                <img src="<%= member.image_url(large = true) %>">
               </div>
               <div class="small-8 columns">
                 <h4 class="vertical-align"><%= member.shortname %></h4>
-                <h4><%= member.username %></h4>
+                <p><%= member.username %></p>
               </div>
               <div class="small-1 columns">
                 <form method="POST" id="delete-form-<%=member.id%>" action="/team/<%=@team.id%>/user/<%=member.id%>">
@@ -59,6 +59,11 @@
                   <a href="#" onclick="$('#delete-form-<%=member.id%>').submit(); return false"><span class="fi-x" /></a>
                 </form>
               </div>
+            </div>
+            <div class="row">
+              <% if not member.bio == "Share a little about yourself." %>
+                <p class="top-margin small-12 columns no-low-margin"><%= member.bio %></p>
+              <% end %>
             </div>
           </div>
         </div>
