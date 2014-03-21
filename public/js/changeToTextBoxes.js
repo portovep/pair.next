@@ -19,5 +19,12 @@ function changeToText()
 
  	document.getElementById("textbox").style.margin="0px";
 
+	$('#extra_row').replaceWith(function() {
+
+					return	'<div class="large-12 column chart-text"> <textarea name="new_extra" class="no-low-margin" laceholder="Share a little about yourself."></textarea> </div>';
+  });
+
+
+        
 
 }
