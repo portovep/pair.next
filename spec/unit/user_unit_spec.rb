@@ -7,6 +7,21 @@ describe 'User' do
     expect(user.image_url).to eq("http://www.gravatar.com/avatar/8d6f61601881ec2f053899a7732c59ba")
   end
 
+  describe 'nicknames' do
+    it 'should get a nickname if none is provided' do
+      fred = User.create(username: "fred@flinstone.com")
+      expect(fred.nickname).to eq "fred"
+
+      indi = User.create(username: "indiana@jones-corp.com", nickname: "")
+      expect(indi.nickname).to eq "indiana"
+    end
+
+    it 'should preserve a nickname if one is provided' do
+      elly = (User.create(username: "hellen@the-parrs.com", nickname: "elasti"))
+      expect(elly.nickname).to eq "elasti"
+    end
+  end
+
   describe 'count pairings' do
     before (:each) do
       @lukas = User.create(username: "Lukas")
@@ -15,7 +30,6 @@ describe 'User' do
 
       PairingSession.create(users: [@lukas,@florian])
       PairingSession.create(users: [@lukas])
-
     end
 
     it 'should count the number of pairings with another user if pairings exist' do
@@ -32,15 +46,6 @@ describe 'User' do
       @lukas.count_pairings_with(nil).should be == 1
       @pablo.count_pairings_with(nil).should be == 0
     end
-  end
-
-  it 'should have a shortname which is the username without the email domain' do
-      username1 = 'foo@thoughtworks.com'
-      nickname1 = username1[/[^@]+/]
-      username2 = 'bar@baz.com'
-      nickname2 = username2[/[^@]+/]
-      User.new(username: username1,nickname: nickname1).shortname.should be == "foo"
-      User.new(username: username2,nickname: nickname2).shortname.should be == "bar"
   end
 
 end
