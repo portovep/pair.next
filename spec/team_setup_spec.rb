@@ -52,6 +52,16 @@ describe 'Team setup' do
       expect(team.users).to include(@current_user)
     end
 
+    it "will santatise user input for name " do
+      post "/team/new", { team_name: "<marquee>hacker team</marquee>" }, session
+      expect(last_response.redirect?).to be_true
+
+      follow_redirect!
+      expect(last_response.body).to include('Team hacker team successfully created')
+      expect(last_response.body).to include('Profile - hacker team')
+      expect(Team.find_by_name('hacker team').name).to eq 'hacker team'
+    end
+
   end
 
 end
