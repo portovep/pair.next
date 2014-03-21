@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
-require_relative './test_helper.rb'
+require_relative '../test_helper.rb'
 
 describe 'Pairing History' do
 
@@ -12,11 +12,11 @@ describe 'Pairing History' do
 
     before(:each) do
       @team = Team.create(name: 'team_test')
-      
+
       @new_teammembers = ["Lukas", "Florian", "Pablo", "Martino"]
 
       @new_teammembers.each do |member|
-      	@team.users << User.create(username: member)
+      @team.users << User.create(username: member)
       end
 
       @team.save
