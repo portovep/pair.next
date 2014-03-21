@@ -18,10 +18,6 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def all_possible_pairs 
-    PairingUtils.all_possible_pairs(users)
-  end
-
   def team_member_users 
     team_members.map { |member| member.user}
   end
@@ -53,6 +49,7 @@ class Team < ActiveRecord::Base
   end
 
    def pairing_statistics 
+     all_possible_pairs = PairingUtils.all_possible_pairs(users)
      Hash[all_possible_pairs.map { |pair| [pair,pair[0].count_pairings_with(pair[1])]}]
    end
 end
