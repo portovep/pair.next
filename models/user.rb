@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :pairing_sessions, through: :pairing_memberships
 
   before_validation :clean_input
-
+  before_save :give_nickname
 
   def image_url(large = false)
     email_address = self.username.downcase
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def count_pairings_with(other_user)
-    if (other_user==nil)
+    if (other_user == nil)
       pairing_memberships.select { |membership| membership.pairing_session.users.count == 1}.count
     else
       pairing_memberships.select { |membership| membership.pairing_session.users.include? other_user}.count
@@ -36,6 +36,12 @@ class User < ActiveRecord::Base
     self.username = Sanitize.clean(self.username)
     self.bio = Sanitize.clean(self.bio)
     self.nickname = Sanitize.clean(nickname)
+  end
+
+  def give_nickname
+    if nickname.nil? || nickname.empty?
+      self.nickname = self.username.split("@").first
+    end
   end
 
 end
