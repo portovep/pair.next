@@ -18,49 +18,20 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def all_possible_pairs 
-    users.combination(2).to_a
+  def team_member_users 
+    team_members.map { |member| member.user}
   end
 
-  def is_valid_pairing_session(session)
-    pair_membership_counter = {}
-    team_members.each { |member| pair_membership_counter[member.user] = 0 }
-    session.each { |pair| pair.each {|user| pair_membership_counter[user] += 1 }}
-
-    valid_user_entries = pair_membership_counter.select { |k,v| v == 1}
-   
-    valid_user_entries.count == pair_membership_counter.count
-  end
-
-  def all_possible_pairing_sessions 
-    combinations = all_possible_pairs.combination(team_members.count/2)
-    valid_combinations = combinations.select { |session| is_valid_pairing_session(session) }
-
-    valid_combinations
-  end
-
-  def number_of_pairings_in_session(session) 
-    session.map {|pair| pair[0].count_pairings_with(pair[1]) }.reduce(0,:+)
+  def count_pairings_between(user1,user2) 
+    user1.count_pairings_with(user2)
   end
 
   def shuffle_pairs
+    all_possible_pairing_sessions = PairingUtils.all_possible_pairing_sessions(team_member_users)
 
-    if (users.count % 2 == 1)
-      ghost = User.find_by_username("Balthasar")
-      users << ghost
-    end 
+    best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,method(:count_pairings_between))
 
-    pairing_number_map = all_possible_pairing_sessions.map { |session| [session,number_of_pairings_in_session(session)]}
-    minimum_pairing_number = pairing_number_map.min_by { |session,pairing_number| pairing_number}[1]
-
-    pairings_with_minimum_number = pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
-
-
-    if (ghost != nil) 
-      users.delete(ghost)
-    end
-
-    pairings_with_minimum_number.shuffle.first
+    best_sessions.shuffle.first
   end
 
   def pairing_history
@@ -78,6 +49,7 @@ class Team < ActiveRecord::Base
   end
 
    def pairing_statistics 
+     all_possible_pairs = PairingUtils.all_possible_pairs(users)
      Hash[all_possible_pairs.map { |pair| [pair,pair[0].count_pairings_with(pair[1])]}]
    end
 end

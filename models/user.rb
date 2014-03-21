@@ -21,7 +21,11 @@ class User < ActiveRecord::Base
   end
 
   def count_pairings_with(other_user)
-    pairing_memberships.select { |membership| membership.pairing_session.users.include? other_user}.count
+    if (other_user==nil) 
+      pairing_memberships.select { |membership| membership.pairing_session.users.count == 1}.count
+    else 
+      pairing_memberships.select { |membership| membership.pairing_session.users.include? other_user}.count
+    end
   end
 
   def shortname 
