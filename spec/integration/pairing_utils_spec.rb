@@ -78,4 +78,12 @@ describe PairingUtils do
 
     PairingUtils.find_best_sessions(possible_sessions,@mock_counter).should match_array [good_session]
   end
+  it 'should find the best sessions for team members (integration)' do 
+    good_session1 = [[@martino,@tom],[@florian]]
+    good_session2 = [[@florian,@tom],[@martino]]
+
+    PairingUtils.find_best_sessions_for_team_members([@florian,@martino,@tom],@mock_counter).should match_array [good_session1,good_session2]
+  end 
+
 end
+
