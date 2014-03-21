@@ -14,7 +14,7 @@ function changeToText()
   // replace div with an input box use nickname for placeholder
 	$('#nickname_row').replaceWith(function() {
 
-					return	'<div class="large-8 column chart-text"> <input id="textbox" class="no-low-margin" name="new_nickname" type="text" placeholder="' + nickname +'"/> </div>';
+					return	'<div class="large-8 column chart-text"> <input id="textbox" class="no-low-margin" name="new_nickname" type="text" value="' + nickname +'" placeholder="Nickname"/> </div>';
     });
 
  	document.getElementById("textbox").style.margin="0px";
