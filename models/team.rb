@@ -3,6 +3,9 @@ class Team < ActiveRecord::Base
   has_many :users, through: :team_members
   validates :name, presence: true, uniqueness: true
 
+  before_validation :clean_input
+
+
   def get_current_pairs
     current_pairing_sessions.map {|session| session.users }
   end
@@ -52,4 +55,9 @@ class Team < ActiveRecord::Base
      all_possible_pairs = PairingUtils.all_possible_pairs(users)
      Hash[all_possible_pairs.map { |pair| [pair,pair[0].count_pairings_with(pair[1])]}]
    end
+
+  private
+  def clean_input
+    self.name = Sanitize.clean(self.name)
+  end
 end
