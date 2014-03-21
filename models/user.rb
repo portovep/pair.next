@@ -10,16 +10,12 @@ class User < ActiveRecord::Base
   before_validation :clean_input
 
 
-  def image_url
+  def image_url(large = false)
     email_address = self.username.downcase
     hash = Digest::MD5.hexdigest(email_address)
-    "http://www.gravatar.com/avatar/#{hash}"
-  end
-
-  def large_image_url
-    email_address = self.username.downcase
-    hash = Digest::MD5.hexdigest(email_address)
-    "http://www.gravatar.com/avatar/#{hash}?s=300"
+    gravatar_url = "http://www.gravatar.com/avatar/#{hash}"
+    gravatar_url += "?s=300" if large
+    return gravatar_url
   end
 
   def count_pairings_with(other_user)
