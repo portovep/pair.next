@@ -30,7 +30,7 @@ class Team < ActiveRecord::Base
   end
 
   def shuffle_pairs
-    best_sessions = PairingUtils.find_best_sessions_for_team_members(team_member_users,method(:count_pairings_between))
+    best_sessions = PairingUtils.find_best_sessions_for_team_members(team_member_users,get_current_pairs,method(:count_pairings_between))
 
     best_sessions.shuffle.first
   end
