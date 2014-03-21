@@ -74,6 +74,8 @@ GEM
       canonix (= 0.1.1)
       nokogiri (~> 1.5.0)
       uuid (~> 2.3)
+    sanitize (2.1.0)
+      nokogiri (>= 1.4.4)
     shotgun (0.9)
       rack (>= 1.0)
     sinatra (1.4.4)
@@ -115,6 +117,7 @@ DEPENDENCIES
   pry
   rack-test
   rspec
+  sanitize
   shotgun
   sinatra
   sinatra-activerecord
