@@ -19,10 +19,13 @@ function changeToText()
 
  	document.getElementById("textbox").style.margin="0px";
 
+	var bio = document.getElementById("bio").innerHTML;
+	bio = bio.trim();
 	$('#extra_row').replaceWith(function() {
 
-					return	'<div class="large-12 column chart-text"> <textarea maxlength="120" name="new_extra" class="no-low-margin" laceholder="Share a little about yourself."></textarea> </div>';
+					return	'<div class="large-12 column chart-text"> <textarea id="extra_area" maxlength="120" name="new_extra" class="noresize no-low-margin" placeholder="Share a little about yourself.">'+bio+'</textarea> </div>';
   });
+ 	document.getElementById("extra_area").style.height="91px";
 
 
         

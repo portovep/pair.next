@@ -167,7 +167,7 @@ post '/user/update' do
 
   new_nickname = params[:new_nickname]
 
-  if (new_nickname.length <= 0)
+  if (new_nickname.to_s.strip.length <= 0)
     session[:error_message] =  "Sorry, you must have a name!"
     redirect to '/user/' + current_user.id.to_s
   elsif (new_nickname.length >= 30)
@@ -176,6 +176,15 @@ post '/user/update' do
   end
 
   new_extra = params[:new_extra]
+
+  if ( new_extra.to_s.strip.length <= 0)
+    new_extra = "Share a little about yourself."
+  elsif (new_extra.length > 200)
+    session[:error_message] =  "Sorry, your info can't be that long"
+    redirect to '/user/' + current_user.id.to_s
+  end
+
+
 
   user = User.find_by_id(current_user.id)
   user.update(nickname: new_nickname)
