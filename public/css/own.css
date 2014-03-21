@@ -67,4 +67,7 @@
 .noresize{ 
   resize:none;
 }
+.no-low-pad{
+  padding-bottom: 0px;
+}
 
