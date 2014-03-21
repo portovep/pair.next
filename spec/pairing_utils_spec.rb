@@ -62,4 +62,13 @@ describe 'PairingUtils' do
 
     PairingUtils.find_best_sessions(possible_sessions,@mock_counter).should match_array [good_session2,good_session1]
   end
+
+  it 'should find the best session when session includes pairings with a single user' do
+    bad_session = [[@florian,@martino],[@lukas]]
+    good_session = [[@lukas,@martino],[@tom]]
+
+    possible_sessions = [bad_session,good_session]
+
+    PairingUtils.find_best_sessions(possible_sessions,@mock_counter).should match_array [good_session]
+  end
 end
