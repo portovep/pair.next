@@ -40,6 +40,8 @@
   font-size: 1rem;
   padding-top: 15px;
   padding-bottom: 15px;
+  word-wrap: break-word;
+
 }
 
 .chart-text{
@@ -49,6 +51,8 @@
   font-size: 1rem;
   padding-top: 5px;
   padding-bottom: 4px;
+  word-wrap: break-word;
+
 }
 
 .no-low-margin{
@@ -58,5 +62,9 @@
 
 .top-margin{
 	margin-top: 1em;
+}
+
+.noresize{ 
+  resize:none;
 }
 
