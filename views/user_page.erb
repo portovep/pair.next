@@ -1,76 +1,75 @@
 <script src="/js/changeToTextBoxes.js"></script>
 
 <div class="row">
-	<div class="large-12 column">
-		<h1>Hello <%= @user.shortname %>!</h1>	
-		<h3>We gave you a little space all to yourself. No need to thank us. </h3>
-	</div>
+  <div class="large-12 column">
+    <h1>Hello <%= @user.shortname %>!</h1>
+    <h3>We gave you a little space all to yourself. No need to thank us. </h3>
+  </div>
 </div>
 
 
 <div class="row">
 
-	<div class="large-9 column">
-		<div class="panel clearfix">
-			<div class="row"> 
-	  		<div class="large-5 column">
-					<img src="<%= @user.large_image_url %>">
-				</div>
-				<div class="large-7 column ">
+  <div class="large-9 column">
+    <div class="panel clearfix">
+      <div class="row"> 
+        <div class="large-5 column">
+          <img src="<%= @user.image_url(large = true) %>">
+        </div>
+        <div class="large-7 column ">
 
-					<form action="/user/update" method="post">
+          <form action="/user/update" method="post">
 
-						<div class="large-12 column nopad text-center">
-							<div class="chart-head">About You</div>
-						</div>
-					
-						<div class="large-4 column chart-row">
-							Nickname:
-						</div>
-						<div id="nickname_row" class="large-8 column chart-row">
-							<div id="nickname"><%= @user.shortname %> </div>
-						</div>	
+            <div class="large-12 column nopad text-center">
+              <div class="chart-head">About You</div>
+            </div>
 
-						<div class="large-4 column chart-row">
-							Email:
-						</div>
-						<div class="large-8 column chart-row">
-							<%= @user.username %>
-						</div>
+            <div class="large-4 column chart-row">
+              Nickname:
+            </div>
+            <div id="nickname_row" class="large-8 column chart-row">
+              <div id="nickname"><%= @user.shortname %> </div>
+            </div>  
 
-						<div class="large-12 column nopad  text-center">
-							<div class="chart-head">A little extra info</div>
-						</div>
-						<div id="extra_row" class="chart-row large-12 column tall text-center">
-							<%= @user.bio %> 							
-						</div>
+            <div class="large-4 column chart-row">
+              Email:
+            </div>
+            <div class="large-8 column chart-row">
+              <%= @user.username %>
+            </div>
 
-						<div calss="row">
-							<div class="large-12 column nopad">
-								<a id="changeDetailsButton" onclick="javascript: changeToText();" class="button expand">
-									Edit
-								</a>
-							</div>
-						</div>
-						
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>	
+            <div class="large-12 column nopad  text-center">
+              <div class="chart-head">A little extra info</div>
+            </div>
+            <div id="extra_row" class="chart-row large-12 column tall text-center">
+              <%= @user.bio %>
+            </div>
 
-	<div class="large-3 columns">
-  	<ul class="pricing-table">
-   		<li class="title">  
-   			Your teams
-   		</li>
+            <div calss="row">
+              <div class="large-12 column nopad">
+                <a id="changeDetailsButton" onclick="javascript: changeToText();" class="button expand">
+                  Edit
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+  <div class="large-3 columns">
+    <ul class="pricing-table">
+      <li class="title">
+        Your teams
+      </li>
       <% @teams.each do |team| %>
-      	<li class="bullet-item">
-      		<a href="/team/<%= team.id %>" class="small">
-      			<%= team.name %>
-      		</a>
-    		</li>
-    	<% end %>
+        <li class="bullet-item">
+          <a href="/team/<%= team.id %>" class="small">
+            <%= team.name %>
+          </a>
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>
