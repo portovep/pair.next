@@ -45,24 +45,6 @@ describe 'Team class' do
     new_pairs[1].size.should be == 2
   end 
 
-  it 'should output all possible pairings' do 
-    possible_pairings = @team.all_possible_pairs
-    expected_pairings = [[@lukas, @florian],[@lukas,@martino],[@lukas,@pablo],[@florian,@martino], [@florian,@pablo], [@pablo,@martino]]
-
-    possible_pairings.should match_array expected_pairings
-  end
-
-  it 'should output all possible pairing sessions' do 
-    possible_sessions = @team.all_possible_pairing_sessions
-    expected_sessions = [
-          [[@lukas, @florian],[@pablo,@martino]],
-          [[@lukas, @martino],[@florian,@pablo]],
-          [[@lukas, @pablo],[@florian,@martino]],
-                            ]
-
-    possible_sessions.should match_array expected_sessions
-  end
-
   it 'should generate only possible pairing solution left' do
     start_time = Time.now
     end_time = start_time + (10*60)
