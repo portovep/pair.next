@@ -109,7 +109,7 @@ post '/team/:team_id/savePairs' do
   redirect to "/team/#{params[:team_id]}/shuffle"
 end
 
-delete '/team/:team_id/user/:user_id' do 
+delete '/team/:team_id/user/:user_id' do
   team = Team.find_by_id(params[:team_id])
   user = User.find_by_id(params[:user_id])
   session[:success_message] =  "User removed from team."
@@ -119,7 +119,7 @@ delete '/team/:team_id/user/:user_id' do
   redirect to "/team/#{team.id}"
 end
 
-get '/team/:team_id/history' do 
+get '/team/:team_id/history' do
   team = Team.find_by_id(params[:team_id])
   @team = team
   @history = team.pairing_history
@@ -127,15 +127,15 @@ get '/team/:team_id/history' do
   erb :history
 end
 
-get '/user' do 
+get '/user' do
   @user = User.find_by_id(params[:user_id])
   if (!(current_user))
     session[:error_message] =  "You are not logged in."
     redirect to '/team/new'
   else
-    redirect to '/user/' + current_user.id.to_s  
+    redirect to '/user/' + current_user.id.to_s
   end
-  
+
 
 end
 
@@ -168,15 +168,13 @@ post '/user/update' do
   new_nickname = params[:new_nickname]
 
   if (new_nickname.length <= 0)
-      session[:error_message] =  "Sorry, you must have a name!"
-      redirect to '/user/' + current_user.id.to_s
+    session[:error_message] =  "Sorry, you must have a name!"
+    redirect to '/user/' + current_user.id.to_s
   elsif (new_nickname.length >= 30)
-      session[:error_message] =  "Sorry, your name can't be that long"
-      redirect to '/user/' + current_user.id.to_s
+    session[:error_message] =  "Sorry, your name can't be that long"
+    redirect to '/user/' + current_user.id.to_s
   end
   user = User.find_by_id(current_user.id)
   user.update(nickname: new_nickname)
   redirect to '/user/' + current_user.id.to_s
-
-  "Hello " + params[:user_id].to_s
 end

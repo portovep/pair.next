@@ -22,8 +22,11 @@ RSpec.configure do |conf|
 
     # Wrap all DB interactions in a transaction and rollback after
     ActiveRecord::Base.transaction do
-      example.run
-      raise ActiveRecord::Rollback
+      begin
+        example.run
+      ensure
+        raise ActiveRecord::Rollback
+      end
     end
   end
 
