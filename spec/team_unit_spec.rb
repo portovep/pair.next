@@ -45,13 +45,6 @@ describe 'Team class' do
     new_pairs[1].size.should be == 2
   end 
 
-  it 'should output all possible pairings' do 
-    possible_pairings = @team.all_possible_pairs
-    expected_pairings = [[@lukas, @florian],[@lukas,@martino],[@lukas,@pablo],[@florian,@martino], [@florian,@pablo], [@pablo,@martino]]
-
-    possible_pairings.should match_array expected_pairings
-  end
-
   it 'should generate only possible pairing solution left' do
     start_time = Time.now
     end_time = start_time + (10*60)
