@@ -174,7 +174,11 @@ post '/user/update' do
     session[:error_message] =  "Sorry, your name can't be that long"
     redirect to '/user/' + current_user.id.to_s
   end
+
+  new_extra = params[:new_extra]
+
   user = User.find_by_id(current_user.id)
   user.update(nickname: new_nickname)
+  user.update(bio: new_extra)
   redirect to '/user/' + current_user.id.to_s
 end
