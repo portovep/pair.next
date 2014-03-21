@@ -1,6 +1,7 @@
-require_relative './test_helper.rb'
+require_relative '../test_helper.rb'
 
-describe 'PairingSession class' do
+describe PairingSession do
+
   before(:each) do
     @team = Team.create(name: "team_test")
 
@@ -8,7 +9,7 @@ describe 'PairingSession class' do
     @florian = User.create(username: "Florian",teams: [@team])
 
     @other_team = Team.create(name: "other_team")
-  
+
     @martino = User.create(username: "Martino",teams: [@other_team])
     @pablo = User.create(username: "Pablo",teams: [@other_team])
 

@@ -1,4 +1,4 @@
-require_relative './test_helper.rb'
+require_relative '../test_helper.rb'
 
 describe 'PairingMembership class' do
   before(:each) do
@@ -8,7 +8,7 @@ describe 'PairingMembership class' do
     @florian = User.create(username: "Florian",teams: [@team])
 
     @other_team = Team.create(name: "other_team")
-  
+
     @martino = User.create(username: "Martino",teams: [@other_team])
     @pablo = User.create(username: "Pablo",teams: [@other_team])
   end
@@ -23,22 +23,22 @@ describe 'PairingMembership class' do
     PairingMembership.find_by_team(@team).should match_array [lukasMembership,florianMembership]
   end
 
-  describe 'find_current_by_user' do 
-    before(:each) do 
+  describe 'find_current_by_user' do
+    before(:each) do
       @session = PairingSession.create(users: [@lukas,@florian])
     end
-    
-    it 'should find current pairingMembership for a user with a current pairingMembership' do 
+
+    it 'should find current pairingMembership for a user with a current pairingMembership' do
       membership = PairingMembership.find_current_by_user(@lukas)
       membership.should be == @session.pairing_memberships.find { |membership| membership.user_id = @lukas.id }
     end
 
-    it 'should return nil for a user without pairingMemberships' do 
+    it 'should return nil for a user without pairingMemberships' do
       membership = PairingMembership.find_current_by_user(@pablo)
       membership.should be == nil
     end
 
-    it 'should return nil for a user with only closed pairingMemberships' do 
+    it 'should return nil for a user with only closed pairingMemberships' do
       closed_session = PairingSession.create(users: [@martino,@pablo], start_time: Time.now - 10, end_time: Time.now)
 
       membership = PairingMembership.find_current_by_user(@pablo)

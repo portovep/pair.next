@@ -1,4 +1,4 @@
-require_relative './test_helper.rb'
+require_relative '../test_helper.rb'
 
 describe 'Team profile' do
 
@@ -13,14 +13,14 @@ describe 'Team profile' do
       team.users << User.create(username: 'valid_id')
 
       get "/team/#{team.id}", {}, session
-      
+
       expect(last_response.body).to include("Profile - #{team.name}")
     end
 
     it 'should show error for non existing team' do
       non_existing_team_id = -1
       get "/team/#{non_existing_team_id}", {}, session
-      
+
       expect(last_response.redirect?).to be_true
 
       follow_redirect!
@@ -30,7 +30,7 @@ describe 'Team profile' do
     it 'should denied access to team profile when user is not member of given team' do
       team = Team.create(name: 'team_test')
       user = User.create(username: 'valid_id')
-      
+
       get "/team/#{team.id}", {}, session
 
       expect(last_response.redirect?).to be_true
@@ -52,14 +52,14 @@ describe 'Team profile' do
       expect(last_response.body).to include(user.image_url)
     end
 
-    it 'should delete a member from the team' do 
+    it 'should delete a member from the team' do
       team = Team.create(name: 'team_test')
       user = User.create(username: 'theUserName')
       team.users << user
-      
+
       delete "/team/#{team.id}/user/#{user.id}", {}, session
       expect(last_response.redirect?).to be_true
-      
+
       follow_redirect!
 
       expect(team.users).not_to include(user)
@@ -72,7 +72,7 @@ describe 'Team profile' do
     it 'should show error for non existing member username' do
       team = Team.create(name: 'team_test')
       team.users << User.create(username: 'valid_id')
-      
+
       expect(team.users.count).to be(1)
 
       post "/team/#{team.id}/members", {member_username: 'user1'}, session
