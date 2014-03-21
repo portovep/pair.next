@@ -1,14 +1,14 @@
 require_relative './test_helper.rb'
 
 describe 'User' do
-  
+
   it 'should produce the right image link' do
     user = User.new(username: 'vise890@gmail.com')
     expect(user.image_url).to eq("http://www.gravatar.com/avatar/8d6f61601881ec2f053899a7732c59ba")
   end
 
-  describe 'count pairings' do 
-    before (:each) do 
+  describe 'count pairings' do
+    before (:each) do
       @lukas = User.create(username: "Lukas")
       @florian = User.create(username: "Florian")
       @pablo = User.create(username: "Pablo")
@@ -18,23 +18,23 @@ describe 'User' do
 
     end
 
-    it 'should count the number of pairings with another user if pairings exist' do 
-      @lukas.count_pairings_with(@florian).should be == 1 
-      @florian.count_pairings_with(@lukas).should be == 1 
+    it 'should count the number of pairings with another user if pairings exist' do
+      @lukas.count_pairings_with(@florian).should be == 1
+      @florian.count_pairings_with(@lukas).should be == 1
     end
 
-    it 'should count the number of pairings with another user they didnt pair before' do 
-      @lukas.count_pairings_with(@pablo).should be == 0 
+    it 'should count the number of pairings with another user they didnt pair before' do
+      @lukas.count_pairings_with(@pablo).should be == 0
       @pablo.count_pairings_with(@lukas).should be == 0
     end
 
-    it 'should count pairings with no user at all' do 
+    it 'should count pairings with no user at all' do
       @lukas.count_pairings_with(nil).should be == 1
       @pablo.count_pairings_with(nil).should be == 0
     end
   end
 
-  it 'should have a shortname which is the username without the email domain' do 
+  it 'should have a shortname which is the username without the email domain' do
       username1 = 'foo@thoughtworks.com'
       nickname1 = username1[/[^@]+/]
       username2 = 'bar@baz.com'
@@ -43,10 +43,4 @@ describe 'User' do
       User.new(username: username2,nickname: nickname2).shortname.should be == "bar"
   end
 
-  #it 'shuold have a nickname stored in the db which defaults to the shortname'
-
-  it 'should know if a user is a ghost or not' do 
-    User.find_by_username("Balthasar").is_ghost.should be == true
-    User.new(username: 'bar@baz.com').is_ghost.should be == false
-  end 
 end
