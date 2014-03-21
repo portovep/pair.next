@@ -21,7 +21,7 @@ function changeToText()
 
 	$('#extra_row').replaceWith(function() {
 
-					return	'<div class="large-12 column chart-text"> <textarea name="new_extra" class="no-low-margin" laceholder="Share a little about yourself."></textarea> </div>';
+					return	'<div class="large-12 column chart-text"> <textarea maxlength="120" name="new_extra" class="no-low-margin" laceholder="Share a little about yourself."></textarea> </div>';
   });
 
 

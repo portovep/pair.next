@@ -11,6 +11,7 @@ gem "omniauth-saml"
 # Auth (OpenID)
 gem "omniauth-openid"
 
+gem "sanitize"
 
 # Persistence
 gem "activerecord"

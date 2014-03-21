@@ -50,6 +50,14 @@ describe "User profile page" do
       expect(last_response.body).to include("A super cool team")
 
     end
+
+    it "will santatise (with an s) user data " do
+      post "/user/update", { new_nickname: "<marquee>Johnny</marquee>" }, @session
+      expect(last_response.redirect?).to be_true
+
+      follow_redirect!
+      expect(last_response.body).to include("Hello Johnny!")
+    end
   end
 
 end
