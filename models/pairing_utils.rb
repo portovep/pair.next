@@ -20,7 +20,13 @@ class PairingUtils
   end
 
  def self.all_possible_pairing_sessions(team_members)
-    combinations = all_possible_pairs(team_members).combination(team_members.count/2)
+    if team_members.count%2 == 0 
+      number_of_pairs = team_members.count/2
+    else 
+      number_of_pairs = team_members.count/2+1
+    end
+
+    combinations = all_possible_pairs(team_members).combination(number_of_pairs)
     valid_combinations = combinations.select { |session| is_valid_pairing_session(session,team_members) }
 
     valid_combinations
