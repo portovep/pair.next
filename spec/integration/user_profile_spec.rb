@@ -1,4 +1,4 @@
-require_relative './test_helper.rb'
+require_relative '../test_helper.rb'
 
 describe "User profile page" do
 
@@ -36,7 +36,7 @@ describe "User profile page" do
 
     end
 
-    it "will list all the teams a user is part of"do 
+    it "will list all the teams a user is part of"do
 
       test_team = Team.create(name: "The cow team")
       test_team.users << @user

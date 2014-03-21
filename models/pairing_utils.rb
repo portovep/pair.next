@@ -42,5 +42,33 @@ class PairingUtils
 
   pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
  end
-  
+
+ def self.find_best_sessions_for_team_members(team_members,to_exclude,count_for_users) 
+  all_possible_pairing_sessions = all_possible_pairing_sessions(team_members)
+  all_possible_pairing_sessions = filter_from_sessions_if_appropriate(all_possible_pairing_sessions,to_exclude)
+
+  best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,count_for_users)
+
+  best_sessions    
+ end
+
+ # TODO: the following is connected and looks kind of strange: 
+ # filter_from_sessions_if_appropriate,contains_pair,is_same_pair
+ def self.filter_from_sessions_if_appropriate(sessions,to_exclude) 
+  if (sessions.count > 1) 
+    sessions.select do |session|
+      session.count != to_exclude.count || !to_exclude.map { |pair_to_exclude| contains_pair(session,pair_to_exclude)}.reduce(true,:&)
+    end
+  else 
+    sessions
+  end
+ end
+
+ def self.contains_pair(session,pair)
+  session.map { |session_pair| is_same_pair(pair,session_pair)}.reduce(false,:|)
+ end
+
+ def self.is_same_pair(pair1,pair2) 
+  pair1.map { |member| pair2.include? member}.reduce(true,:&)
+ end 
 end
