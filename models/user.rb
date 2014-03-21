@@ -34,11 +34,8 @@ class User < ActiveRecord::Base
     nickname
   end
 
-  def is_ghost
-    username == "Balthasar"
-  end
-
   private
+
   def clean_input
     self.username = Sanitize.clean(self.username)
     self.bio = Sanitize.clean(self.bio)
