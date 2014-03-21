@@ -52,6 +52,8 @@ class PairingUtils
   best_sessions    
  end
 
+ # TODO: the following is connected and looks kind of strange: 
+ # filter_from_sessions_if_appropriate,contains_pair,is_same_pair
  def self.filter_from_sessions_if_appropriate(sessions,to_exclude) 
   if (sessions.count > 1) 
     sessions.select do |session|
