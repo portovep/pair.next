@@ -44,6 +44,13 @@ describe 'PairingUtils' do
           [[@lukas, @pablo],[@florian,@martino]]]
   end
 
+  it 'should provide all possible pairing sessions for odd number of team members' do 
+    PairingUtils.all_possible_pairing_sessions([@lukas,@florian,@pablo]).should match_array [
+          [[@lukas, @florian],[@pablo]],
+          [[@lukas, @pablo],[@florian]],
+          [[@florian, @pablo],[@lukas]]]
+  end
+
   it 'should count the number of pairings in a session' do 
     PairingUtils.number_of_pairings_in_session([[@florian,@martino],[@tom,@pablo]],@mock_counter).should be == 3
     PairingUtils.number_of_pairings_in_session([[@lukas,@martino],[@tom,@pablo]],@mock_counter).should be == 2

@@ -36,16 +36,7 @@ class Team < ActiveRecord::Base
   end
 
   def shuffle_pairs
-    if (users.count % 2 == 1)
-      ghost = User.find_by_username("Balthasar")
-      users << ghost
-    end 
-
     best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,method(:count_pairings_between))
-
-    if (ghost != nil) 
-      users.delete(ghost)
-    end
 
     best_sessions.shuffle.first
   end
