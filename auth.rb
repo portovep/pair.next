@@ -30,7 +30,7 @@ helpers do
     session[:user_id]
   end
 
-  def login!(username, nickname = "")
+  def login!(username)
     user = User.where(username: username).first_or_create
     session[:user_id] = user.username
   end
@@ -45,6 +45,6 @@ end
 post '/auth/open_id/callback' do
   auth = env['omniauth.auth']
   logger.info auth[:info]
-  login!(auth[:info][:email], auth[:info][:name])
+  login!(auth[:info][:email])
   redirect to(params[:RelayState] || "/")
 end
