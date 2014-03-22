@@ -26,10 +26,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def shortname
-    nickname
-  end
-
   private
 
   def clean_input
