@@ -11,14 +11,23 @@
   <div class="row">
     <div class="large-12 columns <%= "error" if @team.errors.messages[:name] %>">
       <div class="panel clearfix">
+        <div class="row collapse">
 
-        <label><h3>Team name</h3>
-          <input type="text" name="team_name" placeholder="Type your team name." />
-        </label>
-        <% if @team.errors.messages[:name] %>
-          <small class="error">Name <%= @team.errors.messages[:name].first %></small>
-        <% end %> 
-        <input type="submit" class="small button right" value="Create" />
+          <label><h3>Team name</h3>
+            <div class="small-10 columns">
+              <input type="text" name="team_name" placeholder="Type your team name." />
+            </div>
+          </label>
+
+          <% if @team.errors.messages[:name] %>
+            <small class="error">Name <%= @team.errors.messages[:name].first %></small>
+          <% end %> 
+
+          <div class="small-2 columns">
+            <input type="submit" class="small button postfix" value="Create" />
+          </div>
+          
+        </div>
       </div>
     </div>
   </div>
