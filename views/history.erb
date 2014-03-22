@@ -1,6 +1,6 @@
 <div class="row">
-	<div class="small-12 column">
-		<h1>Pairing Statistics: <a href="/team/<%= @team.id %>"><%= @team.name %></a></h1>
+  <div class="small-12 column">
+    <h1>Pairing Statistics: <a href="/team/<%= @team.id %>"><%= @team.name %></a></h1>
     <table>
       <thead>
         <tr>
@@ -11,13 +11,13 @@
       <tbody>
         <% @statistics.each do |pair,count| %>
           <tr>
-            <td><%=pair.map{ |user| user.shortname }.join(" , ")%></td>
+            <td><%=pair.map{ |user| user.nickname }.join(" , ")%></td>
             <td><%=count%></td>
           </tr>
         <% end %>
       </tbody>
     </table>
-	</div>
+  </div>
 </div>
 
 <div class="row">
@@ -27,25 +27,25 @@
 </div>
 
 <div class="row">
-	<div class="small-12 column">
-		<% @history.each do |timestamp,pairs| %>
-		<div class="row">
-			<div class="small-10 column">
-				<h2><%=timestamp%></h2>
-				<% pairs.each do |pair| %>
-				<div class="row">
-					<div class="small-2 columns">
-						<% pair.each do |pair_member| %>
+  <div class="small-12 column">
+    <% @history.each do |timestamp,pairs| %>
+    <div class="row">
+      <div class="small-10 column">
+        <h2><%=timestamp%></h2>
+        <% pairs.each do |pair| %>
+        <div class="row">
+          <div class="small-2 columns">
+            <% pair.each do |pair_member| %>
               <img src="<%=pair_member.image_url%>" width="30" height="30">
             <% end %>
-	        </div>
-	        <div class="small-10 column">
-	        	<span><%=pair.map{ |user| user.shortname }.join(" and ")%> started pairing</span>
-	        </div>		
+          </div>
+          <div class="small-10 column">
+            <span><%=pair.map{ |user| user.nickname }.join(" and ")%> started pairing</span>
+          </div>    
         </div>
         <%end %>
       </div>
     </div>
     <% end %>
-	</div>
-</div>	
+  </div>
+</div>  
