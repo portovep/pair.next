@@ -31,16 +31,23 @@ function dragDrop(ev) {
 
 	swapElements(source[0],target[0]);
 
-	source.removeClass("drag-source");
-	source.removeClass("drag-target");
-	source.removeClass("drag-alt-target");
-
+	
 	target.removeClass("drag-target");
 	target.removeClass("drag-alt-target");
 
 	target.parent().removeClass("drag-source");
 
 	ev.stopPropagation();	
+	return false;
+}
+
+function dragEnd(ev) {
+	var sourceElem = ev.toElement
+	var source = $(sourceElem);
+	source.removeClass("drag-source");
+	source.removeClass("drag-target");
+	source.removeClass("drag-alt-target");
+	
 	return false;
 }
 
