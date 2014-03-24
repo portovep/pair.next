@@ -14,14 +14,25 @@ describe PairingUtils do
   end
 
   it 'should provide all possible pairs for a set of users with even number' do
-    PairingUtils.all_possible_pairs([@florian,@tom]).should match_array [[@florian,@tom]]
+    PairingUtils.all_possible_pairs([@florian,@tom]).should match_array [Pair.new([@florian,@tom])]
+    
     PairingUtils.all_possible_pairs([@florian,@lukas,@pablo,@martino]).should match_array [
-      [@florian, @lukas],[@lukas,@martino],[@lukas,@pablo],[@florian,@martino], [@florian,@pablo], [@pablo,@martino]]
+      Pair.new([@florian, @lukas]),
+      Pair.new([@lukas,@martino]),
+      Pair.new([@lukas,@pablo]),
+      Pair.new([@florian,@martino]),
+      Pair.new([@florian,@pablo]), 
+      Pair.new([@pablo,@martino])]
   end
 
   it 'should include pairs with one user for a set of users woth odd number' do
     PairingUtils.all_possible_pairs([@florian,@tom,@martino]).should match_array [
-      [@florian,@tom],[@florian,@martino],[@tom,@martino],[@florian],[@tom],[@martino]
+      Pair.new([@florian,@tom]),
+      Pair.new([@florian,@martino]),
+      Pair.new([@tom,@martino]),
+      Pair.new([@florian]),
+      Pair.new([@tom]),
+      Pair.new([@martino])
     ]
   end
 
