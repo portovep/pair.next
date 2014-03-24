@@ -14,7 +14,6 @@ function dragEnter(ev) {
 		target.parent().addClass("drag-target");
 		target.parent().addClass("drag-alt-target");
 	}
-	//$(ev.target).parent().css( "background-color", "red" );
 	return true;
 }
 
