@@ -11,6 +11,7 @@ describe Pair do
     pair2 = Pair.new([@martino,@florian])
 
     pair2.should be == pair
+    pair2.hash.should be == pair.hash
   end
 
   it 'should have an array-accessor' do 
