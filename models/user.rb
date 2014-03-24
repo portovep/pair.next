@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :teams, through: :team_members
 
   has_many :pairing_memberships
-  has_many :pairing_sessions, through: :pairing_memberships
+  has_many :pairings, through: :pairing_memberships
 
   before_validation :clean_input
   before_save :give_nickname
@@ -20,9 +20,9 @@ class User < ActiveRecord::Base
 
   def count_pairings_with(other_user)
     if (other_user == nil)
-      pairing_memberships.select { |membership| membership.pairing_session.users.count == 1}.count
+      pairing_memberships.select { |membership| membership.pairing.users.count == 1}.count
     else
-      pairing_memberships.select { |membership| membership.pairing_session.users.include? other_user}.count
+      pairing_memberships.select { |membership| membership.pairing.users.include? other_user}.count
     end
   end
 

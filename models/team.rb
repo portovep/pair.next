@@ -7,17 +7,17 @@ class Team < ActiveRecord::Base
 
 
   def get_current_pairs
-    current_pairing_sessions.map {|session| session.users }
+    current_pairings.map {|pairing| pairing.users }
   end
 
-  def current_pairing_sessions
-    PairingSession.find_current_by_team(self)
+  def current_pairings
+    Pairing.find_current_by_team(self)
   end
 
-  def end_current_pairing_sessions # TODO: this is untested
-    current_pairing_sessions.each do |pairing_session|
-      pairing_session.end_time = Time.now
-      pairing_session.save
+  def end_current_pairings # TODO: this is untested
+    current_pairings.each do |pairing|
+      pairing.end_time = Time.now
+      pairing.save
     end
   end
 
@@ -30,18 +30,18 @@ class Team < ActiveRecord::Base
   end
 
   def shuffle_pairs
-    best_sessions = PairingUtils.find_best_sessions_for_team_members(team_member_users,get_current_pairs,method(:count_pairings_between))
+    best_pairings = PairingUtils.find_best_sessions_for_team_members(team_member_users,get_current_pairs,method(:count_pairings_between))
 
-    best_sessions.shuffle.first
+    best_pairings.shuffle.first
   end
 
   def pairing_history
     pairing_memberships_for_team = PairingMembership.find_by_team(self)
-    memberships_by_time = pairing_memberships_for_team.group_by { |foo| foo.pairing_session.start_time.change(usec:0) }
+    memberships_by_time = pairing_memberships_for_team.group_by { |foo| foo.pairing.start_time.change(usec:0) }
     Hash[memberships_by_time.map { |time,memberships| 
       [time,memberships.group_by {|membership| 
-        membership.pairing_session_id
-      }.map {|session_id,pair_memberships| 
+        membership.pairing_id
+      }.map {|pairing_id,pair_memberships| 
         pair_memberships.map{|membership| 
           membership.user
         }

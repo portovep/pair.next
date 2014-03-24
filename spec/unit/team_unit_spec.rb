@@ -71,7 +71,7 @@ describe Team do
     new_pairs.each { |pair| pair.each {|user| pair_membership_counter[user] += 1 }}
 
     pair_membership_counter.each { |k,v| v.should be == 1}
-    # todo: the checks are also in Team#isValidPairingSession
+    # todo: the checks are also in Team#isValidPairing
     # todo: better checks?
   end
 
@@ -97,10 +97,10 @@ describe Team do
     today = Time.now
     yesterday = today - (24*60*60)
     dayBefore = yesterday - (24*60*60)
-    PairingSession.create(users: [@martino,@pablo], start_time: dayBefore, end_time: yesterday)
-    PairingSession.create(users: [@lukas,@florian], start_time: dayBefore, end_time: yesterday)
+    Pairing.create(users: [@martino,@pablo], start_time: dayBefore, end_time: yesterday)
+    Pairing.create(users: [@lukas,@florian], start_time: dayBefore, end_time: yesterday)
 
-    PairingSession.create(users: [@martino,@pablo], start_time: yesterday, end_time: today)
+    Pairing.create(users: [@martino,@pablo], start_time: yesterday, end_time: today)
 
     @team.pairing_statistics.should be == {
       [@pablo,@martino] => 2,
