@@ -35,18 +35,6 @@ describe PairingUtils do
     ]
   end
 
-  it 'should detect an invalid pairing session if a user appears more than once' do
-    PairingUtils.is_valid_pairing_session([[@florian,@tom],[@florian,@martino]],[@florian,@tom,@martino]).should be == false
-  end
-
-  it 'should detect a valid pairing session if no user appears more than once' do
-    PairingUtils.is_valid_pairing_session([[@florian,@tom],[@pablo,@martino]],[@florian,@tom,@martino,@pablo]).should be == true
-  end
-
-  it 'should detect if a teammember is not part of the pairing session' do
-    PairingUtils.is_valid_pairing_session([[@florian,@tom]],[@florian,@tom,@martino,@pablo]).should be == false
-  end
-
   it 'should provide all possible pairing sessions' do
     PairingUtils.all_possible_pairing_sessions([@lukas,@florian,@pablo,@martino]).should match_array [
           [Pair.new([@lukas, @florian]),Pair.new([@pablo,@martino])],

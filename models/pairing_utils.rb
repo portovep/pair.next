@@ -8,11 +8,6 @@ class PairingUtils
     possible_pairs.map { |pair| Pair.new(pair)}
   end
 
-  def self.is_valid_pairing_session(session,team_members)
-    pair_array = session.map { |pair| Pair.new(pair) }
-    PairingSession.new(pair_array).is_valid_for(team_members)
-  end
-
  def self.all_possible_pairing_sessions(team_members)
     if team_members.count%2 == 0 
       number_of_pairs = team_members.count/2
