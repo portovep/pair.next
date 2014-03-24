@@ -18,6 +18,8 @@ describe PairingSession do
 
     session1.should be == session2
     session1.hash.should be == session2.hash
+
+    [session1].should match_array [session2]
   end
 
   it 'should have an array-accessor' do 
