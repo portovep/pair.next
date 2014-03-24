@@ -1,6 +1,6 @@
 require_relative '../test_helper.rb'
 
-describe PairingSession do
+describe Pairing do
 
   before(:each) do
     @team = Team.create(name: "team_test")
@@ -13,10 +13,10 @@ describe PairingSession do
     @martino = User.create(username: "Martino",teams: [@other_team])
     @pablo = User.create(username: "Pablo",teams: [@other_team])
 
-    @session = PairingSession.create(users: [@lukas,@florian])
+    @pairing = Pairing.create(users: [@lukas,@florian])
   end
 
-  it 'should find current PairingSessions by team' do
-    PairingSession.find_current_by_team(@team).should match_array [@session]
+  it 'should find current Pairings by team' do
+    Pairing.find_current_by_team(@team).should match_array [@pairing]
   end
 end

@@ -28,8 +28,8 @@ describe 'User' do
       @florian = User.create(username: "Florian")
       @pablo = User.create(username: "Pablo")
 
-      PairingSession.create(users: [@lukas,@florian])
-      PairingSession.create(users: [@lukas])
+      Pairing.create(users: [@lukas,@florian])
+      Pairing.create(users: [@lukas])
     end
 
     it 'should count the number of pairings with another user if pairings exist' do
