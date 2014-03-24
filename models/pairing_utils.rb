@@ -5,7 +5,7 @@ class PairingUtils
       pairs_with_single_user = team_members.map{|member| [member]}
       possible_pairs.concat(pairs_with_single_user)
     end
-    possible_pairs 
+    possible_pairs.map { |pair| Pair.new(pair)}
   end
 
   def self.is_valid_pairing_session(session,team_members)
@@ -20,7 +20,7 @@ class PairingUtils
       number_of_pairs = team_members.count/2+1
     end
 
-    combinations = all_possible_pairs(team_members).combination(number_of_pairs)
+    combinations = all_possible_pairs(team_members).map{|pair| pair.members}.combination(number_of_pairs)
     valid_combinations = combinations.select { |session| is_valid_pairing_session(session,team_members) }
 
     valid_combinations
