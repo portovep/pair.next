@@ -37,16 +37,16 @@ describe PairingUtils do
 
   it 'should provide all possible pairing sessions' do
     PairingUtils.all_possible_pairing_sessions([@lukas,@florian,@pablo,@martino]).should match_array [
-          [Pair.new([@lukas, @florian]),Pair.new([@pablo,@martino])],
-          [Pair.new([@lukas, @martino]),Pair.new([@florian,@pablo])],
-          [Pair.new([@lukas, @pablo]),Pair.new([@florian,@martino])]]
+          PairingSession.new([Pair.new([@lukas, @florian]),Pair.new([@pablo,@martino])]),
+          PairingSession.new([Pair.new([@lukas, @martino]),Pair.new([@florian,@pablo])]),
+          PairingSession.new([Pair.new([@lukas, @pablo]),Pair.new([@florian,@martino])])]
   end
 
   it 'should provide all possible pairing sessions for odd number of team members' do
     PairingUtils.all_possible_pairing_sessions([@lukas,@florian,@pablo]).should match_array [
-          [Pair.new([@lukas, @florian]),Pair.new([@pablo])],
-          [Pair.new([@lukas, @pablo]),Pair.new([@florian])],
-          [Pair.new([@florian, @pablo]),Pair.new([@lukas])]]
+          PairingSession.new([Pair.new([@lukas, @florian]),Pair.new([@pablo])]),
+          PairingSession.new([Pair.new([@lukas, @pablo]),Pair.new([@florian])]),
+          PairingSession.new([Pair.new([@florian, @pablo]),Pair.new([@lukas])])]
   end
 
   it 'should count the number of pairings in a session' do
@@ -98,7 +98,7 @@ describe PairingUtils do
   end 
 
   it 'filter from session should work for strange edge cases (regression tests)' do 
-    all_possible_pairing_sessions = PairingUtils.all_possible_pairing_sessions([@florian,@martino,@tom]).map {|session| session.map { |pair| pair.members }}
+    all_possible_pairing_sessions = PairingUtils.all_possible_pairing_sessions([@florian,@martino,@tom]).map{|session| session.pairs }.map {|session| session.map { |pair| pair.members }}
     PairingUtils.filter_from_sessions_if_appropriate(all_possible_pairing_sessions,[[@florian,@tom],[@martino]]).count.should be > 0
     PairingUtils.filter_from_sessions_if_appropriate(all_possible_pairing_sessions,[]).count.should be > 0
   end

@@ -9,6 +9,8 @@ class PairingSession
     @pairs.to_set == other_session.pairs.to_set
   end
 
+  alias eql? ==
+
   def hash
     @pairs.to_set.hash
   end

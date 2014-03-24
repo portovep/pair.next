@@ -1,4 +1,4 @@
-class Pair
+class Pair 
   attr_accessor :members
 
   def initialize(members)
@@ -8,6 +8,9 @@ class Pair
   def ==(other_pair)
     @members.to_set == other_pair.members.to_set
   end
+
+  alias eql? ==
+
 
   def inspect
     "Pair #{members}"
