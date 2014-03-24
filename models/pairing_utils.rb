@@ -9,13 +9,8 @@ class PairingUtils
   end
 
   def self.is_valid_pairing_session(session,team_members)
-    pair_membership_counter = {}
-    team_members.each { |member| pair_membership_counter[member] = 0 }
-    session.each { |pair| pair.each {|user| pair_membership_counter[user] += 1 }}
-
-    valid_user_entries = pair_membership_counter.select { |k,v| v == 1}
-   
-    valid_user_entries.count == pair_membership_counter.count
+    pair_array = session.map { |pair| Pair.new(pair) }
+    PairingSession.new(pair_array).is_valid_for(team_members)
   end
 
  def self.all_possible_pairing_sessions(team_members)

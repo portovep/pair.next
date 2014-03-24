@@ -26,15 +26,15 @@ describe PairingSession do
   end
 
   it 'should detect an invalid pairing session if a user appears more than once' do
-    PairingSession.new([[@florian,@tom],[@florian,@martino]]).is_valid_for([@florian,@tom,@martino]).should be == false
+    PairingSession.new([Pair.new([@florian,@tom]),Pair.new([@florian,@martino])]).is_valid_for([@florian,@tom,@martino]).should be == false
   end
 
   it 'should detect a valid pairing session if no user appears more than once' do
-    PairingSession.new([[@florian,@tom],[@pablo,@martino]]).is_valid_for([@florian,@tom,@martino,@pablo]).should be == true
+    PairingSession.new([Pair.new([@florian,@tom]),Pair.new([@pablo,@martino])]).is_valid_for([@florian,@tom,@martino,@pablo]).should be == true
   end
 
   it 'should detect if a teammember is not part of the pairing session' do
-    PairingSession.new([[@florian,@tom]]).is_valid_for([@florian,@tom,@martino,@pablo]).should be == false
+    PairingSession.new([Pair.new([@florian,@tom])]).is_valid_for([@florian,@tom,@martino,@pablo]).should be == false
   end
 
 end
