@@ -4,9 +4,6 @@ describe Pair do
   before(:each) do
     @florian = { username: "florian"}
     @martino = { username: "martino"}
-    @pablo = { username: "pablo"}
-    @tom = { username: "tom"}
-    @lukas = { username: "lukas"}
   end
   
   it 'should represent a set of users independent of order' do
