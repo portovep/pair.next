@@ -12,7 +12,7 @@ class PairingSession
   def is_valid_for(team_members)
     pair_membership_counter = {}
     team_members.each { |member| pair_membership_counter[member] = 0 }
-    @pairs.each { |pair| pair.each {|user| pair_membership_counter[user] += 1 }}
+    @pairs.each { |pair| pair.members.each {|user| pair_membership_counter[user] += 1 }}
 
     valid_user_entries = pair_membership_counter.select { |k,v| v == 1}
    
