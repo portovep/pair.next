@@ -20,8 +20,8 @@ class PairingUtils
       number_of_pairs = team_members.count/2+1
     end
 
-    combinations = all_possible_pairs(team_members).map{|pair| pair.members}.combination(number_of_pairs)
-    valid_combinations = combinations.select { |session| is_valid_pairing_session(session,team_members) }
+    combinations = all_possible_pairs(team_members).combination(number_of_pairs)
+    valid_combinations = combinations.select { |session| PairingSession.new(session).is_valid_for(team_members) }
 
     valid_combinations
  end
@@ -38,7 +38,7 @@ class PairingUtils
  end
 
  def self.find_best_sessions_for_team_members(team_members,to_exclude,count_for_users) 
-  all_possible_pairing_sessions = all_possible_pairing_sessions(team_members)
+  all_possible_pairing_sessions = all_possible_pairing_sessions(team_members).map {|session| session.map { |pair| pair.members }}
   all_possible_pairing_sessions = filter_from_sessions_if_appropriate(all_possible_pairing_sessions,to_exclude)
 
   best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,count_for_users)
