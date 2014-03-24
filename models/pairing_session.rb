@@ -9,6 +9,10 @@ class PairingSession
     @pairs.to_set == other_session.pairs.to_set
   end
 
+  def hash
+    @pairs.to_set.hash
+  end
+
   def is_valid_for(team_members)
     pair_membership_counter = {}
     team_members.each { |member| pair_membership_counter[member] = 0 }
@@ -17,5 +21,9 @@ class PairingSession
     valid_user_entries = pair_membership_counter.select { |k,v| v == 1}
    
     valid_user_entries.count == pair_membership_counter.count
+  end
+
+  def inspect
+    "PairingSession #{pairs}"
   end
 end

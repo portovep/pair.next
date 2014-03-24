@@ -8,4 +8,12 @@ class Pair
   def ==(other_pair)
     @members.to_set == other_pair.members.to_set
   end
+
+  def inspect
+    "Pair #{members}"
+  end
+
+  def hash 
+    members.to_set.hash
+  end
 end

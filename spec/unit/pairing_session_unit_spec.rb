@@ -17,6 +17,7 @@ describe PairingSession do
     session2 = PairingSession.new([@lukas_tom,@florian_martino])
 
     session1.should be == session2
+    session1.hash.should be == session2.hash
   end
 
   it 'should have an array-accessor' do 
