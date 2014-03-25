@@ -14,8 +14,8 @@ describe 'PairingMembership class' do
   end
 
   it 'should find memberships by team' do
-    Pairing.create(users: [@lukas,@florian])
-    Pairing.create(users: [@martino,@pablo])
+    Pairing.create(users: [@lukas,@florian], team:@team)
+    Pairing.create(users: [@martino,@pablo], team: @other_team)
 
     lukasMembership = PairingMembership.find_by_user_id(@lukas.id)
     florianMembership = PairingMembership.find_by_user_id(@florian.id)
