@@ -48,11 +48,11 @@ describe Team do
   it 'should generate only possible pairing solution left' do
     start_time = Time.now
     end_time = start_time + (10*60)
-    TestUtilityMethods.create_pair("Pablo", "Florian", start_time, end_time)
-    TestUtilityMethods.create_pair("Lukas", "Martino", start_time, end_time)
+    Pairing.create(users: [@pablo,@florian], team:@team, start_time: start_time, end_time: end_time)
+    Pairing.create(users: [@lukas,@martino], team:@team, start_time: start_time, end_time: end_time)
 
-    TestUtilityMethods.create_pair("Lukas", "Florian", end_time)
-    TestUtilityMethods.create_pair("Pablo", "Martino", end_time)
+    Pairing.create(users: [@lukas,@florian], team:@team, start_time: end_time)
+    Pairing.create(users: [@pablo,@martino], team:@team, start_time: end_time)
 
     new_pairs = @team.shuffle_pairs
     new_pairs.should be == [[User.find_by_username("Lukas"), User.find_by_username("Pablo")],
