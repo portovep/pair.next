@@ -22,11 +22,11 @@ describe Team do
 	it 'should get the most current old pairs' do
     start_time = Time.now
     end_time = start_time + (10*60)
-    TestUtilityMethods.create_pair("Pablo", "Florian", start_time, end_time)
-    TestUtilityMethods.create_pair("Lukas", "Martino", start_time, end_time)
+    Pairing.create(users: [@pablo,@florian], team:@team, start_time: start_time, end_time: end_time)
+    Pairing.create(users: [@lukas,@martino], team:@team, start_time: start_time, end_time: end_time)
 
-    TestUtilityMethods.create_pair("Lukas", "Florian", end_time)
-    TestUtilityMethods.create_pair("Pablo", "Martino", end_time)
+    Pairing.create(users: [@lukas,@florian], team:@team, start_time: end_time)
+    Pairing.create(users: [@pablo,@martino], team:@team, start_time: end_time)
 
 		old_pairs = @team.get_current_pairs
 		old_pairs.should be == [[User.find_by_username("Lukas"), User.find_by_username("Florian")],
@@ -60,8 +60,8 @@ describe Team do
   end
 
   it 'should generate a valid pairing solution when more than one option exists' do
-    TestUtilityMethods.create_pair("Lukas", "Florian")
-    TestUtilityMethods.create_pair("Pablo", "Martino")
+    Pairing.create(users: [@lukas,@florian], team:@team)
+    Pairing.create(users: [@pablo,@martino], team:@team)
 
     # valid pairing check:
     new_pairs = @team.shuffle_pairs
