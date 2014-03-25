@@ -26,7 +26,7 @@ class Team < ActiveRecord::Base
   end
 
   def count_pairings_between(user1,user2) 
-    user1.count_pairings_with(user2)
+    user1.count_pairings_with(user2,self.id)
   end
 
   def shuffle_pairs
@@ -51,7 +51,7 @@ class Team < ActiveRecord::Base
 
    def pairing_statistics 
      all_possible_pairs = PairingUtils.all_possible_pairs(users).map{|pair| pair.members}
-     Hash[all_possible_pairs.map { |pair| [pair,pair[0].count_pairings_with(pair[1])]}]
+     Hash[all_possible_pairs.map { |pair| [pair,pair[0].count_pairings_with(pair[1],self.id)]}]
    end
 
   private

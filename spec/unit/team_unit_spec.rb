@@ -97,13 +97,13 @@ describe Team do
     today = Time.now
     yesterday = today - (24*60*60)
     dayBefore = yesterday - (24*60*60)
-    Pairing.create(users: [@martino,@pablo], start_time: dayBefore, end_time: yesterday)
-    Pairing.create(users: [@lukas,@florian], start_time: dayBefore, end_time: yesterday)
+    Pairing.create(users: [@martino,@pablo], start_time: dayBefore, end_time: yesterday, team_id: 1)
+    Pairing.create(users: [@lukas,@florian], start_time: dayBefore, end_time: yesterday, team_id: 1)
 
-    Pairing.create(users: [@martino,@pablo], start_time: yesterday, end_time: today)
+    Pairing.create(users: [@martino,@pablo], start_time: yesterday, end_time: today, team_id: 1)
 
     @team.pairing_statistics.should be == {
-      [@pablo,@martino] => 2,
+      [@martino,@pablo] => 2,
       [@lukas,@florian] => 1,
       [@lukas,@martino] => 0,
       [@lukas,@pablo] => 0,
