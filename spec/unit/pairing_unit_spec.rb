@@ -13,7 +13,7 @@ describe Pairing do
     @martino = User.create(username: "Martino",teams: [@other_team])
     @pablo = User.create(username: "Pablo",teams: [@other_team])
 
-    @pairing = Pairing.create(users: [@lukas,@florian])
+    @pairing = Pairing.create(users: [@lukas,@florian],team: @team)
   end
 
   it 'should find current Pairings by team' do
