@@ -18,11 +18,11 @@ class User < ActiveRecord::Base
     return gravatar_url
   end
 
-  def count_pairings_with(other_user)
+  def count_pairings_with(other_user,team)
     if (other_user == nil)
-      pairing_memberships.select { |membership| membership.pairing.users.count == 1}.count
+      pairing_memberships.select { |membership| membership.pairing.users.count == 1 and membership.pairing.team_id == team}.count
     else
-      pairing_memberships.select { |membership| membership.pairing.users.include? other_user}.count
+      pairing_memberships.select { |membership| membership.pairing.users.include? other_user and membership.pairing.team_id == team}.count
     end
   end
 

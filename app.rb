@@ -100,7 +100,7 @@ post '/team/:team_id/savePairs' do
   @team = Team.find_by_id(params[:team_id]).end_current_pairings
 
   pairs.each do |pair|
-    pairing = Pairing.create(start_time: Time.now, end_time: nil)
+    pairing = Pairing.create(start_time: Time.now, end_time: nil, team_id: params[:team_id])
     pair.each do |member|
       pairing.users << User.find_by_id(member)
     end

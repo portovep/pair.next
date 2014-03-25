@@ -28,23 +28,23 @@ describe 'User' do
       @florian = User.create(username: "Florian")
       @pablo = User.create(username: "Pablo")
 
-      Pairing.create(users: [@lukas,@florian])
-      Pairing.create(users: [@lukas])
+      Pairing.create(users: [@lukas,@florian],team_id: 1)
+      Pairing.create(users: [@lukas],team_id: 1)
     end
 
     it 'should count the number of pairings with another user if pairings exist' do
-      @lukas.count_pairings_with(@florian).should be == 1
-      @florian.count_pairings_with(@lukas).should be == 1
+      @lukas.count_pairings_with(@florian,1).should be == 1
+      @florian.count_pairings_with(@lukas,1).should be == 1
     end
 
     it 'should count the number of pairings with another user they didnt pair before' do
-      @lukas.count_pairings_with(@pablo).should be == 0
-      @pablo.count_pairings_with(@lukas).should be == 0
+      @lukas.count_pairings_with(@pablo,1).should be == 0
+      @pablo.count_pairings_with(@lukas,1).should be == 0
     end
 
     it 'should count pairings with no user at all' do
-      @lukas.count_pairings_with(nil).should be == 1
-      @pablo.count_pairings_with(nil).should be == 0
+      @lukas.count_pairings_with(nil,1).should be == 1
+      @pablo.count_pairings_with(nil,1).should be == 0
     end
   end
 
