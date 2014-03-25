@@ -21,12 +21,17 @@ describe 'Pair shuffle' do
       	@team.users << User.create(username: member,nickname: member)
       end
 
+      @lukas = User.find_by_username("Lukas")
+      @florian = User.find_by_username("Florian")
+      @pablo = User.find_by_username("Pablo")
+      @martino = User.find_by_username("Martino")
+
       @team.save
     end
 
     it 'should show shuffle page for existing pairings' do
-      TestUtilityMethods.create_pair("Lukas", "Florian")
-      TestUtilityMethods.create_pair("Pablo", "Martino")
+      Pairing.create(users: [@lukas,@florian], team:@team)
+      Pairing.create(users: [@pablo,@martino], team:@team)
 
       get "/team/#{@team.id}/shuffle", {}, session
       parsed_doc = Nokogiri::HTML(last_response.body)
@@ -58,8 +63,8 @@ describe 'Pair shuffle' do
     end
 
     it 'should show new team members after clicking on SHUFFLE' do
-      TestUtilityMethods.create_pair("Lukas", "Florian")
-      TestUtilityMethods.create_pair("Pablo", "Martino")
+      Pairing.create(users: [@lukas,@florian], team:@team)
+      Pairing.create(users: [@pablo,@martino], team:@team)
 
       post "/team/#{@team.id}/shuffle", {}, session
 
