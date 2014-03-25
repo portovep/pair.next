@@ -79,11 +79,11 @@ describe Team do
     today = Time.current.utc.change(usec:0)
     yesterday = today - (24*60*60)
 
-    TestUtilityMethods.create_pair("Pablo", "Florian", yesterday, today)
-    TestUtilityMethods.create_pair("Lukas", "Martino", yesterday, today)
+    Pairing.create(users: [@pablo,@florian], team:@team, start_time: yesterday, end_time: today)
+    Pairing.create(users: [@lukas,@martino], team:@team, start_time: yesterday, end_time: today)
 
-    TestUtilityMethods.create_pair("Lukas", "Florian", today)
-    TestUtilityMethods.create_pair("Pablo", "Martino", today)
+    Pairing.create(users: [@lukas,@florian], team:@team, start_time: today)
+    Pairing.create(users: [@pablo,@martino], team:@team, start_time: today)
 
     expected = {
       yesterday => [[@pablo,@florian],[@lukas,@martino]],
@@ -97,13 +97,13 @@ describe Team do
     today = Time.now
     yesterday = today - (24*60*60)
     dayBefore = yesterday - (24*60*60)
-    Pairing.create(users: [@martino,@pablo], start_time: dayBefore, end_time: yesterday, team_id: 1)
-    Pairing.create(users: [@lukas,@florian], start_time: dayBefore, end_time: yesterday, team_id: 1)
+    Pairing.create(users: [@martino,@pablo], team: @team, start_time: dayBefore, end_time: yesterday)
+    Pairing.create(users: [@lukas,@florian], team: @team, start_time: dayBefore, end_time: yesterday)
 
-    Pairing.create(users: [@martino,@pablo], start_time: yesterday, end_time: today, team_id: 1)
+    Pairing.create(users: [@martino,@pablo], team: @team, start_time: yesterday, end_time: today)
 
     @team.pairing_statistics.should be == {
-      [@martino,@pablo] => 2,
+      [@pablo,@martino] => 2,
       [@lukas,@florian] => 1,
       [@lukas,@martino] => 0,
       [@lukas,@pablo] => 0,
