@@ -46,6 +46,7 @@ describe 'User' do
     it 'should escape correctly when updating' do 
       user = User.create(nickname: "hello")
       user.update(nickname: "<b>hello</b>")
+      user.update(bio: "foo")
       expect(user.nickname).to eq "&lt;b&gt;hello&lt;&#x2F;b&gt;"
     end
   end

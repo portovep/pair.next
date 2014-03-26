@@ -55,8 +55,7 @@ describe "User profile page" do
       post "/user/update", { new_nickname: "<marquee>Johnny</marquee>" }, @session
       expect(last_response.redirect?).to be_true
       follow_redirect!
-      # TODO: why is this escaped twice? should be without the amp;
-      expect(last_response.body).to include("&amp;lt;marquee&amp;gt;Johnny&amp;lt;&amp;#x2F;marquee&amp;gt;")
+      expect(last_response.body).to include("&lt;marquee&gt;Johnny&lt;&#x2F;marquee&gt;")
     end
 
     it "will escape user input for bio " do

@@ -7,7 +7,6 @@ class User < ActiveRecord::Base
   has_many :pairing_memberships
   has_many :pairings, through: :pairing_memberships
 
-  before_validation :clean_input
   before_save :give_nickname
 
   def image_url(large = false)
@@ -26,12 +25,16 @@ class User < ActiveRecord::Base
     end
   end
 
-  private
+  def nickname 
+    clean(self[:nickname])
+  end
 
-  def clean_input
-    self.username = clean(self.username)
-    self.bio = clean(self.bio)
-    self.nickname = clean(self.nickname)
+  def bio
+    clean(self[:bio])
+  end
+
+  def username
+    clean(self[:username])
   end
 
   private def clean(text) 
