@@ -67,12 +67,12 @@ describe PairingUtils do
 
     PairingUtils.find_best_sessions(possible_sessions,@mock_counter).should match_array [good_session]
   end
-  it 'should find the best sessions for team members (integration)' do 
-    good_session1 = [[@martino,@tom],[@florian]]
-    good_session2 = [[@florian,@tom],[@martino]]
 
-    to_exclude = PairingSession.from_array(good_session2)
-    PairingUtils.find_best_sessions_for_team_members([@florian,@martino,@tom],to_exclude,@mock_counter).should match_array [good_session1]
+  it 'should find the best sessions for team members (integration)' do 
+    good_session = PairingSession.from_array([[@martino,@tom],[@florian]])
+    to_exclude = PairingSession.from_array([[@florian,@tom],[@martino]])
+
+    PairingUtils.find_best_sessions_for_team_members([@florian,@martino,@tom],to_exclude,@mock_counter).should be == [good_session]
   end
 
   it 'should filter sessions' do 
