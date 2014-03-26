@@ -33,12 +33,7 @@ class PairingUtils
  end
 
  def self.find_best_sessions_for_team_members(team_members,to_exclude,count_for_users) 
-
-
-
   all_possible_pairing_sessions = all_possible_pairing_sessions(team_members)
-
-  to_exclude = PairingSession.from_array(to_exclude)   # conversion till everything is migrated to oo
 
   all_possible_pairing_sessions = filter_from_sessions_if_appropriate(all_possible_pairing_sessions,to_exclude)
   
