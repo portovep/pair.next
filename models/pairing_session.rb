@@ -25,6 +25,11 @@ class PairingSession
     valid_user_entries.count == pair_membership_counter.count
   end
 
+
+  def number_of_pairings_in_session(count_for_users)
+    pairs.map {|pair| count_for_users.call(pair.members[0],pair.members[1])}.reduce(0,:+)
+  end
+
   def inspect
     "PairingSession #{pairs}"
   end

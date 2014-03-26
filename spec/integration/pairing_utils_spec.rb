@@ -49,15 +49,6 @@ describe PairingUtils do
           PairingSession.new([Pair.new([@florian, @pablo]),Pair.new([@lukas])])]
   end
 
-  it 'should count the number of pairings in a session' do
-    PairingUtils.number_of_pairings_in_session([[@florian,@martino],[@tom,@pablo]],@mock_counter).should be == 3
-    PairingUtils.number_of_pairings_in_session([[@lukas,@martino],[@tom,@pablo]],@mock_counter).should be == 2
-  end
-
-  it 'should count the number of pairings in a session when pairings contain a single user' do
-    PairingUtils.number_of_pairings_in_session([[@lukas],[@tom,@pablo]],@mock_counter).should be == 3
-  end
-
   it 'should find the best session in a set of possible session' do
     bad_session = [[@florian,@martino],[@lukas,@tom]]
     good_session1 = [[@lukas,@martino],[@florian,@tom]]

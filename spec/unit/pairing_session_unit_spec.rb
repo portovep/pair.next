@@ -10,6 +10,10 @@ describe PairingSession do
 
     @florian_martino = Pair.new([@florian,@martino])
     @lukas_tom = Pair.new([@lukas,@tom])
+
+    @mock_counter = proc do |user1,user2|
+      ((user1 == @florian && user2 == @martino)||(user2 == nil)) ? 2 : 1
+    end
   end
   
   it 'should represent a set of pairs independent of order' do
@@ -38,6 +42,15 @@ describe PairingSession do
 
   it 'should detect if a teammember is not part of the pairing session' do
     PairingSession.new([Pair.new([@florian,@tom])]).is_valid_for([@florian,@tom,@martino,@pablo]).should be == false
+  end
+
+  it 'should count the number of pairings in a session' do
+    PairingSession.new([Pair.new([@florian,@martino]),Pair.new([@tom,@pablo])]).number_of_pairings_in_session(@mock_counter).should be == 3
+    PairingSession.new([Pair.new([@lukas,@martino]),Pair.new([@tom,@pablo])]).number_of_pairings_in_session(@mock_counter).should be == 2
+  end
+
+  it 'should count the number of pairings in a session when pairings contain a single user' do
+    PairingUtils.number_of_pairings_in_session([[@lukas],[@tom,@pablo]],@mock_counter).should be == 3
   end
 
 end
