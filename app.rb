@@ -26,6 +26,14 @@ get '/team/new' do
 end
 
 post '/team/new' do
+  new_teamname = params[:team_name]
+  if (new_teamname.to_s.strip.length <= 0)
+    session[:error_message] =  "Sorry, your team must have a name!"
+    redirect to '/team/new'
+  elsif (new_teamname.length >= 250)
+    session[:error_message] =  "Sorry, your team name can't be that long!"
+    redirect to '/team/new'
+  end
   @team = Team.new(name: params[:team_name])
   @team.users << current_user
 
