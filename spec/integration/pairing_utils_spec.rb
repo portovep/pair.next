@@ -50,9 +50,9 @@ describe PairingUtils do
   end
 
   it 'should find the best session in a set of possible session' do
-    bad_session = [[@florian,@martino],[@lukas,@tom]]
-    good_session1 = [[@lukas,@martino],[@florian,@tom]]
-    good_session2 = [[@tom,@martino],[@lukas,@florian]]
+    bad_session = PairingSession.from_array([[@florian,@martino],[@lukas,@tom]])
+    good_session1 = PairingSession.from_array([[@lukas,@martino],[@florian,@tom]])
+    good_session2 = PairingSession.from_array([[@tom,@martino],[@lukas,@florian]])  
 
     possible_sessions = [bad_session,good_session2,good_session1]
 
@@ -60,8 +60,8 @@ describe PairingUtils do
   end
 
   it 'should find the best session when session includes pairings with a single user' do
-    bad_session = [[@florian,@martino],[@lukas]]
-    good_session = [[@lukas,@martino],[@tom]]
+    bad_session = PairingSession.from_array([[@florian,@martino],[@lukas]])
+    good_session = PairingSession.from_array([[@lukas,@martino],[@tom]])
 
     possible_sessions = [bad_session,good_session]
 

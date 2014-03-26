@@ -21,12 +21,8 @@ class PairingUtils
     valid_combinations
  end
 
- def self.number_of_pairings_in_session(session,count_for_users)
-    session.map {|pair| count_for_users.call(pair[0],pair[1])}.reduce(0,:+)
- end
-
  def self.find_best_sessions(sessions,count_for_users)
-  pairing_number_map = sessions.map { |session| [session,number_of_pairings_in_session(session,count_for_users)]}
+  pairing_number_map = sessions.map { |session| [session,session.number_of_pairings_in_session(count_for_users)]}
   minimum_pairing_number = pairing_number_map.min_by { |session,pairing_number| pairing_number}[1]
 
   pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
@@ -36,12 +32,8 @@ class PairingUtils
   all_possible_pairing_sessions = all_possible_pairing_sessions(team_members)
 
   all_possible_pairing_sessions = filter_from_sessions_if_appropriate(all_possible_pairing_sessions,to_exclude)
-  
-  # conversion till everything is migrated to oo
-  all_possible_pairing_sessions = all_possible_pairing_sessions.map{|session| session.pairs }.map {|pairs| pairs.map { |pair| pair.members }}
-
-
-  best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,count_for_users)
+ 
+  best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,count_for_users).map{|session| session.pairs }.map {|pairs| pairs.map { |pair| pair.members }}
 
   best_sessions    
  end
