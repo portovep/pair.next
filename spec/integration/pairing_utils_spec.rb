@@ -73,40 +73,25 @@ describe PairingUtils do
 
     to_exclude = good_session2
     PairingUtils.find_best_sessions_for_team_members([@florian,@martino,@tom],to_exclude,@mock_counter).should match_array [good_session1]
-  end 
+  end
 
   it 'should filter sessions' do 
-    session_1 = [[@martino,@tom],[@florian]]
-    session_2 = [[@florian,@tom],[@martino]]
-    session_2_with_reversed_pair = [[@tom,@florian],[@martino]]
+    session_1 = PairingSession.from_array([[@martino,@tom],[@florian]])
+    session_2 = PairingSession.from_array([[@florian,@tom],[@martino]])
+    session_2_with_reversed_pair = PairingSession.from_array([[@tom,@florian],[@martino]])
     PairingUtils.filter_from_sessions_if_appropriate([session_1,session_2],session_2).should match_array [session_1]
     PairingUtils.filter_from_sessions_if_appropriate([session_1,session_2],session_2_with_reversed_pair).should match_array [session_1]
   end 
 
   it 'should not filter sessions if this would result in an empty result' do 
-    session_1 = [[@martino,@tom],[@florian]]
+    session_1 = PairingSession.from_array([[@martino,@tom],[@florian]])
     PairingUtils.filter_from_sessions_if_appropriate([session_1],session_1).should match_array [session_1]
   end 
 
   it 'filter from session should work for strange edge cases (regression tests)' do 
-    all_possible_pairing_sessions = PairingUtils.all_possible_pairing_sessions([@florian,@martino,@tom]).map{|session| session.pairs }.map {|session| session.map { |pair| pair.members }}
-    PairingUtils.filter_from_sessions_if_appropriate(all_possible_pairing_sessions,[[@florian,@tom],[@martino]]).count.should be > 0
-    PairingUtils.filter_from_sessions_if_appropriate(all_possible_pairing_sessions,[]).count.should be > 0
+    all_possible_pairing_sessions = PairingUtils.all_possible_pairing_sessions([@florian,@martino,@tom])
+    PairingUtils.filter_from_sessions_if_appropriate(all_possible_pairing_sessions,PairingSession.from_array([[@florian,@tom],[@martino]])).count.should be > 0
+    PairingUtils.filter_from_sessions_if_appropriate(all_possible_pairing_sessions,PairingSession.from_array([])).count.should be > 0
   end
 
-  it 'should compare pairs' do 
-    PairingUtils.is_same_pair([@martino,@tom],[@martino,@tom]).should be == true
-    PairingUtils.is_same_pair([@martino,@tom],[@martino,@florian]).should be == false
-    PairingUtils.is_same_pair([@martino,@tom],[@florian,@tom]).should be == false
-    PairingUtils.is_same_pair([@martino,@tom],[@tom,@martino]).should be == true
-  end
-
-  it 'should check if session contains a pair' do 
-    session = [[@martino,@tom],[@florian]]
-
-    PairingUtils.contains_pair(session,[@martino,@tom]).should be == true
-    PairingUtils.contains_pair(session,[@martino,@florian]).should be == false
-    PairingUtils.contains_pair(session,[@tom,@martino]).should be == true
-    
-  end
 end
