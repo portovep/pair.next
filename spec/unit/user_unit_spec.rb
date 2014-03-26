@@ -22,6 +22,29 @@ describe 'User' do
     end
   end
 
+  describe 'escaping' do 
+    it 'should escape html tags in username' do 
+      user = User.create(username: "<b>hello</b>")
+      expect(user.username).to eq "&lt;b&gt;hello&lt;&#x2F;b&gt;"
+    end
+
+    it 'should escape html tags in nickname' do 
+      user = User.create(nickname: "<b>hello</b>")
+      expect(user.nickname).to eq "&lt;b&gt;hello&lt;&#x2F;b&gt;"
+    end
+
+    it 'should escape html tags in bio' do   
+      user = User.create(bio: "<b>hello</b>")
+      expect(user.bio).to eq "&lt;b&gt;hello&lt;&#x2F;b&gt;"
+    end
+
+    it 'should allow < characters' do 
+      user = User.create(bio: "I <3 you");
+      expect(user.bio).to eq "I &lt;3 you"
+    end
+
+  end
+
   describe 'count pairings' do
     before (:each) do
       @lukas = User.create(username: "Lukas")
