@@ -17,8 +17,8 @@ class PairingUtils
 
     combinations = all_possible_pairs(team_members).combination(number_of_pairs)
 
-    sessions = combinations.map {|session| PairingSession.new(session)}
-    valid_sessions = sessions.select { |session| session.is_valid_for(team_members) }
+    potential_sessions = combinations.map {|session| PairingSession.new(session)}
+    valid_sessions = potential_sessions.select { |session| session.is_valid_for(team_members) }
 
     valid_sessions
  end
