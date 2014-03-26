@@ -29,9 +29,13 @@ class User < ActiveRecord::Base
   private
 
   def clean_input
-    self.username = Sanitize.clean(self.username)
-    self.bio = Sanitize.clean(self.bio)
-    self.nickname = Sanitize.clean(nickname)
+    self.username = clean(self.username)
+    self.bio = clean(self.bio)
+    self.nickname = clean(nickname)
+  end
+
+  private def clean(text) 
+    Rack::Utils.escape_html(text)
   end
 
   def give_nickname

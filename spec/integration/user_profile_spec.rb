@@ -51,20 +51,20 @@ describe "User profile page" do
 
     end
 
-    it "will santatise (with an s) user input for nickname " do
+    it "will escape user input for nickname " do
       post "/user/update", { new_nickname: "<marquee>Johnny</marquee>" }, @session
       expect(last_response.redirect?).to be_true
 
       follow_redirect!
-      expect(last_response.body).to include("Hello Johnny!")
+      expect(last_response.body).to include("&amp;lt;marquee&amp;gt;Johnny&amp;lt;&amp;#x2F;marquee&amp;gt;")
     end
 
-    it "will santatise (with an s) user input for bio " do
+    it "will escape user input for bio " do
       post "/user/update", {  new_nickname: "Johnny", new_extra: "<marquee>I am a super awesome dev</marquee>" }, @session
       expect(last_response.redirect?).to be_true
 
       follow_redirect!
-      expect(last_response.body).to include("I am a super awesome dev")
+      expect(last_response.body).to include("&lt;marquee&gt;I am a super awesome dev&lt;&#x2F;marquee&gt;")
     end
   end
 
