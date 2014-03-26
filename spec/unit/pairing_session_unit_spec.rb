@@ -55,7 +55,7 @@ describe PairingSession do
   end
 
   it 'should count the number of pairings in a session when pairings contain a single user' do
-    PairingUtils.number_of_pairings_in_session([[@lukas],[@tom,@pablo]],@mock_counter).should be == 3
+    PairingSession.new([Pair.new([@lukas]),Pair.new([@tom,@pablo])]).number_of_pairings_in_session(@mock_counter).should be == 3
   end
 
 end
