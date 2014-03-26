@@ -33,8 +33,7 @@ class PairingUtils
 
   all_possible_pairing_sessions = filter_from_sessions_if_appropriate(all_possible_pairing_sessions,to_exclude)
  
-  best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,count_for_users).map{|session| session.pairs }.map {|pairs| pairs.map { |pair| pair.members }}
-
+  best_sessions = PairingUtils.find_best_sessions(all_possible_pairing_sessions,count_for_users)
   best_sessions    
  end
 
