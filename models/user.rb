@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   def clean_input
     self.username = clean(self.username)
     self.bio = clean(self.bio)
-    self.nickname = clean(nickname)
+    self.nickname = clean(self.nickname)
   end
 
   private def clean(text) 

@@ -43,6 +43,11 @@ describe 'User' do
       expect(user.bio).to eq "I &lt;3 you"
     end
 
+    it 'should escape correctly when updating' do 
+      user = User.create(nickname: "hello")
+      user.update(nickname: "<b>hello</b>")
+      expect(user.nickname).to eq "&lt;b&gt;hello&lt;&#x2F;b&gt;"
+    end
   end
 
   describe 'count pairings' do
