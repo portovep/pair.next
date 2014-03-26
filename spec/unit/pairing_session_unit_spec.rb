@@ -15,6 +15,11 @@ describe PairingSession do
       ((user1 == @florian && user2 == @martino)||(user2 == nil)) ? 2 : 1
     end
   end
+
+  it 'should provide a factory method from array' do 
+    PairingSession.from_array([[@florian,@martino],[@lukas,@tom]]).should be ==
+      PairingSession.new([@florian_martino,@lukas_tom])
+  end
   
   it 'should represent a set of pairs independent of order' do
     session1 = PairingSession.new([@florian_martino,@lukas_tom])
