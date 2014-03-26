@@ -71,7 +71,7 @@ describe PairingUtils do
     good_session1 = [[@martino,@tom],[@florian]]
     good_session2 = [[@florian,@tom],[@martino]]
 
-    to_exclude = good_session2
+    to_exclude = PairingSession.from_array(good_session2)
     PairingUtils.find_best_sessions_for_team_members([@florian,@martino,@tom],to_exclude,@mock_counter).should match_array [good_session1]
   end
 
