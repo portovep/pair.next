@@ -22,10 +22,14 @@ class PairingUtils
  end
 
  def self.find_best_sessions(sessions,count_for_users)
-  pairing_number_map = sessions.map { |session| [session,session.number_of_pairings_in_session(count_for_users)]}
-  minimum_pairing_number = pairing_number_map.min_by { |session,pairing_number| pairing_number}[1]
+  pairing_number_map = Hash[sessions.map do |session| 
+    pairing_number = session.number_of_pairings_in_session(count_for_users)
+    [session,pairing_number]
+  end]
+  
+  minimum_pairing_number = pairing_number_map.values.min
 
-  pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.map {|session,pairing_number| session}
+  pairing_number_map.select { |session,pairing_number| pairing_number == minimum_pairing_number }.keys
  end
 
  def self.find_best_sessions_for_team_members(team_members,to_exclude,count_for_users) 
