@@ -1,6 +1,10 @@
 class PairingSession
   attr_accessor :pairs
 
+  def self.from_array(pairs) 
+    PairingSession.new(pairs.map { |pair| Pair.new(pair)})
+  end
+
   def initialize(pairs)
      @pairs = pairs
   end
