@@ -26,15 +26,9 @@ get '/team/new' do
 end
 
 post '/team/new' do
-  new_teamname = params[:team_name]
-  if (new_teamname.length >= 250)
-    session[:error_message] =  "Sorry, your team name can't be that long!"
-    redirect to '/team/new'
-  end
   @team = Team.new(name: params[:team_name])
-  @team.users << current_user
-
   if @team.save
+    @team.users << current_user
     session[:success_message] =  "Team #{@team.name} successfully created"
     redirect to "/team/#{@team.id}"
   else

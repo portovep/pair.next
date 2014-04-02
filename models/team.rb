@@ -1,7 +1,7 @@
 class Team < ActiveRecord::Base
   has_many :team_members
   has_many :users, through: :team_members
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true, length: {maximum: 250}
 
   before_validation :clean_input
 
@@ -21,11 +21,11 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def team_member_users 
+  def team_member_users
     team_members.map { |member| member.user}
   end
 
-  def count_pairings_between(user1,user2) 
+  def count_pairings_between(user1,user2)
     user1.count_pairings_with(user2,self.id)
   end
 
@@ -38,24 +38,24 @@ class Team < ActiveRecord::Base
   def pairing_history
     pairing_memberships_for_team = PairingMembership.find_by_team(self)
     memberships_by_time = pairing_memberships_for_team.group_by { |foo| foo.pairing.start_time.change(usec:0) }
-    Hash[memberships_by_time.map { |time,memberships| 
-      [time,memberships.group_by {|membership| 
+    Hash[memberships_by_time.map { |time,memberships|
+      [time,memberships.group_by {|membership|
         membership.pairing_id
-      }.map {|pairing_id,pair_memberships| 
-        pair_memberships.map{|membership| 
+      }.map {|pairing_id,pair_memberships|
+        pair_memberships.map{|membership|
           membership.user
         }
       }]
     }]
   end
 
-   def pairing_statistics 
+   def pairing_statistics
      all_possible_pairs = PairingUtils.all_possible_pairs(users).map{|pair| pair.members}
      Hash[all_possible_pairs.map { |pair| [pair,pair[0].count_pairings_with(pair[1],self.id)]}]
    end
 
   private
   def clean_input
-    self.name = Sanitize.clean(self.name)
+    self.name = Sanitize.clean(self.name.strip)
   end
 end
