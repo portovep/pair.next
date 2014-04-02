@@ -35,6 +35,8 @@ group :development do
   # better console
   gem "pry"
 
+  gem "rake"
+
   # dev server
   gem "shotgun"
 
