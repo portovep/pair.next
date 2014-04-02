@@ -24,7 +24,6 @@ get '/team/new' do
 end
 
 post '/team/new' do
-  protect_team!
   @team = Team.new(name: params[:team_name])
   if @team.save
     @team.users << current_user
@@ -36,13 +35,12 @@ post '/team/new' do
 end
 
 get '/team/:team_id' do
-  protect_team!
   @team = Team.find_by_id(params[:team_id])
-
   if @team.nil?
     session[:error_message] =  "Team not found"
     redirect to '/team/new'
   else
+    protect_team!
     erb :team_profile
   end
 end

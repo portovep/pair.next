@@ -40,10 +40,16 @@ helpers do
   end
 
   def current_team
-    Team.find_by_id(params[:team_id])
+    team = Team.find_by_id(params[:team_id])
+    if team
+      return team
+    else
+      redirect to '/team/new'
+    end
   end
 
   def protect_team!
+    redirect to '/team/new' unless current_user
     unless current_user.member_of?(current_team)
       session[:error_message] = "You are not a member of the team you are trying to access"
       redirect to '/team/new'

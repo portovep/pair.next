@@ -2,19 +2,18 @@ require_relative '../test_helper.rb'
 
 describe 'Team profile' do
 
-  context 'with a signed in user' do
+  context 'when a user is signed in' do
 
-    let(:session) do
-      { 'rack.session' => { user_id: 'valid_id' } }
+    before(:all) do
+      @current_user = User.create(username: 'HackMeister')
     end
 
-    it 'should show team profile if user is a member' do
-      team = Team.create(name: 'team_test')
-      team.users << User.create(username: 'valid_id')
+    before(:each) do
+      @team = Team.create(name: 'hack-heroes')
+    end
 
-      get "/team/#{team.id}", {}, session
-
-      expect(last_response.body).to include("Profile - #{team.name}")
+    let(:session) do
+      { 'rack.session' => { user_id: @current_user.username } }
     end
 
     it 'should show error for non existing team' do
@@ -27,46 +26,58 @@ describe 'Team profile' do
       expect(last_response.body).to include("Team not found")
     end
 
-    it 'should denied access to team profile when user is not member of given team' do
-      team = Team.create(name: 'team_test')
-      user = User.create(username: 'valid_id')
+    context 'and is a member of the current team' do
+      before(:each) do
+        @team.users << @current_user
+      end
 
-      get "/team/#{team.id}", {}, session
+      it 'team profile is shown' do
+        get "/team/#{@team.id}", {}, session
+        expect(last_response.body).to include("Profile - #{@team.name}")
+      end
 
-      expect(last_response.redirect?).to be_true
+      it 'should add a new member' do
+        new_member = User.create(username: 'user1')
 
-      follow_redirect!
-      expect(last_response.body).to include("You are not a member of the team you are trying to access")
+        post "/team/#{team.id}/members", {member_username: new_member.username}, session
+        follow_redirect!
+
+        expect(@team.users).to include(new_member)
+        expect(last_response.body).to include(new_member.username)
+        expect(last_response.body).to include(new_member.image_url)
+      end
+
+      it 'should delete a member from the team' do
+        short_lived_user = User.create(username: 'theUserName')
+        team.users << short_lived_user
+
+        delete "/team/#{team.id}/user/#{short_lived_user.id}", {}, session
+        expect(last_response.redirect?).to be_true
+
+        follow_redirect!
+
+        expect(team.users).not_to include(short_lived_user)
+        # FIXME: for some reason the body is empty...
+        # expect(last_response.body).not_to include("theUserName")
+        # expect(last_response.body).to include("User removed from team.")
+      end
     end
 
-    it 'should add a new member to a team' do
-      team = Team.create(name: 'team_test')
-      team.users << User.create(username: 'valid_id')
-      user = User.create(username: 'user1')
+    context 'the current user is NOT a member of the current team' do
+      it 'should deny access' do
+        get "/team/#{@team.id}", {}, session
 
-      post "/team/#{team.id}/members", {member_username: user.username}, session
-      follow_redirect!
+        expect(last_response.redirect?).to be_true
 
-      expect(team.users).to include(user)
-      expect(last_response.body).to include(user.username)
-      expect(last_response.body).to include(user.image_url)
-    end
+        follow_redirect!
+        expect(last_response.body).to include("You are not a member of the team you are trying to access")
+      end
+      it 'should show an error when trying to add a new member' do
+        post "/team/#{team.id}/members", {member_username: "new_user"}, session
+        follow_redirect!
 
-    it 'should delete a member from the team' do
-      team = Team.create(name: 'team_test')
-      user = User.create(username: 'theUserName')
-      team.users << user
-
-      delete "/team/#{team.id}/user/#{user.id}", {}, session
-      expect(last_response.redirect?).to be_true
-
-      follow_redirect!
-
-      expect(team.users).not_to include(user)
-      # FIXME: for some reason the body is empty...
-      # expect(last_response.body).not_to include("theUserName")
-      # expect(last_response.body).to include("User removed from team.")
-
+        expect(last_response.body).to include("You are not a member of the team you are trying to access")
+      end
     end
 
     it 'should show error for non existing member username' do
@@ -95,15 +106,6 @@ describe 'Team profile' do
       expect(last_response.body).to include("user1 is already a member!")
     end
 
-    it 'should show error when a non member user try to add member to a team' do
-      team = Team.create(name: 'team_test')
-      user = User.create(username: 'user1')
-
-      post "/team/#{team.id}/members", {member_username: user.username}, session
-      follow_redirect!
-
-      expect(last_response.body).to include("You are not a member of the team you are trying to access")
-    end
 
   end
 
