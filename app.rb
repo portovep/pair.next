@@ -41,7 +41,7 @@ get '/team/:team_id' do
   if @team.nil?
     session[:error_message] =  "Team not found"
     redirect to '/team/new'
-  elsif !@team.users.include? current_user
+  elsif ! current_user.member_of?(@team)
     session[:error_message] = "You are not a member of the team you are trying to access"
     redirect to '/team/new'
   else
@@ -53,7 +53,7 @@ post '/team/:team_id/members' do
   @team = Team.find_by_id(params[:team_id])
 
   new_member = User.find_by_username(params[:member_username])
-  if !@team.users.include? current_user
+  if ! current_user.member_of?(@team)
     session[:error_message] = "You are not a member of the team you are trying to access"
     redirect to '/team/new'
   elsif new_member

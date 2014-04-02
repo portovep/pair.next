@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def nickname 
+  def nickname
     clean(self[:nickname])
   end
 
@@ -37,7 +37,11 @@ class User < ActiveRecord::Base
     clean(self[:username])
   end
 
-  private def clean(text) 
+  def member_of?(team)
+    team.users.include? self
+  end
+
+  private def clean(text)
     Rack::Utils.escape_html(text)
   end
 

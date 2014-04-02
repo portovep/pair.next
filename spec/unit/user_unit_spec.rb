@@ -22,28 +22,28 @@ describe 'User' do
     end
   end
 
-  describe 'escaping' do 
-    it 'should escape html tags in username' do 
+  describe 'escaping' do
+    it 'should escape html tags in username' do
       user = User.create(username: "<b>hello</b>")
       expect(user.username).to eq "&lt;b&gt;hello&lt;&#x2F;b&gt;"
     end
 
-    it 'should escape html tags in nickname' do 
+    it 'should escape html tags in nickname' do
       user = User.create(nickname: "<b>hello</b>")
       expect(user.nickname).to eq "&lt;b&gt;hello&lt;&#x2F;b&gt;"
     end
 
-    it 'should escape html tags in bio' do   
+    it 'should escape html tags in bio' do
       user = User.create(bio: "<b>hello</b>")
       expect(user.bio).to eq "&lt;b&gt;hello&lt;&#x2F;b&gt;"
     end
 
-    it 'should allow < characters' do 
+    it 'should allow < characters' do
       user = User.create(bio: "I <3 you");
       expect(user.bio).to eq "I &lt;3 you"
     end
 
-    it 'should escape correctly when updating' do 
+    it 'should escape correctly when updating' do
       user = User.create(nickname: "hello")
       user.update(nickname: "<b>hello</b>")
       user.update(bio: "foo")
@@ -75,6 +75,24 @@ describe 'User' do
       @lukas.count_pairings_with(nil,1).should be == 1
       @pablo.count_pairings_with(nil,1).should be == 0
     end
+  end
+
+  describe '#member_of?' do
+
+    before(:each) do
+      @user = User.create(username: 'alice')
+      @team = Struct.new(:users).new([])
+    end
+
+    it 'should return true if self is included in members of team' do
+      @team.users << @user
+      expect(@user.member_of?(@team)).to be_true
+    end
+
+    it 'should return false if self is NOT included in members of team' do
+      expect(@user.member_of?(@team)).to be_false
+    end
+
   end
 
 end
