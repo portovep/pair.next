@@ -39,6 +39,17 @@ helpers do
     User.find_by_username(session[:user_id])
   end
 
+  def current_team
+    Team.find_by_id(params[:team_id])
+  end
+
+  def protect_team!
+    unless current_user.member_of?(current_team)
+      session[:error_message] = "You are not a member of the team you are trying to access"
+      redirect to '/team/new'
+    end
+  end
+
 end
 
 # Support both GET and POST for callbacks

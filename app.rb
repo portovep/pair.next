@@ -24,6 +24,7 @@ get '/team/new' do
 end
 
 post '/team/new' do
+  protect_team!
   @team = Team.new(name: params[:team_name])
   if @team.save
     @team.users << current_user
@@ -35,12 +36,11 @@ post '/team/new' do
 end
 
 get '/team/:team_id' do
+  protect_team!
   @team = Team.find_by_id(params[:team_id])
+
   if @team.nil?
     session[:error_message] =  "Team not found"
-    redirect to '/team/new'
-  elsif ! current_user.member_of?(@team)
-    session[:error_message] = "You are not a member of the team you are trying to access"
     redirect to '/team/new'
   else
     erb :team_profile
@@ -48,13 +48,11 @@ get '/team/:team_id' do
 end
 
 post '/team/:team_id/members' do
+  protect_team!
   @team = Team.find_by_id(params[:team_id])
 
   new_member = User.find_by_username(params[:member_username])
-  if ! current_user.member_of?(@team)
-    session[:error_message] = "You are not a member of the team you are trying to access"
-    redirect to '/team/new'
-  elsif new_member
+  if new_member
     unless @team.users.include?(new_member)
       @team.users << new_member
       @team.save
@@ -68,6 +66,7 @@ post '/team/:team_id/members' do
 end
 
 get '/team/:team_id/shuffle' do
+  protect_team!
   @team = Team.find_by_id(params[:team_id])
   @old_pairs = @team.get_current_pairs
   @new_pairs = []
@@ -75,6 +74,7 @@ get '/team/:team_id/shuffle' do
 end
 
 post '/team/:team_id/shuffle' do
+  protect_team!
   @team = Team.find_by_id(params[:team_id])
   @old_pairs = @team.get_current_pairs
   @new_pairs = @team.shuffle_pairs
@@ -82,6 +82,7 @@ post '/team/:team_id/shuffle' do
 end
 
 post '/team/:team_id/savePairs' do
+  protect_team!
 
   # convertig pairs into better format:
   input_data = params['pair']
@@ -107,6 +108,7 @@ post '/team/:team_id/savePairs' do
 end
 
 delete '/team/:team_id/user/:user_id' do
+  protect_team!
   team = Team.find_by_id(params[:team_id])
   user = User.find_by_id(params[:user_id])
   session[:success_message] =  "User removed from team."
@@ -117,6 +119,7 @@ delete '/team/:team_id/user/:user_id' do
 end
 
 get '/team/:team_id/history' do
+  protect_team!
   team = Team.find_by_id(params[:team_id])
   @team = team
   @history = team.pairing_history
@@ -132,8 +135,6 @@ get '/user' do
   else
     redirect to '/user/' + current_user.id.to_s
   end
-
-
 end
 
 get '/user/:user_id' do
