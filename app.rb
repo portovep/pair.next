@@ -1,7 +1,5 @@
 set :app_file, __FILE__
-# set :method_override, true
 
-# Okta integration
 before do
   request_path = request.path_info
   return if request_path.start_with? '/auth'
@@ -159,10 +157,6 @@ get '/user/:user_id' do
 end
 
 post '/user/update' do
-  if (!(current_user))
-    session[:error_message] =  "You are not logged in."
-    redirect to '/team/new'
-  end
 
   new_nickname = params[:new_nickname]
 
@@ -182,8 +176,6 @@ post '/user/update' do
     session[:error_message] =  "Sorry, your info can't be that long"
     redirect to '/user/' + current_user.id.to_s
   end
-
-
 
   user = User.find_by_id(current_user.id)
   user.update(nickname: new_nickname)
