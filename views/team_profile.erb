@@ -6,7 +6,7 @@
 
 
 <div class="row">
-  <div class="small-8 small-offset-2 columns text-center">
+  <div class="small-12 large-8 large-offset-2 columns text-center">
     <h3>Add new team members.</h3>
     <form action="/team/<%= @team.id %>/members" method="POST">
       <div class="row collapse">
@@ -43,7 +43,7 @@
   <% @team.users.each_slice(2) do |row| %>
     <div class="row" data-equalizer>
       <% row.each do |member| %> 
-        <div class="small-6 columns" >
+        <div class="small-12 large-6 columns" >
           <div class="panel no-low-pad"  data-equalizer-watch>
             <div class="row">
               <div class="small-3 columns">
