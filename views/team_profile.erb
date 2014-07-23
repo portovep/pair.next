@@ -10,10 +10,10 @@
     <h3>Add new team members.</h3>
     <form action="/team/<%= @team.id %>/members" method="POST">
       <div class="row collapse">
-        <div class="small-9 columns">
+        <div class="small-8 large-9 columns">
           <input type="text" name="member_username" placeholder="Type a email" />
         </div>
-        <div class="small-3 columns">
+        <div class="small-4 large-3 columns">
           <input type="submit" value="Add member" class="button postfix">
         </div>
       </div>
@@ -46,14 +46,14 @@
         <div class="small-12 large-6 columns" >
           <div class="panel no-low-pad"  data-equalizer-watch>
             <div class="row">
-              <div class="small-3 columns">
+              <div class="small-3 large-3 columns">
                 <img src="<%= member.image_url(large = true) %>">
               </div>
-              <div class="small-8 columns">
+              <div class="small-7 large-8 columns">
                 <h4 class="vertical-align"><%= member.nickname %></h4>
                 <p><%= member.username %></p>
               </div>
-              <div class="small-1 columns">
+              <div class="small-2 large-1 columns">
                 <form method="POST" id="delete-form-<%=member.id%>" action="/team/<%=@team.id%>/user/<%=member.id%>">
                   <input type="hidden" name="_method" value="DELETE"/>
                   <a href="#" onclick="$('#delete-form-<%=member.id%>').submit(); return false"><span class="fi-x" /></a>

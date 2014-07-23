@@ -10,13 +10,15 @@
 
 <div class="row">
 
-  <div class="large-9 column">
+  <div class="small-12 large-9 column">
     <div class="panel clearfix">
       <div class="row"> 
-        <div class="large-5 column">
-          <img src="<%= @user.image_url(large = true) %>">
+        <div class="small-12 large-5 column text-center">
+          <!-- <center> -->
+            <img class="user-img" src="<%= @user.image_url(large = true) %>">
+          <!-- </center> -->
         </div>
-        <div class="large-7 column ">
+        <div class="small-12 large-7 column ">
 
           <form action="/user/update" method="post">
 
@@ -24,29 +26,29 @@
               <div class="chart-head">About You</div>
             </div>
 
-            <div class="large-4 column chart-row">
+            <div class="small-4 large-4 column chart-row">
               Nickname:
             </div>
-            <div id="nickname_row" class="large-8 column chart-row">
+            <div id="nickname_row" class="small-8 large-8 column chart-row">
               <div id="nickname"><%= @user.nickname %> </div>
             </div>  
 
-            <div class="large-4 column chart-row">
+            <div class="small-4 large-4 column chart-row">
               Email:
             </div>
-            <div class="large-8 column chart-row">
+            <div class="small-8 large-8 column chart-row">
               <%= @user.username %>
             </div>
 
-						<div class="large-12 column nopad  text-center">
+						<div class="small-12 large-12 column nopad  text-center">
 							<div class="chart-head">A little extra info</div>
 						</div>
-						<div id="extra_row" class="chart-row large-12 column">
+						<div id="extra_row" class="chart-row small-12 large-12 column">
 							<p id="bio" class="no-low-margin" ><%= @user.bio %></p>
 						</div>
 
             <div calss="row">
-              <div class="large-12 column nopad">
+              <div class="small-12 large-12 column nopad">
                 <a id="changeDetailsButton" onclick="javascript: changeToText();" class="button expand">
                   Edit
                 </a>

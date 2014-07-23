@@ -57,7 +57,6 @@
 
 .no-low-margin{
 	margin: 0px;
-
 }
 
 .top-margin{
@@ -69,5 +68,13 @@
 }
 .no-low-pad{
   padding-bottom: 0px;
+}
+
+.user-img{
+  vertical-align: super;
+}
+
+.text-center{
+  text-align: center;
 }
 
