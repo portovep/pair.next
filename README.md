@@ -15,7 +15,8 @@ $ rake shotgun # fire up the dev server
 * `vagrant up` (spins up a virtual machine and sets up a ruby environment)
 * `vagrant ssh` (logs into vagrant)
 * In the VM, the project is in /vagrant
-* In the VM `rake migrate && rake test && rake shotgun` gives you a running app
+* Execute bundle install to install all the dependencies
+* After that `rake migrate && rake test && rake shotgun` gives you a running app
 * Port 4567 is mapped into the VM so access a running app in the VM by pointing your host-browser to http://localhost:4567
 * You can continue editing project files from the host, it's automatically synced into the VM
 * The VM blocks port 4567 so make sure you don't have anything else binding to that port if you get errors

@@ -95,7 +95,7 @@ exec { 'install_ruby':
   # The rvm executable is more suitable for automated installs.
   #
   # use a ruby patch level known to have a binary
-  command => "${as_vagrant} '${home}/.rvm/bin/rvm install ruby-2.0.0-p353 --binary --autolibs=enabled && rvm --default use ruby-2.0.0-p353'",
+  command => "${as_vagrant} '${home}/.rvm/bin/rvm install ruby-2.1.2 --binary --autolibs=enabled && rvm --default use ruby-2.1.2'",
   creates => "${home}/.rvm/bin/ruby",
   require => Exec['install_rvm']
 }
