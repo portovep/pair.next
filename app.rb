@@ -28,14 +28,14 @@ end
 post '/team/new' do
   new_teamname = params[:team_name]
   if (new_teamname.length >= 250)
-    session[:error_message] =  "Sorry, your team name can't be that long!"
+    session[:error_message] = "Sorry, your team name can't be that long!"
     redirect to '/team/new'
   end
   @team = Team.new(name: params[:team_name])
   @team.users << current_user
 
   if @team.save
-    session[:success_message] =  "Team #{@team.name} successfully created"
+    session[:success_message] = "Team #{@team.name} successfully created"
     redirect to "/team/#{@team.id}"
   else
     erb :team_setup
@@ -45,7 +45,7 @@ end
 get '/team/:team_id' do
   @team = Team.find_by_id(params[:team_id])
   if @team.nil?
-    session[:error_message] =  "Team not found"
+    session[:error_message] = "Team not found"
     redirect to '/team/new'
   elsif !@team.users.include? current_user
     session[:error_message] = "You are not a member of the team you are trying to access"
@@ -117,7 +117,7 @@ end
 delete '/team/:team_id/user/:user_id' do
   team = Team.find_by_id(params[:team_id])
   user = User.find_by_id(params[:user_id])
-  session[:success_message] =  "User removed from team."
+  session[:success_message] = "User removed from team."
 
   team.users.delete(user)
 
@@ -135,7 +135,7 @@ end
 get '/user' do
   @user = User.find_by_id(params[:user_id])
   if (!(current_user))
-    session[:error_message] =  "You are not logged in."
+    session[:error_message] = "You are not logged in."
     redirect to '/team/new'
   else
     redirect to '/user/' + current_user.id.to_s
@@ -148,12 +148,12 @@ get '/user/:user_id' do
   @user = User.find_by_id(params[:user_id])
   if @user.nil?
     if (!current_user)
-      session[:error_message] =  "You are not logged in."
+      session[:error_message] = "You are not logged in."
       redirect to '/hi'
     else
       redirect to '/user/' + current_user.id.to_s
     end
-    session[:error_message] =  "You are not logged in."
+    session[:error_message] = "You are not logged in."
     redirect to '/hi'
   elsif @user.id != current_user.id
     redirect to '/user/' + current_user.id.to_s
@@ -166,29 +166,28 @@ end
 
 post '/user/update' do
   if (!(current_user))
-    session[:error_message] =  "You are not logged in."
+    session[:error_message] = "You are not logged in."
     redirect to '/team/new'
   end
 
   new_nickname = params[:new_nickname]
 
   if (new_nickname.to_s.strip.length <= 0)
-    session[:error_message] =  "Sorry, you must have a name!"
+    session[:error_message] = "Sorry, you must have a name!"
     redirect to '/user/' + current_user.id.to_s
   elsif (new_nickname.length >= 30)
-    session[:error_message] =  "Sorry, your name can't be that long"
+    session[:error_message] = "Sorry, your name can't be that long"
     redirect to '/user/' + current_user.id.to_s
   end
 
   new_extra = params[:new_extra]
 
-  if ( new_extra.to_s.strip.length <= 0)
+  if (new_extra.to_s.strip.length <= 0)
     new_extra = "Share a little about yourself."
   elsif (new_extra.length > 200)
-    session[:error_message] =  "Sorry, your info can't be that long"
+    session[:error_message] = "Sorry, your info can't be that long"
     redirect to '/user/' + current_user.id.to_s
   end
-
 
 
   user = User.find_by_id(current_user.id)

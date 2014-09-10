@@ -1,8 +1,8 @@
-class Pair 
+class Pair
   attr_accessor :members
 
   def initialize(members)
-     @members = members
+    @members = members
   end
 
   def ==(other_pair)
@@ -16,7 +16,7 @@ class Pair
     "Pair #{members}"
   end
 
-  def hash 
+  def hash
     members.to_set.hash
   end
 end

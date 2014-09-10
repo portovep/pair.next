@@ -8,9 +8,9 @@ task :migration do
     raise "Must specificy migration name, e.g., rake migration NAME=create_tasks"
   end
 
-  name     = ENV['NAME'].camelize
+  name = ENV['NAME'].camelize
   filename = "%s_%s.rb" % [Time.now.strftime('%Y%m%d%H%M%S'), ENV['NAME'].underscore]
-  path     = APP_ROOT.join('db', 'migrate', filename)
+  path = APP_ROOT.join('db', 'migrate', filename)
 
   if File.exist?(path)
     raise "ERROR: File '#{path}' already exists"
@@ -48,15 +48,10 @@ task :migrate do
   end
 end
 
-desc "Populate db with testing data"
-task :seed do
-  require_relative 'db/seed.rb'
-end
-
 desc "Resets the database"
 task :reset_db do
   puts "resetting the db with test data..."
-  puts `rake drop ; rake create && rake migrate && rake seed`
+  puts `rake drop ; rake create && rake migrate`
 end
 
 desc "Fire up the development server"

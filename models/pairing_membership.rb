@@ -3,7 +3,7 @@ class PairingMembership < ActiveRecord::Base
   belongs_to :pairing
 
   def self.find_by_team(team)
-    PairingMembership.find_by_sql ["select * from pairing_memberships where pairing_id in (select id from pairings where team_id = ?)",team.id]
+    PairingMembership.find_by_sql ["select * from pairing_memberships where pairing_id in (select id from pairings where team_id = ?)", team.id]
   end
 
   def self.find_current_by_user(user)

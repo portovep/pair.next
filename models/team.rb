@@ -7,7 +7,7 @@ class Team < ActiveRecord::Base
 
 
   def get_current_pairs
-    current_pairings.map {|pairing| pairing.users }
+    current_pairings.map { |pairing| pairing.users }
   end
 
   def current_pairings
@@ -21,38 +21,38 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def team_member_users 
-    team_members.map { |member| member.user}
+  def team_member_users
+    team_members.map { |member| member.user }
   end
 
-  def count_pairings_between(user1,user2) 
-    user1.count_pairings_with(user2,self.id)
+  def count_pairings_between(user1, user2)
+    user1.count_pairings_with(user2, self.id)
   end
 
   def shuffle_pairs
-    best_pairings = PairingUtils.find_best_sessions_for_team_members(team_member_users,PairingSession.from_array(get_current_pairs),method(:count_pairings_between))
+    best_pairings = PairingUtils.find_best_sessions_for_team_members(team_member_users, PairingSession.from_array(get_current_pairs), method(:count_pairings_between))
 
     best_pairings.shuffle.first.pairs.map { |pair| pair.members }
   end
 
   def pairing_history
     pairing_memberships_for_team = PairingMembership.find_by_team(self)
-    memberships_by_time = pairing_memberships_for_team.group_by { |foo| foo.pairing.start_time.change(usec:0) }
-    Hash[memberships_by_time.map { |time,memberships| 
-      [time,memberships.group_by {|membership| 
+    memberships_by_time = pairing_memberships_for_team.group_by { |foo| foo.pairing.start_time.change(usec: 0) }
+    Hash[memberships_by_time.map { |time, memberships|
+      [time, memberships.group_by { |membership|
         membership.pairing_id
-      }.map {|pairing_id,pair_memberships| 
-        pair_memberships.map{|membership| 
+      }.map { |pairing_id, pair_memberships|
+        pair_memberships.map { |membership|
           membership.user
         }
       }]
     }]
   end
 
-   def pairing_statistics 
-     all_possible_pairs = PairingUtils.all_possible_pairs(users).map{|pair| pair.members}
-     Hash[all_possible_pairs.map { |pair| [pair,pair[0].count_pairings_with(pair[1],self.id)]}]
-   end
+  def pairing_statistics
+    all_possible_pairs = PairingUtils.all_possible_pairs(users).map { |pair| pair.members }
+    Hash[all_possible_pairs.map { |pair| [pair, pair[0].count_pairings_with(pair[1], self.id)] }]
+  end
 
   private
   def clean_input

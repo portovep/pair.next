@@ -17,15 +17,15 @@ class User < ActiveRecord::Base
     return gravatar_url
   end
 
-  def count_pairings_with(other_user,team)
+  def count_pairings_with(other_user, team)
     if (other_user == nil)
-      pairing_memberships.select { |membership| membership.pairing.users.count == 1 and membership.pairing.team_id == team}.count
+      pairing_memberships.select { |membership| membership.pairing.users.count == 1 and membership.pairing.team_id == team }.count
     else
-      pairing_memberships.select { |membership| membership.pairing.users.include? other_user and membership.pairing.team_id == team}.count
+      pairing_memberships.select { |membership| membership.pairing.users.include? other_user and membership.pairing.team_id == team }.count
     end
   end
 
-  def nickname 
+  def nickname
     clean(self[:nickname])
   end
 
@@ -37,7 +37,9 @@ class User < ActiveRecord::Base
     clean(self[:username])
   end
 
-  private def clean(text) 
+  private
+
+  def clean(text)
     Rack::Utils.escape_html(text)
   end
 
