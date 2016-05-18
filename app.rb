@@ -140,8 +140,6 @@ get '/user' do
   else
     redirect to '/user/' + current_user.id.to_s
   end
-
-
 end
 
 get '/user/:user_id' do

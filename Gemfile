@@ -11,8 +11,7 @@ gem "omniauth"
 gem "omniauth-saml"
 
 # Auth (OpenID)
-gem "omniauth-openid"
-
+gem "omniauth-google-oauth2"
 gem "sanitize"
 
 # Persistence
